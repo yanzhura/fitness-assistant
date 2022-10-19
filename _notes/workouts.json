@@ -1,0 +1,84 @@
+{
+    "workouts": [
+        {
+            "_id": "nMOdPiBBskS9FXhe0U-Tuw",
+            "group": "горизонтальный жим",
+            "name": "отжимания от пола",
+            "bodyParts": ["грудь", "трицепс"],
+            "type": "силовая",
+            "level": 1
+        },
+        {
+            "_id": "DKoKT1MIwEGnfVbKnEo2Qw",
+            "group": "вертикальный жим",
+            "name": "жим гантелей двумя руками",
+            "bodyParts": ["плечи", "трицепс", "грудь"],
+            "type": "силовая",
+            "level": 2
+        },
+        {
+            "_id": "tRGUCSgOE0yKFHXm0ju94w",
+            "group": "горизонтальная тяга",
+            "name": "тяга штанги в наклоне",
+            "bodyParts": ["спина", "бицепс"],
+            "type": "силовая",
+            "level": 3
+        },
+        {
+            "_id": "DFkGcfEA_0uWrwoU2mkMtQ",
+            "group": "вертикальная тяга",
+            "name": "тяга верхнего блока",
+            "bodyParts": ["спина", "бицепс"],
+            "type": "силовая",
+            "level": 1
+        },
+        {
+            "_id": "11arFRD5ZEawUx8oqrTOrw",
+            "group": "разгибания бёдер",
+            "name": "румынская тяга со  штангой",
+            "bodyParts": ["ноги"],
+            "type": "силовая",
+            "level": 2
+        },
+        {
+            "_id": "RGu_ENdW_k-f6YvUeVG2OQ",
+            "group": "приседания",
+            "name": "приседания со штангой",
+            "bodyParts": ["ноги"],
+            "type": "силовая",
+            "level": 3
+        },
+        {
+            "_id": "CR74T3viNUW0MyeoxOohOw",
+            "group": "статические выпады",
+            "name": "выпад на одну ногу",
+            "bodyParts": ["ноги"],
+            "type": "силовая",
+            "level": 1
+        },
+        {
+            "_id": "LwAMtAaDbUu3AzkPbSCWFA",
+            "group": "динамические выпады",
+            "name": "выпады назад с гантелей",
+            "bodyParts": ["ноги"],
+            "type": "силовая",
+            "level": 2
+        },
+        {
+            "_id": "_oUyXEUFpkWd1uElsXW2LQ",
+            "group": "скручивания",
+            "name": "подтягивания коленей к груди в висе на турнике",
+            "bodyParts": ["кор", "поясница"],
+            "type": "вспомогательная",
+            "level": 3
+        },
+        {
+            "_id": "-zygekP2b06PhThV7JvwOg",
+            "group": "пронос тяжестей",
+            "name": "прогулка фермера с одной гантелей",
+            "bodyParts": ["кор", "поясница"],
+            "type": "вспомогательная",
+            "level": 1
+        }
+    ]
+}
