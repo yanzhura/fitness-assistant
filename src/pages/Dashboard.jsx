@@ -5,7 +5,7 @@ import Progress from '../components/Progress';
 
 const Dashboard = () => {
     return (
-        <div className="container shadow mt-4 mb-4">
+        <div>
             <h2>Сводка</h2>
             <p>
                 Эта страница будет основной для всех пользователей, кто зарегистрировался и прощёлкал ДАЛЕЕ на страницах

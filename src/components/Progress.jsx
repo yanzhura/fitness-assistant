@@ -2,7 +2,7 @@ import React from 'react';
 
 const Progress = () => {
     return (
-        <div className="container shadow mt-4 mb-4">
+        <div>
             <h3>Прогресс</h3>
             <p>
                 Вертикальная карусель с мини-карточками тренировок. Будет показывать &quot;вы сейчас здесь&quot;.

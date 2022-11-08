@@ -1,0 +1,10 @@
+{
+    "workoutTypes": {
+        "workoutType01": {
+            "name": "силовая"
+        },
+        "workoutType02": {
+            "name": "вспомогательная"
+        }
+    }
+}

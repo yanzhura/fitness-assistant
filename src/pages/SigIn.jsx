@@ -1,22 +1,69 @@
 import React from 'react';
+import { LockOutlined, UserOutlined } from '@ant-design/icons';
+import { Button, Checkbox, Form, Input } from 'antd';
+import { Link } from 'react-router-dom';
 
-const SigIn = () => {
+const signIn = () => {
+    const onFinish = (values) => {
+        console.log('Success:', values);
+    };
+    const onFinishFailed = (errorInfo) => {
+        console.log('Failed:', errorInfo);
+    };
+
     return (
-        <div className="container shadow mt-4 mb-4">
-            <h2>Форма для входа</h2>
-            <div>
-                <label htmlFor="email" className="form-label">
-                    Электронная почта
-                </label>
-                <input type="email" className="form-control" id="email" placeholder="E-mail" />
-                <label htmlFor="password" className="form-label">
-                    Пароль
-                </label>
-                <input type="password" className="form-control" id="password" placeholder="Пароль" />
-                <button className="btn btn-secondary">Войти</button>
-            </div>
-        </div>
+        <Form
+            name="normal_login"
+            className="login-form"
+            initialValues={{
+                remember: true
+            }}
+            onFinish={onFinish}
+            onFinishFailed={onFinishFailed}
+            wrapperCol={{ span: 10 }}>
+            <Form.Item
+                name="username"
+                rules={[
+                    {
+                        required: true,
+                        message: 'Введите ваш e-mail'
+                    }
+                ]}>
+                <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="E-mail" />
+            </Form.Item>
+            <Form.Item
+                name="password"
+                rules={[
+                    {
+                        required: true,
+                        message: 'Введите пароль'
+                    }
+                ]}>
+                <Input prefix={<LockOutlined className="site-form-item-icon" />} type="password" placeholder="Пароль" />
+            </Form.Item>
+            <Form.Item>
+                <Form.Item name="remember" valuePropName="checked" noStyle>
+                    <Checkbox>Запомнить меня</Checkbox>
+                </Form.Item>
+            </Form.Item>
+
+            <Form.Item>
+                <Button type="primary" htmlType="submit" className="login-form-button">
+                    Войти
+                </Button>{' '}
+                ... или{' '}
+                <Link to="/login/signup">
+                    <span>зарегистрироваться.</span>
+                </Link>
+            </Form.Item>
+
+            <p>
+                <a className="login-form-forgot" href="">
+                    Забыли пароль?
+                </a>
+            </p>
+        </Form>
     );
 };
 
-export default SigIn;
+export default signIn;

@@ -2,7 +2,7 @@ import React from 'react';
 
 const MiniSchedule = () => {
     return (
-        <div className="container shadow mt-4 mb-4">
+        <div>
             <h3>Мини-версия календаря</h3>
             <p>
                 Календарь номерами тренировок и цветными отметками на днях, на которых что-либо запланировано. При

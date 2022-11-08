@@ -6,7 +6,7 @@ import SignUp from '../pages/SignUp';
 const Login = () => {
     const { loginType } = useParams();
     return (
-        <div className="container shadow mt-4 mb-4">
+        <div>
             <h2>Страница входа или регистрации.</h2>
             <hr />
             {loginType === 'signup' ? <SignUp /> : <SigIn />}
