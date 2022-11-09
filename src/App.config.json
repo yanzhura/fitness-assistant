@@ -1,0 +1,4 @@
+{
+    "authApiUrl": "https://identitytoolkit.googleapis.com/v1/accounts",
+    "firebaseApiUrl": "https://training-plan-6dd35-default-rtdb.europe-west1.firebasedatabase.app/"
+}

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import SigIn from '../pages/SigIn';
-import SignUp from '../pages/SignUp';
+import LoginPage from '../pages/LoginPage';
+import RegisterPage from '../pages/RegisterPage';
 
 const Login = () => {
     const { loginType } = useParams();
@@ -9,7 +9,7 @@ const Login = () => {
         <div>
             <h2>Страница входа или регистрации.</h2>
             <hr />
-            {loginType === 'signup' ? <SignUp /> : <SigIn />}
+            {loginType === 'signup' ? <RegisterPage /> : <LoginPage />}
         </div>
     );
 };

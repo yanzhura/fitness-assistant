@@ -1,50 +1,51 @@
 import React from 'react';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
-import { Button, Checkbox, Form, Input } from 'antd';
+import { Button, Form, Input } from 'antd';
 import { Link } from 'react-router-dom';
+import httpAuthService from '../services/httpAuthService';
 
-const signIn = () => {
+const LoginPage = () => {
     const onFinish = (values) => {
-        console.log('Success:', values);
+        httpAuthService.login(values);
     };
     const onFinishFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);
     };
 
     return (
-        <Form
-            name="normal_login"
-            className="login-form"
-            initialValues={{
-                remember: true
-            }}
-            onFinish={onFinish}
-            onFinishFailed={onFinishFailed}
-            wrapperCol={{ span: 10 }}>
+        <Form name="loginForm" onFinish={onFinish} onFinishFailed={onFinishFailed} wrapperCol={{ span: 10 }}>
             <Form.Item
-                name="username"
+                name="email"
+                label="E-mail"
+                hasFeedback
                 rules={[
                     {
                         required: true,
-                        message: 'Введите ваш e-mail'
+                        message: 'Для входа указажите ваш E-mail '
+                    },
+                    {
+                        type: 'email',
+                        message: 'Неверный формат адреса электроной почты '
                     }
                 ]}>
                 <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="E-mail" />
             </Form.Item>
+
             <Form.Item
                 name="password"
+                label="Пароль"
+                hasFeedback
                 rules={[
                     {
                         required: true,
-                        message: 'Введите пароль'
+                        message: 'Пароль не может быть пустым'
                     }
                 ]}>
-                <Input prefix={<LockOutlined className="site-form-item-icon" />} type="password" placeholder="Пароль" />
-            </Form.Item>
-            <Form.Item>
-                <Form.Item name="remember" valuePropName="checked" noStyle>
-                    <Checkbox>Запомнить меня</Checkbox>
-                </Form.Item>
+                <Input.Password
+                    prefix={<LockOutlined className="site-form-item-icon" />}
+                    type="password"
+                    placeholder="Пароль"
+                />
             </Form.Item>
 
             <Form.Item>
@@ -56,14 +57,8 @@ const signIn = () => {
                     <span>зарегистрироваться.</span>
                 </Link>
             </Form.Item>
-
-            <p>
-                <a className="login-form-forgot" href="">
-                    Забыли пароль?
-                </a>
-            </p>
         </Form>
     );
 };
 
-export default signIn;
+export default LoginPage;
