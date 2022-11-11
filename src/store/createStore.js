@@ -1,11 +1,8 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import userReducer from './user';
 
 const rootReducer = combineReducers({
-    user: 'awsdasd'
+    user: userReducer
 });
 
-export const createStore = () => {
-    configureStore({
-        reducer: rootReducer
-    });
-};
+export default configureStore({ reducer: rootReducer });

@@ -1,0 +1,21 @@
+.logo_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+
+.logo {
+    height: 50px;
+}
+
+.profile_container {
+    display: flex;
+    justify-content: end;
+    padding-right: 20px;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    color: #ffffff;
+}

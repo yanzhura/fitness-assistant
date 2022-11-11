@@ -1,27 +1,22 @@
 import React from 'react';
+import { Router } from 'react-router-dom';
+import { ConfigProvider } from 'antd';
+import { Provider } from 'react-redux';
 import './App.css';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import Login from './layouts/Login';
-import Main from './layouts/Main';
-import Navbar from './components/Navbar';
-import Schedule from './layouts/Sсhedule';
-import Stats from './layouts/Stats';
-import Workouts from './layouts/Workouts';
-import Help from './layouts/Help';
+import ruRU from 'antd/es/locale/ru_RU';
+import store from './store/createStore';
+import customHistory from './utils/customHistory';
+import Main from './layouts/Main/';
 
 function App() {
     return (
-        <BrowserRouter>
-            <Navbar />
-            <Switch>
-                <Route exact path="/" component={Main} />
-                <Route path="/login/:loginType" component={Login} />
-                <Route path="/schedule" component={Schedule} />
-                <Route path="/workouts" component={Workouts} />
-                <Route path="/stats" component={Stats} />
-                <Route path="/help" component={Help} />
-            </Switch>
-        </BrowserRouter>
+        <ConfigProvider locale={ruRU}>
+            <Provider store={store}>
+                <Router history={customHistory}>
+                    <Main />
+                </Router>
+            </Provider>
+        </ConfigProvider>
     );
 }
 
