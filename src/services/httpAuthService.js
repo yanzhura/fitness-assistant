@@ -8,21 +8,17 @@ const httpAuth = axios.create({
     }
 });
 
-const login = async ({ email, password }) => {
-    try {
-        const { data } = await httpAuth.post(':signInWithPassword', {
-            email,
-            password,
-            returnSecureToken: true
-        });
-        return data;
-    } catch (error) {
-        console.error('error :>> ', error.response.data.error.message);
-    }
+const signIn = async ({ email, password }) => {
+    const { data } = await httpAuth.post(':signInWithPassword', {
+        email,
+        password,
+        returnSecureToken: true
+    });
+    return data;
 };
 
 const httpAuthService = {
-    login
+    signIn
 };
 
 export default httpAuthService;

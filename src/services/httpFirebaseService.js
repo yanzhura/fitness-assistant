@@ -5,11 +5,11 @@ const http = axios.create({
     baseURL: config.firebaseApiUrl
 });
 
-const httpService = {
+const httpFirebaseService = {
     get: http.get,
     post: http.post,
     put: http.put,
     delete: http.delete
 };
 
-export default httpService;
+export default httpFirebaseService;
