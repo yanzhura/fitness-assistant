@@ -71,7 +71,7 @@ export const login = (userData) => async (dispatch) => {
         const authData = await httpAuthService.signIn(userData);
         localstorageService.setTokens(authData);
         dispatch(authSucceeded(authData));
-        customHistory.replace('/');
+        customHistory.replace('/dashboard');
     } catch (error) {
         const errorMessage = error.response.data.error.message;
         let errorWindowMessage = 'Ошибка аутентификации';
