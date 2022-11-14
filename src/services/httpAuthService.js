@@ -17,8 +17,18 @@ const signIn = async ({ email, password }) => {
     return data;
 };
 
+const signUp = async ({ email, password }) => {
+    const { data } = await httpAuth.post(':signUp', {
+        email,
+        password,
+        returnSecureToken: true
+    });
+    return data;
+};
+
 const httpAuthService = {
-    signIn
+    signIn,
+    signUp
 };
 
 export default httpAuthService;

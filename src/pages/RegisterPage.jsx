@@ -2,13 +2,14 @@ import React from 'react';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Col, Form, Input, Row } from 'antd';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { createUser } from '../store/user';
 
 const RegisterPage = () => {
+    const dispatch = useDispatch();
+
     const onFinish = (values) => {
-        console.log('Success:', values);
-    };
-    const onFinishFailed = (errorInfo) => {
-        console.log('Failed:', errorInfo);
+        dispatch(createUser(values));
     };
 
     return (
@@ -17,7 +18,6 @@ const RegisterPage = () => {
                 <Form
                     name="registerForm"
                     onFinish={onFinish}
-                    onFinishFailed={onFinishFailed}
                     labelCol={{
                         span: 8
                     }}
@@ -42,7 +42,7 @@ const RegisterPage = () => {
                     </Form.Item>
 
                     <Form.Item
-                        name="nickName"
+                        name="name"
                         label="Имя"
                         hasFeedback
                         rules={[

@@ -9,8 +9,14 @@ const getCurrentUser = async () => {
     return data;
 };
 
+const createNewUser = async (userId, userData) => {
+    const { data } = await httpFirebaseService.put(`${userEndpoint}/${userId}.json`, userData);
+    return data;
+};
+
 const firebaseUserService = {
-    getCurrentUser
+    getCurrentUser,
+    createNewUser
 };
 
 export default firebaseUserService;

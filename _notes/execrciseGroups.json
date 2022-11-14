@@ -1,34 +1,42 @@
 {
-    "exerciseGroups": {
-        "exerciseGroup01": {
-            "name": "Горизонтальный жим"
-        },
-        "exerciseGroup02": {
-            "name": "Вертикальный жим"
-        },
-        "exerciseGroup03": {
-            "name": "Горизонтальная тяга"
-        },
-        "exerciseGroup04": {
-            "name": "Вертикальная тяга"
-        },
-        "exerciseGroup05": {
-            "name": "Разгибания бёдер"
-        },
-        "exerciseGroup06": {
-            "name": "Приседания"
-        },
-        "exerciseGroup07": {
-            "name": "Статические выпады"
-        },
-        "exerciseGroup08": {
-            "name": "Динамические выпады"
-        },
-        "exerciseGroup09": {
-            "name": "Скручивания"
-        },
-        "exerciseGroup10": {
-            "name": "Пронос тяжестей"
-        }
+    "exerciseGroup01": {
+        "name": "Горизонтальный жим",
+        "excersies": ["excersie01", "excersie02", "excersie03"]
+    },
+    "exerciseGroup02": {
+        "name": "Вертикальный жим",
+        "excersies": ["excersie04", "excersie05", "excersie06"]
+    },
+    "exerciseGroup03": {
+        "name": "Горизонтальная тяга",
+        "excersies": ["excersie07", "excersie08", "excersie09"]
+    },
+    "exerciseGroup04": {
+        "name": "Вертикальная тяга",
+        "excersies": ["excersie10", "excersie11", "excersie12"]
+    },
+    "exerciseGroup05": {
+        "name": "Разгибания бёдер",
+        "excersies": ["excersie13", "excersie14", "excersie15"]
+    },
+    "exerciseGroup06": {
+        "name": "Приседания",
+        "excersies": ["excersie16", "excersie17", "excersie18"]
+    },
+    "exerciseGroup07": {
+        "name": "Статические выпады",
+        "excersies": ["excersie19", "excersie20", "excersie21"]
+    },
+    "exerciseGroup08": {
+        "name": "Динамические выпады",
+        "excersies": ["excersie22", "excersie23", "excersie24"]
+    },
+    "exerciseGroup09": {
+        "name": "Скручивания",
+        "excersies": ["excersie25", "excersie26", "excersie27"]
+    },
+    "exerciseGroup10": {
+        "name": "Пронос тяжестей",
+        "excersies": ["excersie28", "excersie29", "excersie30"]
     }
 }

@@ -4,7 +4,7 @@ import Login from '../layouts/Login';
 import Home from '../layouts/Home';
 import Schedule from '../layouts/Sсhedule';
 import Stats from '../layouts/Stats';
-import Workouts from '../layouts/Workouts';
+import Dashboard from '../layouts/Dashboard';
 import Help from '../layouts/Help';
 import Logout from '../layouts/Logout';
 import PrivateRoute from './PrivateRoute';
@@ -18,7 +18,7 @@ const AppRouter = () => {
             <Route path="/login/signIn" component={Login} />
             <Route path="/login/signUp" component={Login} />
             <PrivateRoute path="/schedule" component={Schedule} />
-            <PrivateRoute path="/workouts" component={Workouts} />
+            <PrivateRoute path="/dashboard" component={Dashboard} />
             <PrivateRoute path="/stats" component={Stats} />
             <PrivateRoute path="/help" component={Help} />
             <Route path="/logout" component={Logout} />
