@@ -11,9 +11,6 @@ const LoginPage = () => {
     const onFinish = (values) => {
         dispatch(login(values));
     };
-    const onFinishFailed = (errorInfo) => {
-        console.error('Failed:', errorInfo);
-    };
 
     return (
         <Row justify={'center'}>
@@ -21,7 +18,6 @@ const LoginPage = () => {
                 <Form
                     name="loginForm"
                     onFinish={onFinish}
-                    onFinishFailed={onFinishFailed}
                     labelCol={{
                         span: 8
                     }}

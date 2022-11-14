@@ -1,32 +1,30 @@
 {
-    "workouts": {
-        "w01": {
-            "name": "A",
-            "type": "workoutType01",
-            "excerciseGroups": {
-                "1": "exerciseGroup06",
-                "2": "exerciseGroup02",
-                "3": "exerciseGroup03",
-                "4": "exerciseGroup07"
-            }
-        },
-        "w02": {
-            "name": "A",
-            "type": "workoutType01",
-            "excerciseGroups": {
-                "1": "exerciseGroup05",
-                "2": "exerciseGroup01",
-                "3": "exerciseGroup04",
-                "4": "exerciseGroup08"
-            }
-        },
-        "w03": {
-            "name": "A",
-            "type": "workoutType02",
-            "excerciseGroups": {
-                "1": "exerciseGroup09",
-                "4": "exerciseGroup10"
-            }
+    "workoutA": {
+        "name": "A",
+        "type": "workoutType01",
+        "excerciseGroups": {
+            "1": "exerciseGroup06",
+            "2": "exerciseGroup02",
+            "3": "exerciseGroup03",
+            "4": "exerciseGroup07"
+        }
+    },
+    "workoutB": {
+        "name": "B",
+        "type": "workoutType01",
+        "excerciseGroups": {
+            "1": "exerciseGroup05",
+            "2": "exerciseGroup01",
+            "3": "exerciseGroup04",
+            "4": "exerciseGroup08"
+        }
+    },
+    "workoutC": {
+        "name": "C",
+        "type": "workoutType02",
+        "excerciseGroups": {
+            "1": "exerciseGroup09",
+            "4": "exerciseGroup10"
         }
     }
 }

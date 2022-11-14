@@ -26,6 +26,12 @@ const getInitialState = () => {
     }
 };
 
+const initialUserData = {
+    scheduleId: 0,
+    trainingStarted: 0,
+    trainingStartedAt: 0
+};
+
 const userSlice = createSlice({
     name: 'user',
     initialState: getInitialState(),
@@ -55,6 +61,19 @@ const userSlice = createSlice({
             state.isLoggedIn = false;
             state.isLoading = false;
             state.error = null;
+        },
+        userCreateRequested: (state) => {
+            state.isLoading = true;
+        },
+        userCreateSucceeded: (state, action) => {
+            state.isLoading = false;
+            state.isLoggedIn = true;
+            state.userId = action.payload.userId;
+            state.userData = action.payload.userData;
+        },
+        userCreateFailed: (state, action) => {
+            state.isLoading = false;
+            state.error = action.payload;
         }
     }
 });
@@ -62,8 +81,17 @@ const userSlice = createSlice({
 const authRequested = createAction('user/authRequested');
 
 const { actions, reducer: userReducer } = userSlice;
-const { authSucceeded, authFailed, userDataRequested, userDataReceived, userDataRequestFailed, userLoggedOut } =
-    actions;
+const {
+    authSucceeded,
+    authFailed,
+    userDataRequested,
+    userDataReceived,
+    userDataRequestFailed,
+    userLoggedOut,
+    userCreateRequested,
+    userCreateSucceeded,
+    userCreateFailed
+} = actions;
 
 export const login = (userData) => async (dispatch) => {
     dispatch(authRequested());
@@ -99,6 +127,27 @@ export const getUserData = () => async (dispatch) => {
         dispatch(userDataRequestFailed('Ошибка получения данных пользователя'));
     }
 };
+
+export const createUser =
+    ({ email, password, passwordConfirm, ...rest }) =>
+    async (dispatch) => {
+        dispatch(userCreateRequested());
+        try {
+            const authData = await httpAuthService.signUp({ email, password });
+            await firebaseUserService.createNewUser(authData.localId, { ...initialUserData, ...rest });
+            dispatch(
+                userCreateSucceeded({
+                    userId: authData.localId,
+                    userData: { ...initialUserData, ...rest }
+                })
+            );
+            localstorageService.setTokens(authData);
+            customHistory.replace('/dashboard');
+        } catch (error) {
+            console.log('store/users > createUser() > error :', error.response);
+            dispatch(userCreateFailed('Ошибка при создании пользователя'));
+        }
+    };
 
 export const getIsLoggedIn = () => (state) => state.user.isLoggedIn;
 export const getUserLoadingStatus = () => (state) => state.user.isLoading;

@@ -1,0 +1,182 @@
+{
+    "workout01": {
+        "sequenceNumber": 1,
+        "workout": "workoutA",
+        "complexityLevel": 1
+    },
+    "workout02": {
+        "sequenceNumber": 2,
+        "workout": "workoutB",
+        "complexityLevel": 1
+    },
+    "workout03": {
+        "sequenceNumber": 3,
+        "workout": "workoutC",
+        "complexityLevel": 1
+    },
+    "workout04": {
+        "sequenceNumber": 4,
+        "workout": "workoutA",
+        "complexityLevel": 1
+    },
+    "workout05": {
+        "sequenceNumber": 5,
+        "workout": "workoutB",
+        "complexityLevel": 1
+    },
+    "workout06": {
+        "sequenceNumber": 6,
+        "workout": "workoutC",
+        "complexityLevel": 1
+    },
+    "workout07": {
+        "sequenceNumber": 7,
+        "workout": "workoutA",
+        "complexityLevel": 1
+    },
+    "workout08": {
+        "sequenceNumber": 8,
+        "workout": "workoutB",
+        "complexityLevel": 1
+    },
+    "workout09": {
+        "sequenceNumber": 9,
+        "workout": "workoutC",
+        "complexityLevel": 1
+    },
+    "workout10": {
+        "sequenceNumber": 10,
+        "workout": "workoutA",
+        "complexityLevel": 1
+    },
+    "workout11": {
+        "sequenceNumber": 11,
+        "workout": "workoutB",
+        "complexityLevel": 1
+    },
+    "workout12": {
+        "sequenceNumber": 12,
+        "workout": "workoutC",
+        "complexityLevel": 1
+    },
+    "workout13": {
+        "sequenceNumber": 13,
+        "workout": "workoutA",
+        "complexityLevel": 2
+    },
+    "workout14": {
+        "sequenceNumber": 14,
+        "workout": "workoutB",
+        "complexityLevel": 2
+    },
+    "workout15": {
+        "sequenceNumber": 15,
+        "workout": "workoutC",
+        "complexityLevel": 2
+    },
+    "workout16": {
+        "sequenceNumber": 16,
+        "workout": "workoutA",
+        "complexityLevel": 2
+    },
+    "workout17": {
+        "sequenceNumber": 17,
+        "workout": "workoutB",
+        "complexityLevel": 2
+    },
+    "workout18": {
+        "sequenceNumber": 18,
+        "workout": "workoutC",
+        "complexityLevel": 2
+    },
+    "workout19": {
+        "sequenceNumber": 19,
+        "workout": "workoutA",
+        "complexityLevel": 2
+    },
+    "workout20": {
+        "sequenceNumber": 20,
+        "workout": "workoutB",
+        "complexityLevel": 2
+    },
+    "workout21": {
+        "sequenceNumber": 21,
+        "workout": "workoutC",
+        "complexityLevel": 2
+    },
+    "workout22": {
+        "sequenceNumber": 22,
+        "workout": "workoutA",
+        "complexityLevel": 2
+    },
+    "workout23": {
+        "sequenceNumber": 23,
+        "workout": "workoutB",
+        "complexityLevel": 2
+    },
+    "workout24": {
+        "sequenceNumber": 24,
+        "workout": "workoutC",
+        "complexityLevel": 2
+    },
+    "workout25": {
+        "sequenceNumber": 25,
+        "workout": "workoutA",
+        "complexityLevel": 3
+    },
+    "workout26": {
+        "sequenceNumber": 26,
+        "workout": "workoutB",
+        "complexityLevel": 3
+    },
+    "workout27": {
+        "sequenceNumber": 27,
+        "workout": "workoutC",
+        "complexityLevel": 3
+    },
+    "workout28": {
+        "sequenceNumber": 28,
+        "workout": "workoutA",
+        "complexityLevel": 3
+    },
+    "workout29": {
+        "sequenceNumber": 29,
+        "workout": "workoutB",
+        "complexityLevel": 3
+    },
+    "workout30": {
+        "sequenceNumber": 30,
+        "workout": "workoutC",
+        "complexityLevel": 3
+    },
+    "workout31": {
+        "sequenceNumber": 31,
+        "workout": "workoutA",
+        "complexityLevel": 3
+    },
+    "workout32": {
+        "sequenceNumber": 32,
+        "workout": "workoutB",
+        "complexityLevel": 3
+    },
+    "workout33": {
+        "sequenceNumber": 33,
+        "workout": "workoutC",
+        "complexityLevel": 3
+    },
+    "workout34": {
+        "sequenceNumber": 34,
+        "workout": "workoutA",
+        "complexityLevel": 3
+    },
+    "workout35": {
+        "sequenceNumber": 35,
+        "workout": "workoutB",
+        "complexityLevel": 3
+    },
+    "workout36": {
+        "sequenceNumber": 36,
+        "workout": "workoutC",
+        "complexityLevel": 3
+    }
+}
