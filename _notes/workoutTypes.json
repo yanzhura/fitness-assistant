@@ -1,8 +1,8 @@
 {
-    "workoutType1": {
+    "workoutType01": {
         "name": "силовая"
     },
-    "workoutType2": {
+    "workoutType02": {
         "name": "вспомогательная"
     }
 }

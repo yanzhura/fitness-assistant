@@ -15,10 +15,11 @@ const Navbar = () => {
 
     const navItems = [
         { key: '0', path: '/', label: 'Главная', private: 'none' },
-        { key: '1', path: '/dashboard', label: 'Тренировки', private: true },
-        { key: '2', path: '/schedule', label: 'Расписание', private: true },
-        { key: '3', path: '/stats', label: 'Статистика', private: true },
-        { key: '4', path: '/help', label: 'Помощь', private: true }
+        { key: '1', path: '/dashboard', label: 'Сводка', private: true },
+        { key: '2', path: '/workouts', label: 'Тренировки', private: true },
+        { key: '3', path: '/schedule', label: 'Расписание', private: true },
+        { key: '4', path: '/stats', label: 'Статистика', private: true },
+        { key: '5', path: '/help', label: 'Помощь', private: true }
     ];
 
     const currentNavItem = navItems.find((item) => item.path === location.pathname);

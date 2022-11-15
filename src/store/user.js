@@ -27,9 +27,8 @@ const getInitialState = () => {
 };
 
 const initialUserData = {
-    scheduleId: 0,
-    trainingStarted: 0,
-    trainingStartedAt: 0
+    isTrainingStarted: false,
+    currentWorkout: 0
 };
 
 const userSlice = createSlice({
@@ -117,13 +116,13 @@ export const logout = () => (dispatch) => {
     customHistory.push('/');
 };
 
-export const getUserData = () => async (dispatch) => {
+export const loadUserData = () => async (dispatch) => {
     dispatch(userDataRequested());
     try {
         const userData = await userService.getCurrentUser();
         dispatch(userDataReceived(userData));
     } catch (error) {
-        console.log('store/users > getUserData > error :', error.response);
+        console.log('store/users > loadUserData > error :', error.response);
         dispatch(userDataRequestFailed('Ошибка получения данных пользователя'));
     }
 };

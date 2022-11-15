@@ -1,16 +1,16 @@
 import httpService from './httpService';
 import localstorageService from './localstorageService';
 
-const userEndpoint = 'users';
+const userLocation = 'users';
 
 const getCurrentUser = async () => {
     const currentUserId = localstorageService.getUserId();
-    const { data } = await httpService.get(`${userEndpoint}/${currentUserId}.json`);
+    const { data } = await httpService.get(`${userLocation}/${currentUserId}.json`);
     return data;
 };
 
 const createNewUser = async (userId, userData) => {
-    const { data } = await httpService.put(`${userEndpoint}/${userId}.json`, userData);
+    const { data } = await httpService.put(`${userLocation}/${userId}.json`, userData);
     return data;
 };
 

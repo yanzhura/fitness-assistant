@@ -4,7 +4,7 @@ import Navbar from '../../components/NavBar';
 import AppRouter from '../../router/AppRouter';
 import styles from './Main.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { getIsLoggedIn, getUserData } from '../../store/user';
+import { getIsLoggedIn, loadUserData } from '../../store/user';
 
 const { Header, Content, Footer } = Layout;
 
@@ -14,7 +14,7 @@ const Main = () => {
 
     useEffect(() => {
         if (isLoggedIn) {
-            dispatch(getUserData());
+            dispatch(loadUserData());
         }
     }, [isLoggedIn]);
 

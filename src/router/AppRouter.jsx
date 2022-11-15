@@ -18,7 +18,7 @@ const AppRouter = () => {
             <Redirect exact from="/login" to="/login/signIn" />
             <Route path="/login/signIn" component={Login} />
             <Route path="/login/signUp" component={Login} />
-            <Route path="/workouts" component={Workouts} />
+            <PrivateRoute path="/workouts" component={Workouts} />
             <PrivateRoute path="/schedule" component={Schedule} />
             <PrivateRoute path="/dashboard" component={Dashboard} />
             <PrivateRoute path="/stats" component={Stats} />

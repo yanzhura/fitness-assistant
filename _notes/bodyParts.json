@@ -1,26 +1,26 @@
 {
-    "bodyPart1": {
+    "bodyPart01": {
         "name": "грудь"
     },
-    "bodyPart2": {
+    "bodyPart02": {
         "name": "трицепс"
     },
-    "bodyPart3": {
+    "bodyPart03": {
         "name": "плечи"
     },
-    "bodyPart4": {
+    "bodyPart04": {
         "name": "спина"
     },
-    "bodyPart5": {
+    "bodyPart05": {
         "name": "бицепс"
     },
-    "bodyPart6": {
+    "bodyPart06": {
         "name": "ноги"
     },
-    "bodyPart7": {
+    "bodyPart07": {
         "name": "пресс"
     },
-    "bodyPart8": {
+    "bodyPart08": {
         "name": "поясница"
     }
 }
