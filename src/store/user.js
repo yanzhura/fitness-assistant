@@ -1,7 +1,7 @@
 /* eslint-disable indent */
 import { createAction, createSlice } from '@reduxjs/toolkit';
-import firebaseUserService from '../services/firebaseUserService';
-import httpAuthService from '../services/httpAuthService';
+import userService from '../services/userService';
+import authService from '../services/authService';
 import localstorageService from '../services/localstorageService';
 import customHistory from '../utils/customHistory';
 
@@ -96,7 +96,7 @@ const {
 export const login = (userData) => async (dispatch) => {
     dispatch(authRequested());
     try {
-        const authData = await httpAuthService.signIn(userData);
+        const authData = await authService.signIn(userData);
         localstorageService.setTokens(authData);
         dispatch(authSucceeded(authData));
         customHistory.replace('/dashboard');
@@ -120,7 +120,7 @@ export const logout = () => (dispatch) => {
 export const getUserData = () => async (dispatch) => {
     dispatch(userDataRequested());
     try {
-        const userData = await firebaseUserService.getCurrentUser();
+        const userData = await userService.getCurrentUser();
         dispatch(userDataReceived(userData));
     } catch (error) {
         console.log('store/users > getUserData > error :', error.response);
@@ -133,8 +133,8 @@ export const createUser =
     async (dispatch) => {
         dispatch(userCreateRequested());
         try {
-            const authData = await httpAuthService.signUp({ email, password });
-            await firebaseUserService.createNewUser(authData.localId, { ...initialUserData, ...rest });
+            const authData = await authService.signUp({ email, password });
+            await userService.createNewUser(authData.localId, { ...initialUserData, ...rest });
             dispatch(
                 userCreateSucceeded({
                     userId: authData.localId,

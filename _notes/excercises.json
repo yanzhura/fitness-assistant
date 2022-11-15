@@ -1,45 +1,45 @@
 {
-    "exrcise01": {
+    "excersie1": {
         "name": "отжимания от пола",
         "bodyParts": ["bodyPart1", "bodyPart2"],
         "level": 1
     },
-    "exrcise02": {
+    "excersie2": {
         "name": "жим гантелей от груди лёжа",
         "bodyParts": ["bodyPart1", "bodyPart2"],
         "level": 2
     },
-    "exrcise03": {
+    "excersie3": {
         "name": "жим штанги от груди лёжа",
         "bodyParts": ["bodyPart1", "bodyPart2"],
         "level": 3
     },
-    "exrcise04": {
+    "excersie4": {
         "name": "жим гантелей одной рукой",
         "bodyParts": ["bodyPart1", "bodyPart2", "bodyPart3"],
         "level": 1
     },
-    "exrcise05": {
+    "excersie5": {
         "name": "жим гантелей двумя руками",
         "bodyParts": ["bodyPart1", "bodyPart2", "bodyPart3"],
         "level": 2
     },
-    "exrcise06": {
+    "excersie6": {
         "name": "жим штанги над головой",
         "bodyParts": ["bodyPart1", "bodyPart2", "bodyPart3"],
         "level": 3
     },
-    "exrcise07": {
+    "excersie7": {
         "name": "тяга гантелей на наклонной скамье",
         "bodyParts": ["bodyPart4", "bodyPart5"],
         "level": 1
     },
-    "exrcise08": {
+    "excersie8": {
         "name": "тяга гантели в наклоне одной рукой",
         "bodyParts": ["bodyPart4", "bodyPart5"],
         "level": 2
     },
-    "exrcise09": {
+    "excersie9": {
         "name": "тяга штанги в наклоне",
         "bodyParts": ["bodyPart4", "bodyPart5"],
         "level": 3

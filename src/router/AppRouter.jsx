@@ -9,6 +9,7 @@ import Help from '../layouts/Help';
 import Logout from '../layouts/Logout';
 import PrivateRoute from './PrivateRoute';
 import NotFound from '../layouts/NotFound';
+import Workouts from '../pages/Workouts';
 
 const AppRouter = () => {
     return (
@@ -17,6 +18,7 @@ const AppRouter = () => {
             <Redirect exact from="/login" to="/login/signIn" />
             <Route path="/login/signIn" component={Login} />
             <Route path="/login/signUp" component={Login} />
+            <Route path="/workouts" component={Workouts} />
             <PrivateRoute path="/schedule" component={Schedule} />
             <PrivateRoute path="/dashboard" component={Dashboard} />
             <PrivateRoute path="/stats" component={Stats} />
