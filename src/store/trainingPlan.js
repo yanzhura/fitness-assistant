@@ -3,7 +3,7 @@ import workoutService from '../services/workoutService';
 
 const initialState = {
     data: null,
-    isLoading: false,
+    isLoading: true,
     error: null
 };
 
@@ -34,8 +34,7 @@ export const loadTrainingPlan = () => async (dispatch) => {
         const trainingplanData = await workoutService.fetchFullTrainingPlan();
         dispatch(trainingPlanDataReceived(trainingplanData));
     } catch (error) {
-        const errorMessage = error.response.data.error.message;
-        console.error('store/trainingPlan > loadTraininglan() > error :', errorMessage);
+        console.error('store/trainingPlan > loadTraininglan() > error :', error);
         dispatch(trainingPlanDataFailed('Ошибка при запросе данных по тренировкам с сервера.'));
     }
 };

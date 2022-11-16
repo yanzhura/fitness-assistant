@@ -1,0 +1,20 @@
+.ant-card-head-title {
+    background-color: rgb(192, 255, 133);
+}
+
+.card_override {
+    height: 100%;
+    border-radius: 5px;
+}
+
+.workout_complete {
+    background-color: #cecece;
+}
+
+.workout_current {
+    background-color: #ffac85;
+}
+
+.workout_incomplete {
+    background-color: #c0ff85;
+}

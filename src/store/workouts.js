@@ -3,7 +3,7 @@ import workoutService from '../services/workoutService';
 
 const initialState = {
     entities: {},
-    isLoading: false,
+    isLoading: true,
     error: null
 };
 
@@ -36,8 +36,7 @@ export const loadWorkout = (number) => async (dispatch, getState) => {
             const workoutData = await workoutService.fetchWorkoutBySeqNumber(number);
             dispatch(workoutDataReceived(workoutData));
         } catch (error) {
-            const errorMessage = error.response.data.error.message;
-            console.error('store/workouts > loadWorkout() > error :', errorMessage);
+            console.error('store/workouts > loadWorkout() > error :', error);
             dispatch(workoutDataRequestFailed('Ошибка при запросе данных по тренировкам с сервера.'));
         }
     }
@@ -45,6 +44,6 @@ export const loadWorkout = (number) => async (dispatch, getState) => {
 
 export const getWorkoutsLoadingStatus = () => (state) => state.workouts.isLoading;
 export const getWorkoutsErrors = () => (state) => state.workouts.error;
-export const getWorkoutByNumber = (number) => (state) => state.entities[number];
+export const getWorkoutByNumber = (number) => (state) => state.workouts.entities[number];
 
 export default workoutsReducer;
