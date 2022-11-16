@@ -4,7 +4,7 @@ import config from '../App.config.json';
 const httpAuth = axios.create({
     baseURL: config.authApiUrl,
     params: {
-        key: process.env.REACT_APP_FIREBASE_AUTH_API_KEY
+        key: process.env.REACT_APP_FIREBASE_API_KEY
     }
 });
 
@@ -26,9 +26,7 @@ const signUp = async ({ email, password }) => {
     return data;
 };
 
-const httpAuthService = {
+export default {
     signIn,
     signUp
 };
-
-export default httpAuthService;

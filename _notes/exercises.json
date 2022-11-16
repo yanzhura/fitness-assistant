@@ -1,152 +1,152 @@
 {
-    "exrcise01": {
+    "exercise01": {
         "name": "отжимания от пола",
-        "bodyParts": ["bodyPart1", "bodyPart2"],
+        "bodyParts": ["bodyPart01", "bodyPart02"],
         "level": 1
     },
-    "exrcise02": {
+    "exercise02": {
         "name": "жим гантелей от груди лёжа",
-        "bodyParts": ["bodyPart1", "bodyPart2"],
+        "bodyParts": ["bodyPart01", "bodyPart02"],
         "level": 2
     },
-    "exrcise03": {
+    "exercise03": {
         "name": "жим штанги от груди лёжа",
-        "bodyParts": ["bodyPart1", "bodyPart2"],
+        "bodyParts": ["bodyPart01", "bodyPart02"],
         "level": 3
     },
-    "exrcise04": {
+    "exercise04": {
         "name": "жим гантелей одной рукой",
-        "bodyParts": ["bodyPart1", "bodyPart2", "bodyPart3"],
+        "bodyParts": ["bodyPart01", "bodyPart02", "bodyPart03"],
         "level": 1
     },
-    "exrcise05": {
+    "exercise05": {
         "name": "жим гантелей двумя руками",
-        "bodyParts": ["bodyPart1", "bodyPart2", "bodyPart3"],
+        "bodyParts": ["bodyPart01", "bodyPart02", "bodyPart03"],
         "level": 2
     },
-    "exrcise06": {
+    "exercise06": {
         "name": "жим штанги над головой",
-        "bodyParts": ["bodyPart1", "bodyPart2", "bodyPart3"],
+        "bodyParts": ["bodyPart01", "bodyPart02", "bodyPart03"],
         "level": 3
     },
-    "exrcise07": {
+    "exercise07": {
         "name": "тяга гантелей на наклонной скамье",
-        "bodyParts": ["bodyPart4", "bodyPart5"],
+        "bodyParts": ["bodyPart04", "bodyPart05"],
         "level": 1
     },
-    "exrcise08": {
+    "exercise08": {
         "name": "тяга гантели в наклоне одной рукой",
-        "bodyParts": ["bodyPart4", "bodyPart5"],
+        "bodyParts": ["bodyPart04", "bodyPart05"],
         "level": 2
     },
-    "exrcise09": {
+    "exercise09": {
         "name": "тяга штанги в наклоне",
-        "bodyParts": ["bodyPart4", "bodyPart5"],
+        "bodyParts": ["bodyPart04", "bodyPart05"],
         "level": 3
     },
-    "exrcise10": {
+    "exercise10": {
         "name": "тяга верхнего блока",
-        "bodyParts": ["bodyPart4", "bodyPart5"],
+        "bodyParts": ["bodyPart04", "bodyPart05"],
         "level": 1
     },
-    "exrcise11": {
+    "exercise11": {
         "name": "подтягивания на турнике с резинкой",
-        "bodyParts": ["bodyPart4", "bodyPart5"],
+        "bodyParts": ["bodyPart04", "bodyPart05"],
         "level": 2
     },
-    "exrcise12": {
+    "exercise12": {
         "name": "подтягивания на турнике",
-        "bodyParts": ["bodyPart4", "bodyPart5"],
+        "bodyParts": ["bodyPart04", "bodyPart05"],
         "level": 3
     },
-    "exrcise13": {
+    "exercise13": {
         "name": "тяга нижнего блока между ног",
-        "bodyParts": ["bodyPart6"],
+        "bodyParts": ["bodyPart06"],
         "level": 1
     },
-    "exrcise14": {
+    "exercise14": {
         "name": "румынская тяга",
-        "bodyParts": ["bodyPart6"],
+        "bodyParts": ["bodyPart06"],
         "level": 2
     },
-    "exrcise15": {
+    "exercise15": {
         "name": "становая тяга",
-        "bodyParts": ["bodyPart6"],
+        "bodyParts": ["bodyPart06"],
         "level": 3
     },
-    "exrcise16": {
+    "exercise16": {
         "name": "приседания плие с гантелей",
-        "bodyParts": ["bodyPart6"],
+        "bodyParts": ["bodyPart06"],
         "level": 1
     },
-    "exrcise17": {
+    "exercise17": {
         "name": "приседания с гантелей у груди",
-        "bodyParts": ["bodyPart6"],
+        "bodyParts": ["bodyPart06"],
         "level": 2
     },
-    "exrcise18": {
+    "exercise18": {
         "name": "приседания со штангой",
-        "bodyParts": ["bodyPart6"],
+        "bodyParts": ["bodyPart06"],
         "level": 3
     },
-    "exrcise19": {
+    "exercise19": {
         "name": "выпады",
-        "bodyParts": ["bodyPart6"],
+        "bodyParts": ["bodyPart06"],
         "level": 1
     },
-    "exrcise20": {
+    "exercise20": {
         "name": "выпады с гантелями",
-        "bodyParts": ["bodyPart6"],
+        "bodyParts": ["bodyPart06"],
         "level": 2
     },
-    "exrcise21": {
+    "exercise21": {
         "name": "болгарские приседания",
-        "bodyParts": ["bodyPart6"],
+        "bodyParts": ["bodyPart06"],
         "level": 3
     },
-    "exrcise22": {
+    "exercise22": {
         "name": "выпады назад",
-        "bodyParts": ["bodyPart6"],
+        "bodyParts": ["bodyPart06"],
         "level": 1
     },
-    "exrcise23": {
+    "exercise23": {
         "name": "выпады назад с гантелей",
-        "bodyParts": ["bodyPart6"],
+        "bodyParts": ["bodyPart06"],
         "level": 2
     },
-    "exrcise24": {
+    "exercise24": {
         "name": "выпады назад с двумя гантелями",
-        "bodyParts": ["bodyPart6"],
+        "bodyParts": ["bodyPart06"],
         "level": 3
     },
-    "exrcise25": {
+    "exercise25": {
         "name": "скручивания с наклоном вперёд",
-        "bodyParts": ["bodyPart7", "bodyPart8"],
+        "bodyParts": ["bodyPart07", "bodyPart08"],
         "level": 1
     },
-    "exrcise26": {
+    "exercise26": {
         "name": "скручивания с подтягиванием колена",
-        "bodyParts": ["bodyPart7", "bodyPart8"],
+        "bodyParts": ["bodyPart07", "bodyPart08"],
         "level": 2
     },
-    "exrcise27": {
+    "exercise27": {
         "name": "подтягивания коленей к груди в висе на турнике",
-        "bodyParts": ["bodyPart7", "bodyPart8"],
+        "bodyParts": ["bodyPart07", "bodyPart08"],
         "level": 3
     },
-    "exrcise28": {
+    "exercise28": {
         "name": "прогулка фермера с одной гантелей",
-        "bodyParts": ["bodyPart7", "bodyPart8"],
+        "bodyParts": ["bodyPart07", "bodyPart08"],
         "level": 1
     },
-    "exrcise29": {
+    "exercise29": {
         "name": "прогулка фермера с двумя гантелями",
-        "bodyParts": ["bodyPart7", "bodyPart8"],
+        "bodyParts": ["bodyPart07", "bodyPart08"],
         "level": 2
     },
-    "exrcise30": {
+    "exercise30": {
         "name": "прогулка фермера с гантелями над головой",
-        "bodyParts": ["bodyPart7", "bodyPart8"],
+        "bodyParts": ["bodyPart07", "bodyPart08"],
         "level": 3
     }
 }

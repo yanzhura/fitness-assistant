@@ -14,10 +14,8 @@ const removeTokens = () => {
     localStorage.removeItem('expiresIn');
 };
 
-const localstorageService = {
+export default {
     setTokens,
     getUserId,
     removeTokens
 };
-
-export default localstorageService;

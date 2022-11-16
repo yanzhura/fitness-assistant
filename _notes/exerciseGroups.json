@@ -1,42 +1,42 @@
 {
     "exerciseGroup01": {
         "name": "Горизонтальный жим",
-        "excersies": ["excersie01", "excersie02", "excersie03"]
+        "exercises": ["exercise01", "exercise02", "exercise03"]
     },
     "exerciseGroup02": {
         "name": "Вертикальный жим",
-        "excersies": ["excersie04", "excersie05", "excersie06"]
+        "exercises": ["exercise04", "exercise05", "exercise06"]
     },
     "exerciseGroup03": {
         "name": "Горизонтальная тяга",
-        "excersies": ["excersie07", "excersie08", "excersie09"]
+        "exercises": ["exercise07", "exercise08", "exercise09"]
     },
     "exerciseGroup04": {
         "name": "Вертикальная тяга",
-        "excersies": ["excersie10", "excersie11", "excersie12"]
+        "exercises": ["exercise10", "exercise11", "exercise12"]
     },
     "exerciseGroup05": {
         "name": "Разгибания бёдер",
-        "excersies": ["excersie13", "excersie14", "excersie15"]
+        "exercises": ["exercise13", "exercise14", "exercise15"]
     },
     "exerciseGroup06": {
         "name": "Приседания",
-        "excersies": ["excersie16", "excersie17", "excersie18"]
+        "exercises": ["exercise16", "exercise17", "exercise18"]
     },
     "exerciseGroup07": {
         "name": "Статические выпады",
-        "excersies": ["excersie19", "excersie20", "excersie21"]
+        "exercises": ["exercise19", "exercise20", "exercise21"]
     },
     "exerciseGroup08": {
         "name": "Динамические выпады",
-        "excersies": ["excersie22", "excersie23", "excersie24"]
+        "exercises": ["exercise22", "exercise23", "exercise24"]
     },
     "exerciseGroup09": {
         "name": "Скручивания",
-        "excersies": ["excersie25", "excersie26", "excersie27"]
+        "exercises": ["exercise25", "exercise26", "exercise27"]
     },
     "exerciseGroup10": {
         "name": "Пронос тяжестей",
-        "excersies": ["excersie28", "excersie29", "excersie30"]
+        "exercises": ["exercise28", "exercise29", "exercise30"]
     }
 }
