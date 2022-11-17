@@ -14,7 +14,14 @@ const createNewUser = async (userId, userData) => {
     return data;
 };
 
+const updateCurrentUser = async (userData) => {
+    const currentUserId = localstorageService.getUserId();
+    const { data } = await httpService.put(`${userLocation}/${currentUserId}.json`, userData);
+    return data;
+};
+
 export default {
     getCurrentUser,
-    createNewUser
+    createNewUser,
+    updateCurrentUser
 };
