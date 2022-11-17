@@ -6,11 +6,10 @@ import {
     getTrainingPlanErrors,
     getTrainingPlanLoadingStatus,
     loadTrainingPlan
-} from '../../store/trainingPlan';
-import showEerrorToast from '../../utils/errorToast';
-import TrainingPlanCard from '../../components/TrainingPlanCard';
-import { getCurrentUser } from '../../store/user';
-// import styles from './WorkoutList.module.css';
+} from '../store/trainingPlan';
+import showEerrorToast from '../utils/errorToast';
+import TrainingPlanCard from '../components/TrainingPlanCard';
+import { getCurrentUser } from '../store/user';
 
 const WorkoutList = () => {
     const dispatch = useDispatch();
@@ -54,7 +53,7 @@ const WorkoutList = () => {
     return (
         <>
             <h3>Список тренировок</h3>
-            <div className="wrapper">
+            <div>
                 <Row justify={'center'}>
                     <Col span={16}>
                         <Row gutter={[16, 24]}>{trainingPlanLoadingStatus ? <Spin /> : getWorkoutCards()}</Row>

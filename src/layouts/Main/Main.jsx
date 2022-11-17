@@ -1,10 +1,13 @@
+/** @jsxImportSource @emotion/react */
+
 import React, { useEffect } from 'react';
 import { Layout } from 'antd';
+import { useDispatch, useSelector } from 'react-redux';
 import Navbar from '../../components/NavBar';
 import AppRouter from '../../router/AppRouter';
-import styles from './Main.module.css';
-import { useDispatch, useSelector } from 'react-redux';
 import { getIsLoggedIn, loadUserData } from '../../store/user';
+//* styles
+import { headerOverride, mainContent, contentWrapper } from './styles';
 
 const { Header, Content, Footer } = Layout;
 
@@ -20,11 +23,11 @@ const Main = () => {
 
     return (
         <Layout>
-            <Header className={styles.header_override}>
+            <Header css={headerOverride}>
                 <Navbar />
             </Header>
-            <Content className={styles.main_content}>
-                <div className={styles.content_wrapper}>
+            <Content css={mainContent}>
+                <div css={contentWrapper}>
                     <AppRouter />
                 </div>
             </Content>
