@@ -1,16 +1,18 @@
-.logo_container {
+import { css } from '@emotion/react';
+
+export const logoContainer = css`
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100%;
     width: 100%;
-}
+`;
 
-.logo {
+export const logoImage = css`
     height: 50px;
-}
+`;
 
-.profile_container {
+export const profileContainer = css`
     display: flex;
     justify-content: flex-end;
     padding-right: 20px;
@@ -18,4 +20,4 @@
     height: 100%;
     width: 100%;
     color: #ffffff;
-}
+`;

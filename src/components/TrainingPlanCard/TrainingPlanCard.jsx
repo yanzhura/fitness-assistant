@@ -1,20 +1,11 @@
+/** @jsxImportSource @emotion/react */
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Card } from 'antd';
-import styles from './TrainingPlanCard.module.css';
 import { Link } from 'react-router-dom';
-
-const headStyles = {
-    complete: {
-        backgroundColor: '#c0ff85'
-    },
-    current: {
-        backgroundColor: '#ffac85'
-    },
-    incomplete: {
-        backgroundColor: '#cecece'
-    }
-};
+//* styles
+import { headStyles, cardOverride } from './styles';
 
 const TrainingPlanCard = ({
     sequenceNumber,
@@ -31,7 +22,7 @@ const TrainingPlanCard = ({
                 extra={<p>{typeName}</p>}
                 size={'small'}
                 headStyle={headStyles[completeStatus]}
-                className={styles.card_override}>
+                css={cardOverride}>
                 <p>Вид: {kindName}</p>
                 <p>Сложность: {complexityLevel}</p>
                 <p>Виды упражнений: {exerciseGroupNames}</p>
@@ -50,5 +41,3 @@ TrainingPlanCard.propTypes = {
 };
 
 export default TrainingPlanCard;
-
-// TODO Переделать стили на @emotion/styled
