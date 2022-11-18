@@ -9,7 +9,7 @@ import {
     getUserSchedule,
     updateUserSchedule,
     getCurrentWorkoutSchedule
-} from '../store/user';
+} from '../../store/user';
 
 const WorkoutCard = ({ sequenceNumber, complexityLevel, kindName, typeName, exercises }) => {
     const [planedDate, setPlanedDate] = useState(null);
@@ -44,37 +44,41 @@ const WorkoutCard = ({ sequenceNumber, complexityLevel, kindName, typeName, exer
 
     return (
         <div>
-            <p>Номер: {sequenceNumber}</p>
-            <p>Сложность: {complexityLevel}</p>
-            <p>Вид: {kindName}</p>
-            <p>Тип: {typeName}</p>
-            {currentWorkoutSchedule ? (
-                <p>Тренировка запланирована на {moment(currentWorkoutSchedule).format('DD MMMM YYYY')} г.</p>
-            ) : (
-                ''
-            )}
-            {sequenceNumber === userCurrentWorkout ? (
-                <>
-                    <Divider>Планирование тренировки</Divider>
-                    <Space>
-                        <DatePicker
-                            disabledDate={disabledDate}
-                            format={'DD.MM.YYYY'}
-                            showToday={false}
-                            value={planedDate}
-                            onChange={(value) => handleDatePick(value)}
-                        />
-                        <Button type="primary" onClick={submitToSchedule}>
-                            Запланировать
-                        </Button>
-                        <Button type="ghost" onClick={completeWorkout}>
-                            Завершить
-                        </Button>
-                    </Space>
-                </>
-            ) : (
-                ''
-            )}
+            <div>
+                <p>Номер: {sequenceNumber}</p>
+                <p>Сложность: {complexityLevel}</p>
+                <p>Вид: {kindName}</p>
+                <p>Тип: {typeName}</p>
+            </div>
+            <div>
+                {currentWorkoutSchedule ? (
+                    <p>Тренировка запланирована на {moment(currentWorkoutSchedule).format('DD MMMM YYYY')} г.</p>
+                ) : (
+                    ''
+                )}
+                {sequenceNumber === userCurrentWorkout ? (
+                    <>
+                        <Divider>Планирование тренировки</Divider>
+                        <Space>
+                            <DatePicker
+                                disabledDate={disabledDate}
+                                format={'DD.MM.YYYY'}
+                                showToday={false}
+                                value={planedDate}
+                                onChange={(value) => handleDatePick(value)}
+                            />
+                            <Button type="primary" onClick={submitToSchedule}>
+                                Запланировать
+                            </Button>
+                            <Button type="ghost" onClick={completeWorkout}>
+                                Завершить
+                            </Button>
+                        </Space>
+                    </>
+                ) : (
+                    ''
+                )}
+            </div>
         </div>
     );
 };

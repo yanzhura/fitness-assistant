@@ -53,7 +53,7 @@ const Sсhedule = () => {
 
     const getWorkoutTag = (workoutNumber) => {
         const workout = trainingPlan[workoutNumber - 1];
-        const color = currentWorkout === workout.sequenceNumber ? '#f50' : '#87d068';
+        const color = currentWorkout === workout.sequenceNumber ? '#ff7a45' : '#bae637';
         return (
             <Link to={`/workouts/${workoutNumber}`}>
                 <Row justify={'end'}>

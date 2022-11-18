@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-import { getWorkoutByNumber, getWorkoutsErrors, getWorkoutsLoadingStatus, loadWorkout } from '../store/workouts';
-import showEerrorToast from '../utils/errorToast';
+import { getWorkoutByNumber, getWorkoutsErrors, getWorkoutsLoadingStatus, loadWorkout } from '../../store/workouts';
+import showEerrorToast from '../../utils/errorToast';
 import { Button, Spin } from 'antd';
-import customHistory from '../utils/customHistory';
-import WorkoutCard from '../components/WorkoutCard';
+import customHistory from '../../utils/customHistory';
+import WorkoutCard from '../../components/WorkoutCard';
 
 const Workout = ({ seqNumber }) => {
     const dispatch = useDispatch();
@@ -38,7 +38,7 @@ const Workout = ({ seqNumber }) => {
 };
 
 Workout.propTypes = {
-    seqNumber: PropTypes.string.isRequired
+    seqNumber: PropTypes.number.isRequired
 };
 
 export default Workout;
