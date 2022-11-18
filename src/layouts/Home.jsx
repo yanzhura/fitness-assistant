@@ -1,5 +1,4 @@
 import React from 'react';
-import Dashboard from '../pages/Dashboard';
 import NavigationHelp from '../pages/NavigationHelp';
 import Welcome from '../pages/Welcome';
 
@@ -10,7 +9,6 @@ const Home = () => {
             <hr />
             <Welcome />
             <NavigationHelp />
-            <Dashboard />
         </>
     );
 };

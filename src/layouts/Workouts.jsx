@@ -5,7 +5,7 @@ import WorkoutList from '../pages/WorkoutList';
 
 const Workouts = () => {
     const { seqNumber } = useParams();
-    return <>{seqNumber ? <Workout seqNumber={seqNumber} /> : <WorkoutList />}</>;
+    return <>{seqNumber ? <Workout seqNumber={parseInt(seqNumber)} /> : <WorkoutList />}</>;
 };
 
 export default Workouts;
