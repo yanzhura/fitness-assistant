@@ -25,13 +25,13 @@ const Workout = ({ seqNumber }) => {
     }, [workoutLoadingErrors]);
 
     const handleClick = () => {
-        customHistory.push('/workouts');
+        customHistory.goBack();
     };
 
     return (
         <div>
             <p>Тренировка №{seqNumber}</p>
-            <Button onClick={handleClick}>К списку тренировок</Button>
+            <Button onClick={handleClick}>Назад</Button>
             {workoutLoadingStatus || !currentWorkout ? <Spin /> : <WorkoutCard {...currentWorkout} />}
         </div>
     );

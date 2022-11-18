@@ -1,14 +1,25 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Button, DatePicker, Divider, Space } from 'antd';
+import { Button, DatePicker, Divider, Space, message } from 'antd';
 import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
-import { completeCurrentWorkout, getUserCurrentWorkout, updateUserSchedule } from '../store/user';
+import {
+    completeCurrentWorkout,
+    getUserCurrentWorkout,
+    getUserSchedule,
+    updateUserSchedule,
+    getCurrentWorkoutSchedule
+} from '../store/user';
 
 const WorkoutCard = ({ sequenceNumber, complexityLevel, kindName, typeName, exercises }) => {
     const [planedDate, setPlanedDate] = useState(null);
     const dispatch = useDispatch();
     const userCurrentWorkout = useSelector(getUserCurrentWorkout());
+    const userSchedule = useSelector(getUserSchedule());
+    const lastWorkoutCompleteDate = userSchedule[userCurrentWorkout - 1];
+    const nowDate = moment().format('YYYYMMDD');
+    const isWorkoutCompleteUnable = lastWorkoutCompleteDate === nowDate;
+    const currentWorkoutSchedule = useSelector(getCurrentWorkoutSchedule());
 
     const disabledDate = (current) => {
         return current && current < moment().endOf('day');
@@ -20,10 +31,15 @@ const WorkoutCard = ({ sequenceNumber, complexityLevel, kindName, typeName, exer
 
     const submitToSchedule = () => {
         dispatch(updateUserSchedule(sequenceNumber, planedDate.format('YYYYMMDD')));
+        setPlanedDate('');
     };
 
     const completeWorkout = () => {
-        dispatch(completeCurrentWorkout());
+        if (isWorkoutCompleteUnable) {
+            message.error('Сегодня Вы уже завершили одну тренировку. Запланируйте следующую на другой день.');
+        } else {
+            dispatch(completeCurrentWorkout());
+        }
     };
 
     return (
@@ -32,6 +48,11 @@ const WorkoutCard = ({ sequenceNumber, complexityLevel, kindName, typeName, exer
             <p>Сложность: {complexityLevel}</p>
             <p>Вид: {kindName}</p>
             <p>Тип: {typeName}</p>
+            {currentWorkoutSchedule ? (
+                <p>Тренировка запланирована на {moment(currentWorkoutSchedule).format('DD MMMM YYYY')} г.</p>
+            ) : (
+                ''
+            )}
             {sequenceNumber === userCurrentWorkout ? (
                 <>
                     <Divider>Планирование тренировки</Divider>

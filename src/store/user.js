@@ -207,6 +207,9 @@ export const getCurrentUser = () => (state) => ({
     userId: state.user.userId,
     userData: state.user.userData
 });
-export const getUserCurrentWorkout = () => (state) => state.user.userData.currentWorkout;
+export const getUserCurrentWorkout = () => (state) => state.user.userData?.currentWorkout;
+export const getUserSchedule = () => (state) => state.user.userData?.schedule;
+export const getCurrentWorkoutSchedule = () => (state) =>
+    state.user.userData.schedule[state.user.userData.currentWorkout];
 
 export default userReducer;
