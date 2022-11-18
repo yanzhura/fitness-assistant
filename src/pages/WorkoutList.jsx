@@ -1,53 +1,48 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Col, Row, Spin } from 'antd';
-import {
-    getTrainingPlan,
-    getTrainingPlanErrors,
-    getTrainingPlanLoadingStatus,
-    loadTrainingPlan
-} from '../store/trainingPlan';
-import showEerrorToast from '../utils/errorToast';
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { Col, Divider, Pagination, Row, Spin } from 'antd';
+import { getTrainingPlan, getTrainingPlanLoadingStatus } from '../store/trainingPlan';
 import TrainingPlanCard from '../components/TrainingPlanCard';
 import { getCurrentUser } from '../store/user';
 
 const WorkoutList = () => {
-    const dispatch = useDispatch();
     const trainingPlan = useSelector(getTrainingPlan());
-    const trainingPlanLoadErrors = useSelector(getTrainingPlanErrors());
     const trainingPlanLoadingStatus = useSelector(getTrainingPlanLoadingStatus());
     const { userData } = useSelector(getCurrentUser());
 
-    useEffect(() => {
-        if (!trainingPlan) {
-            dispatch(loadTrainingPlan());
-        }
-    }, []);
+    const [currentPage, setCurrentPage] = useState(1);
 
-    useEffect(() => {
-        if (trainingPlanLoadErrors) {
-            showEerrorToast(trainingPlanLoadErrors);
+    const totalPages = trainingPlan ? trainingPlan.length : 1;
+    const pageSize = 9;
+
+    const getTrainingPlanPage = () => {
+        if (trainingPlan) {
+            const firstIndex = pageSize * (currentPage - 1);
+            const lastIndex = pageSize * currentPage;
+            return trainingPlan.slice(firstIndex, lastIndex);
         }
-    }, [trainingPlanLoadErrors]);
+    };
 
     const getWorkoutCards = () => {
-        if (trainingPlan) {
-            return trainingPlan.map((workout) => {
-                let completeStatus;
-                if (workout.sequenceNumber < userData.currentWorkout) {
-                    completeStatus = 'complete';
-                } else if (workout.sequenceNumber === userData.currentWorkout) {
-                    completeStatus = 'current';
-                } else {
-                    completeStatus = 'incomplete';
-                }
-                return (
-                    <Col key={workout.sequenceNumber} span={8}>
-                        <TrainingPlanCard {...workout} completeStatus={completeStatus} />
-                    </Col>
-                );
-            });
-        }
+        return getTrainingPlanPage().map((workout) => {
+            let completeStatus;
+            if (workout.sequenceNumber < userData.currentWorkout) {
+                completeStatus = 'complete';
+            } else if (workout.sequenceNumber === userData.currentWorkout) {
+                completeStatus = 'current';
+            } else {
+                completeStatus = 'incomplete';
+            }
+            return (
+                <Col key={workout.sequenceNumber} span={8}>
+                    <TrainingPlanCard {...workout} completeStatus={completeStatus} />
+                </Col>
+            );
+        });
+    };
+
+    const handlePageChange = (page) => {
+        setCurrentPage(page);
     };
 
     return (
@@ -57,6 +52,15 @@ const WorkoutList = () => {
                 <Row justify={'center'}>
                     <Col span={16}>
                         <Row gutter={[16, 24]}>{trainingPlanLoadingStatus ? <Spin /> : getWorkoutCards()}</Row>
+                    </Col>
+                    <Divider />
+                    <Col>
+                        <Pagination
+                            current={currentPage}
+                            total={totalPages}
+                            onChange={handlePageChange}
+                            pageSize={pageSize}
+                        />
                     </Col>
                 </Row>
             </div>

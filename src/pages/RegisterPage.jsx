@@ -42,23 +42,6 @@ const RegisterPage = () => {
                     </Form.Item>
 
                     <Form.Item
-                        name="name"
-                        label="Имя"
-                        hasFeedback
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Имя не можут быть пустым'
-                            },
-                            {
-                                min: 2,
-                                message: 'Имя не может быть короче 2-х символов'
-                            }
-                        ]}>
-                        <Input placeholder="Ваше имя или никнейм" />
-                    </Form.Item>
-
-                    <Form.Item
                         name="password"
                         label="Пароль"
                         hasFeedback
@@ -103,6 +86,23 @@ const RegisterPage = () => {
                             type="password"
                             placeholder="Пароль"
                         />
+                    </Form.Item>
+
+                    <Form.Item
+                        name="name"
+                        label="Имя"
+                        hasFeedback
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Имя не можут быть пустым'
+                            },
+                            {
+                                min: 2,
+                                message: 'Имя не может быть короче 2-х символов'
+                            }
+                        ]}>
+                        <Input placeholder="Ваше имя или никнейм" />
                     </Form.Item>
 
                     <Form.Item

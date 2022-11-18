@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import workoutService from '../services/workoutService';
 
 const initialState = {
-    data: null,
+    entities: null,
     isLoading: true,
     error: null
 };
@@ -15,7 +15,7 @@ const trainingPlanSlice = createSlice({
             state.isLoading = true;
         },
         trainingPlanDataReceived: (state, action) => {
-            state.data = action.payload;
+            state.entities = action.payload;
             state.isLoading = false;
         },
         trainingPlanDataFailed: (state, action) => {
@@ -41,6 +41,6 @@ export const loadTrainingPlan = () => async (dispatch) => {
 
 export const getTrainingPlanLoadingStatus = () => (state) => state.trainingPlan.isLoading;
 export const getTrainingPlanErrors = () => (state) => state.trainingPlan.error;
-export const getTrainingPlan = () => (state) => state.trainingPlan.data;
+export const getTrainingPlan = () => (state) => state.trainingPlan.entities;
 
 export default trainingPlanReducer;
