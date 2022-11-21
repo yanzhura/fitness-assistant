@@ -3,17 +3,19 @@ import { useSelector } from 'react-redux';
 import { Col, Divider, Pagination, Row, Spin } from 'antd';
 import { getTrainingPlan, getTrainingPlanLoadingStatus } from '../store/trainingPlan';
 import TrainingPlanCard from '../components/TrainingPlanCard';
-import { getCurrentUser } from '../store/user';
+import { getCurrentUser, getUserCurrentWorkout } from '../store/user';
 
 const WorkoutList = () => {
     const trainingPlan = useSelector(getTrainingPlan());
     const trainingPlanLoadingStatus = useSelector(getTrainingPlanLoadingStatus());
     const { userData } = useSelector(getCurrentUser());
-
-    const [currentPage, setCurrentPage] = useState(1);
+    const currentUserWorkout = useSelector(getUserCurrentWorkout());
 
     const totalPages = trainingPlan ? trainingPlan.length : 1;
     const pageSize = 9;
+    const initialPage = Math.ceil(currentUserWorkout / pageSize);
+
+    const [currentPage, setCurrentPage] = useState(initialPage || 1);
 
     const getTrainingPlanPage = () => {
         if (trainingPlan) {

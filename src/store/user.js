@@ -85,10 +85,15 @@ const userSlice = createSlice({
             state.error = action.payload;
         },
         userScheduleUpdated: (state, action) => {
+            const sequenceNumber = action.payload.workoutSequenceNumber;
+            const date = action.payload.plannedDate;
             const oldSchedule = { ...state.userData.schedule };
             state.userData.schedule = {
                 ...oldSchedule,
-                [action.payload.workoutSequenceNumber]: action.payload.plannedDate
+                [`workout${sequenceNumber}`]: {
+                    date,
+                    sequenceNumber
+                }
             };
         },
         userWorkoutCompleted: (state) => {
