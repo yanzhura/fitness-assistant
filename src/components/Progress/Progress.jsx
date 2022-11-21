@@ -6,8 +6,8 @@ import { getTrainingPlan } from '../../store/trainingPlan';
 import { getUserCurrentWorkout } from '../../store/user';
 
 const Progress = () => {
-    const [progressRange, setProgressRange] = useState([0, 5]);
     const currentWorkout = useSelector(getUserCurrentWorkout());
+    const [progressRange, setProgressRange] = useState([currentWorkout - 3, currentWorkout + 2]);
     const trainingPlan = useSelector(getTrainingPlan());
     const [start, setStart] = useState(currentWorkout - 3);
 

@@ -69,9 +69,11 @@ const Sсhedule = () => {
 
     const onCellRender = (value) => {
         if (userSchedule && currentWorkout && trainingPlan) {
-            const workoutNumber = userSchedule.findIndex((el) => el === value.format('YYYYMMDD'));
-            if (workoutNumber > 0) {
-                return getWorkoutTag(workoutNumber);
+            const scheduleItem = Object.values(userSchedule).find(
+                (item) => String(item.date) === value.format('YYYYMMDD')
+            );
+            if (scheduleItem) {
+                return getWorkoutTag(scheduleItem.sequenceNumber);
             }
         }
     };

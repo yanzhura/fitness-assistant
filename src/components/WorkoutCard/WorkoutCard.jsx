@@ -16,10 +16,13 @@ const WorkoutCard = ({ sequenceNumber, complexityLevel, kindName, typeName, exer
     const dispatch = useDispatch();
     const userCurrentWorkout = useSelector(getUserCurrentWorkout());
     const userSchedule = useSelector(getUserSchedule());
-    const lastWorkoutCompleteDate = userSchedule[userCurrentWorkout - 1];
-    const nowDate = moment().format('YYYYMMDD');
-    const isWorkoutCompleteUnable = lastWorkoutCompleteDate === nowDate;
     const currentWorkoutSchedule = useSelector(getCurrentWorkoutSchedule());
+
+    const lastWorkoutCompleted = Object.values(userSchedule).find(
+        (item) => item.sequenceNumber === userCurrentWorkout - 1
+    );
+    const nowDate = moment().format('YYYYMMDD');
+    const isWorkoutCompleteUnable = String(lastWorkoutCompleted.date) === nowDate;
 
     const disabledDate = (current) => {
         return current && current < moment().endOf('day');
