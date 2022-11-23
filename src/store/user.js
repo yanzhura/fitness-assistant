@@ -87,12 +87,14 @@ const userSlice = createSlice({
         userScheduleUpdated: (state, action) => {
             const sequenceNumber = action.payload.workoutSequenceNumber;
             const date = action.payload.plannedDate;
+            const result = action.payload.workoutResult;
             const oldSchedule = { ...state.userData.schedule };
             state.userData.schedule = {
                 ...oldSchedule,
                 [`workout${sequenceNumber}`]: {
                     date,
-                    sequenceNumber
+                    sequenceNumber,
+                    result
                 }
             };
         },
@@ -191,16 +193,16 @@ const updateUser = () => async (dispatch, getState) => {
     }
 };
 
-export const updateUserSchedule = (workoutSequenceNumber, plannedDate) => async (dispatch) => {
-    dispatch(userScheduleUpdated({ workoutSequenceNumber, plannedDate }));
+export const updateUserSchedule = (workoutSequenceNumber, plannedDate, workoutResult) => async (dispatch) => {
+    dispatch(userScheduleUpdated({ workoutSequenceNumber, plannedDate, workoutResult }));
     dispatch(updateUser());
 };
 
-export const completeCurrentWorkout = () => async (dispatch, getState) => {
+export const completeCurrentWorkout = (workoutResult) => async (dispatch, getState) => {
     const { user } = getState();
     const userCurrentWorkout = user.userData.currentWorkout;
     const workoutCompleteDate = moment().format('YYYYMMDD');
-    dispatch(updateUserSchedule(userCurrentWorkout, workoutCompleteDate));
+    dispatch(updateUserSchedule(userCurrentWorkout, workoutCompleteDate, workoutResult));
     dispatch(userWorkoutCompleted());
     dispatch(updateUser());
 };
@@ -214,7 +216,9 @@ export const getCurrentUser = () => (state) => ({
 });
 export const getUserCurrentWorkout = () => (state) => state.user.userData?.currentWorkout;
 export const getUserSchedule = () => (state) => state.user.userData?.schedule;
-export const getCurrentWorkoutSchedule = () => (state) =>
-    state.user.userData.schedule[state.user.userData.currentWorkout];
+export const getCurrentWorkoutSchedule = () => (state) => {
+    const currentWorkoutName = `workout${state.user.userData.currentWorkout}`;
+    return state.user.userData.schedule[currentWorkoutName];
+};
 
 export default userReducer;
