@@ -12,11 +12,16 @@ import {
 } from '../../store/user';
 import Exercise from '../Exercise';
 import { capitalize } from '../../utils/capitalize';
+import customHistory from '../../utils/customHistory';
+import { getWorkoutByNumber } from '../../store/workouts';
 
-const WorkoutCard = ({ sequenceNumber, complexityLevel, kindName, typeName, exercises }) => {
+const WorkoutCard = ({ sequenceNumber }) => {
+    const dispatch = useDispatch();
+
     const [planedDate, setPlanedDate] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const dispatch = useDispatch();
+
+    const { complexityLevel, kindName, typeName, exercises } = useSelector(getWorkoutByNumber(sequenceNumber));
     const userCurrentWorkout = useSelector(getUserCurrentWorkout());
     const userSchedule = useSelector(getUserSchedule());
     const currentWorkoutSchedule = useSelector(getCurrentWorkoutSchedule());
@@ -62,8 +67,8 @@ const WorkoutCard = ({ sequenceNumber, complexityLevel, kindName, typeName, exer
     };
 
     const getExercisesElements = () => {
-        return Object.keys(exercises).map((e) => {
-            return <Exercise key={exercises[e].name} {...exercises[e]} />;
+        return Object.keys(exercises).map((key) => {
+            return <Exercise key={key} workoutNumber={sequenceNumber} exerciseKey={key} />;
         });
     };
 
@@ -114,8 +119,13 @@ const WorkoutCard = ({ sequenceNumber, complexityLevel, kindName, typeName, exer
         });
     };
 
+    const handleBackButton = () => {
+        customHistory.goBack();
+    };
+
     return (
         <div>
+            <Button onClick={handleBackButton}>Назад</Button>
             <div>
                 <p>Номер: {sequenceNumber}</p>
                 <p>Сложность: {complexityLevel}</p>
@@ -169,11 +179,7 @@ const WorkoutCard = ({ sequenceNumber, complexityLevel, kindName, typeName, exer
 };
 
 WorkoutCard.propTypes = {
-    sequenceNumber: PropTypes.number.isRequired,
-    complexityLevel: PropTypes.number.isRequired,
-    kindName: PropTypes.string.isRequired,
-    typeName: PropTypes.string.isRequired,
-    exercises: PropTypes.object.isRequired
+    sequenceNumber: PropTypes.number.isRequired
 };
 
 export default WorkoutCard;

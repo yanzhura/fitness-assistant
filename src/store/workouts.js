@@ -44,6 +44,10 @@ export const loadWorkout = (number) => async (dispatch, getState) => {
 
 export const getWorkoutsLoadingStatus = () => (state) => state.workouts.isLoading;
 export const getWorkoutsErrors = () => (state) => state.workouts.error;
-export const getWorkoutByNumber = (number) => (state) => state.workouts.entities[number];
+export const getWorkoutByNumber = (number) => (state) => {
+    if (number) {
+        return state.workouts.entities[number];
+    }
+};
 
 export default workoutsReducer;
