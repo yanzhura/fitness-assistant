@@ -5,7 +5,7 @@ import { getTrainingPlan, getTrainingPlanLoadingStatus } from '../store/training
 import TrainingPlanCard from '../components/TrainingPlanCard';
 import { getCurrentUser, getUserCurrentWorkout } from '../store/user';
 
-const WorkoutList = () => {
+const TrainingPlan = () => {
     const trainingPlan = useSelector(getTrainingPlan());
     const trainingPlanLoadingStatus = useSelector(getTrainingPlanLoadingStatus());
     const { userData } = useSelector(getCurrentUser());
@@ -70,4 +70,4 @@ const WorkoutList = () => {
     );
 };
 
-export default WorkoutList;
+export default TrainingPlan;

@@ -1,21 +1,22 @@
 import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { Col, Row, Spin } from 'antd';
 import { getWorkoutByNumber, getWorkoutsErrors, getWorkoutsLoadingStatus, loadWorkout } from '../../store/workouts';
-import showEerrorToast from '../../utils/errorToast';
-import { Button, Spin } from 'antd';
-import customHistory from '../../utils/customHistory';
 import WorkoutCard from '../../components/WorkoutCard';
+import showEerrorToast from '../../utils/errorToast';
+import { StyledBorderBox } from '../../components/StyledBorderBox';
 
-const Workout = ({ seqNumber }) => {
+const Workout = () => {
     const dispatch = useDispatch();
-
+    const { seqNumber } = useParams();
+    const sequenceNumber = parseInt(seqNumber);
     const workoutLoadingStatus = useSelector(getWorkoutsLoadingStatus());
     const workoutLoadingErrors = useSelector(getWorkoutsErrors());
-    const currentWorkout = useSelector(getWorkoutByNumber(seqNumber));
+    const workout = useSelector(getWorkoutByNumber(sequenceNumber));
 
     useEffect(() => {
-        dispatch(loadWorkout(seqNumber));
+        dispatch(loadWorkout(sequenceNumber));
     }, []);
 
     useEffect(() => {
@@ -24,21 +25,15 @@ const Workout = ({ seqNumber }) => {
         }
     }, [workoutLoadingErrors]);
 
-    const handleClick = () => {
-        customHistory.goBack();
-    };
-
     return (
-        <div>
-            <p>Тренировка №{seqNumber}</p>
-            <Button onClick={handleClick}>Назад</Button>
-            {workoutLoadingStatus || !currentWorkout ? <Spin /> : <WorkoutCard {...currentWorkout} />}
-        </div>
+        <Col span={16} offset={4}>
+            <Row justify={'center'}>
+                <StyledBorderBox>
+                    {workoutLoadingStatus || !workout ? <Spin /> : <WorkoutCard sequenceNumber={sequenceNumber} />}
+                </StyledBorderBox>
+            </Row>
+        </Col>
     );
-};
-
-Workout.propTypes = {
-    seqNumber: PropTypes.number.isRequired
 };
 
 export default Workout;

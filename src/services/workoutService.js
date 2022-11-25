@@ -48,15 +48,16 @@ const fetchWorkoutBySeqNumber = async (workoutSeqNumber) => {
     const { data: workout } = await httpService.get(`${trainingPlanLocation}/workout${number}.json`);
     const { data: workoutKind } = await httpService.get(`${workoutKindsLocation}/${workout.kind}.json`);
     const { data: workoutType } = await httpService.get(`${workoutTypesLocation}/${workoutKind.type}.json`);
-    const exercises = [];
+    const exercises = {};
     for (const g of workoutKind.groups) {
         const { data: exerciseGroup } = await httpService.get(`${exerciseGroupsLocation}/${g}.json`);
         const exercise = await fetchExercise(exerciseGroup.exercises, workout.complexityLevel);
-        exercises.push({
+        exercises[exercise.key] = {
             group: exerciseGroup.name,
             name: exercise.name,
+            bodyWeight: exercise.bodyWeight,
             bodyParts: exercise.bodyPartNames
-        });
+        };
     }
 
     const fullWorkout = {
@@ -75,6 +76,8 @@ const fetchExercise = async (exercises, complexityLevel) => {
         if (exercise.level === complexityLevel) {
             const bodyPartNames = await fetchBodyParts(exercise.bodyParts);
             return {
+                key: ex,
+                bodyWeight: exercise.bodyWeight,
                 name: exercise.name,
                 bodyPartNames
             };
@@ -82,13 +85,15 @@ const fetchExercise = async (exercises, complexityLevel) => {
     }
 };
 
-const fetchBodyParts = async (bodyParts) => {
-    const bodyPartNames = [];
-    for (const bp of bodyParts) {
+const fetchBodyParts = async (bodyPartsKeys) => {
+    const bodyParts = {};
+    for (const bp of bodyPartsKeys) {
         const { data: bodyPart } = await httpService.get(`${bodyPartsLocation}/${bp}.json`);
-        bodyPartNames.push(bodyPart.name);
+        bodyParts[bp] = {
+            name: bodyPart.name
+        };
     }
-    return bodyPartNames;
+    return bodyParts;
 };
 
 export default {
