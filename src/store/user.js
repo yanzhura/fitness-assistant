@@ -29,6 +29,8 @@ const getInitialState = () => {
 
 const initialUserData = {
     currentWorkout: 1,
+    trainingStartedAt: false,
+    trainingFinishedAt: false,
     schedule: {
         workout1: {
             date: 0,
@@ -228,5 +230,9 @@ export const getCurrentWorkoutSchedule = () => (state) => {
         return state.user.userData.schedule[currentWorkoutKey];
     }
 };
+export const getUserTrainingStatus = () => (state) => ({
+    trainingStartedAt: state.user.userData.trainingStartedAt,
+    trainingFinishedAt: state.user.userData.trainingFinishedAt
+});
 
 export default userReducer;

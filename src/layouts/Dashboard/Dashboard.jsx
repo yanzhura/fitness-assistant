@@ -5,7 +5,7 @@ import { getTrainingPlanErrors, getTrainingPlanLoadingStatus } from '../../store
 import { getUserCurrentWorkout, getUserErrors, getUserLoadingStatus } from '../../store/user';
 import { getWorkoutByNumber, getWorkoutsErrors, getWorkoutsLoadingStatus, loadWorkout } from '../../store/workouts';
 import CalendarSmall from '../../components/CalendarSmall';
-import Progress from '../../components/Progress/Progress';
+import WorkoutSteps from '../../components/WorkoutSteps';
 import WorkoutCard from '../../components/WorkoutCard';
 import showEerrorToast from '../../utils/errorToast';
 //* styles
@@ -16,12 +16,12 @@ const Dashboard = () => {
 
     const userLoadingStatus = useSelector(getUserLoadingStatus());
     const workoutLoadingStatus = useSelector(getWorkoutsLoadingStatus());
+    const trainigplanLoadingStatus = useSelector(getTrainingPlanLoadingStatus());
 
     const userLoadngErrors = useSelector(getUserErrors());
     const workoutLoadingErrors = useSelector(getWorkoutsErrors());
-
-    const trainigplanLoadingStatus = useSelector(getTrainingPlanLoadingStatus());
     const trainigplanLoadingErrors = useSelector(getTrainingPlanErrors());
+
     const userCurrentWorkout = useSelector(getUserCurrentWorkout());
 
     const workout = useSelector(getWorkoutByNumber(userCurrentWorkout));
@@ -70,7 +70,7 @@ const Dashboard = () => {
                                 <Row>
                                     <Col span={24}>
                                         <StyledBorderBox>
-                                            {trainigplanLoadingStatus ? <Spin /> : <Progress />}
+                                            {trainigplanLoadingStatus ? <Spin /> : <WorkoutSteps />}
                                         </StyledBorderBox>
                                     </Col>
                                 </Row>

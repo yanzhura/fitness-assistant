@@ -6,10 +6,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import Navbar from '../../components/NavBar';
 import AppRouter from '../../router/AppRouter';
 import { getIsLoggedIn, getUserErrors, loadUserData } from '../../store/user';
-//* styles
-import { headerOverride, mainContent, contentWrapper } from './styles';
 import { getTrainingPlanErrors, loadTrainingPlan } from '../../store/trainingPlan';
 import showEerrorToast from '../../utils/errorToast';
+//* styles
+import { headerOverride, footerOverride, mainContent, contentWrapper } from './styles';
 
 const { Header, Content, Footer } = Layout;
 
@@ -44,7 +44,10 @@ const Main = () => {
                     <AppRouter />
                 </div>
             </Content>
-            <Footer>XXXXX -=- Footer -=- XXXXX</Footer>
+            <Footer css={footerOverride}>
+                <p>&copy;2022 Михаил Янжура</p>
+                <p>Дипломная работа для курса &#171;Профессия Junior Frontend-разработчик&#187;.</p>
+            </Footer>
         </Layout>
     );
 };

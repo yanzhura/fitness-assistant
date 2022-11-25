@@ -5,7 +5,7 @@ import { EllipsisOutlined } from '@ant-design/icons';
 import { getTrainingPlan } from '../../store/trainingPlan';
 import { getUserCurrentWorkout } from '../../store/user';
 
-const Progress = () => {
+const WorkoutSteps = () => {
     const currentWorkout = useSelector(getUserCurrentWorkout());
 
     const initialProgressRange = currentWorkout <= 5 ? [0, 5] : [currentWorkout - 3, currentWorkout + 2];
@@ -69,4 +69,4 @@ const Progress = () => {
     );
 };
 
-export default Progress;
+export default WorkoutSteps;
