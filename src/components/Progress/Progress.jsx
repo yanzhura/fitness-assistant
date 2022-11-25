@@ -7,9 +7,14 @@ import { getUserCurrentWorkout } from '../../store/user';
 
 const Progress = () => {
     const currentWorkout = useSelector(getUserCurrentWorkout());
-    const [progressRange, setProgressRange] = useState([currentWorkout - 3, currentWorkout + 2]);
+
+    const initialProgressRange = currentWorkout <= 5 ? [0, 5] : [currentWorkout - 3, currentWorkout + 2];
+    const initialStart = currentWorkout <= 5 ? null : currentWorkout - 3;
+
+    const [progressRange, setProgressRange] = useState(initialProgressRange);
+    const [start, setStart] = useState(initialStart);
+
     const trainingPlan = useSelector(getTrainingPlan());
-    const [start, setStart] = useState(currentWorkout - 3);
 
     const trainingPlanSlice = trainingPlan.slice(...progressRange);
     const isUpButtonDisabled = progressRange[0] === 0;

@@ -36,6 +36,8 @@ const CalendarSmall = () => {
             } else {
                 return <StyledCell workoutStatus={'none'}>{value.format('DD')}</StyledCell>;
             }
+        } else {
+            return value.format('DD');
         }
     };
 

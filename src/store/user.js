@@ -28,7 +28,13 @@ const getInitialState = () => {
 };
 
 const initialUserData = {
-    currentWorkout: 1
+    currentWorkout: 1,
+    schedule: {
+        workout1: {
+            date: 0,
+            sequenceNumber: 1
+        }
+    }
 };
 
 const userSlice = createSlice({
@@ -99,7 +105,8 @@ const userSlice = createSlice({
             };
         },
         userWorkoutCompleted: (state) => {
-            state.userData.currentWorkout += 1;
+            const newState = state.userData.currentWorkout + 1;
+            return newState;
         }
     }
 });
@@ -169,8 +176,7 @@ export const createUser =
             dispatch(
                 userCreateSucceeded({
                     userId: authData.localId,
-                    userData: { ...initialUserData, ...rest },
-                    schedule: {}
+                    userData: { ...initialUserData, ...rest }
                 })
             );
             localstorageService.setTokens(authData);
@@ -217,8 +223,10 @@ export const getCurrentUser = () => (state) => ({
 export const getUserCurrentWorkout = () => (state) => state.user.userData?.currentWorkout;
 export const getUserSchedule = () => (state) => state.user.userData?.schedule;
 export const getCurrentWorkoutSchedule = () => (state) => {
-    const currentWorkoutName = `workout${state.user.userData.currentWorkout}`;
-    return state.user.userData.schedule[currentWorkoutName];
+    const currentWorkoutKey = `workout${state.user.userData.currentWorkout}`;
+    if (state.user.userData?.schedule) {
+        return state.user.userData.schedule[currentWorkoutKey];
+    }
 };
 
 export default userReducer;
