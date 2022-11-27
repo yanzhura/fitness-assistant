@@ -2,7 +2,7 @@ import React from 'react';
 import { notification } from 'antd';
 import { ExclamationCircleFilled } from '@ant-design/icons';
 
-const showEerrorToast = (message) => {
+const showErrorToast = (message) => {
     notification.open({
         message: 'Ошибка',
         description: message,
@@ -10,4 +10,4 @@ const showEerrorToast = (message) => {
     });
 };
 
-export default showEerrorToast;
+export default showErrorToast;

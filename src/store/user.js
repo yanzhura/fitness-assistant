@@ -4,7 +4,6 @@ import userService from '../services/userService';
 import authService from '../services/authService';
 import localstorageService from '../services/localstorageService';
 import customHistory from '../utils/customHistory';
-import moment from 'moment';
 
 const getInitialState = () => {
     const userId = localstorageService.getUserId();
@@ -107,8 +106,16 @@ const userSlice = createSlice({
             };
         },
         userWorkoutCompleted: (state) => {
-            const newState = state.userData.currentWorkout + 1;
-            return newState;
+            state.userData.currentWorkout = parseInt(state.userData.currentWorkout) + 1;
+        },
+        userErrorReset: (state) => {
+            state.error = undefined;
+        },
+        trainingStarted: (state, action) => {
+            state.userData.trainingStartedAt = action.payload;
+        },
+        trainingFinished: (state, action) => {
+            state.userData.trainingFinishedAt = action.payload;
         }
     }
 });
@@ -130,7 +137,10 @@ const {
     userUpdateSucceeded,
     userUpdateFailed,
     userScheduleUpdated,
-    userWorkoutCompleted
+    userWorkoutCompleted,
+    userErrorReset,
+    trainingStarted,
+    trainingFinished
 } = actions;
 
 export const login = (userData) => async (dispatch) => {
@@ -206,13 +216,24 @@ export const updateUserSchedule = (workoutSequenceNumber, plannedDate, workoutRe
     dispatch(updateUser());
 };
 
-export const completeCurrentWorkout = (workoutResult) => async (dispatch, getState) => {
-    const { user } = getState();
-    const userCurrentWorkout = user.userData.currentWorkout;
-    const workoutCompleteDate = moment().format('YYYYMMDD');
-    dispatch(updateUserSchedule(userCurrentWorkout, workoutCompleteDate, workoutResult));
-    dispatch(userWorkoutCompleted());
-    dispatch(updateUser());
+export const completeCurrentWorkout =
+    ({ workoutResult, completeDate }) =>
+    async (dispatch, getState) => {
+        const { user, trainingPlan } = getState();
+        const userCurrentWorkout = user.userData.currentWorkout;
+        const lastWorkout = trainingPlan.entities.length;
+        if (userCurrentWorkout === 1) {
+            dispatch(trainingStarted(completeDate));
+        } else if (userCurrentWorkout === lastWorkout) {
+            dispatch(trainingFinished(completeDate));
+        }
+        dispatch(updateUserSchedule(userCurrentWorkout, completeDate, workoutResult));
+        dispatch(userWorkoutCompleted());
+        dispatch(updateUser());
+    };
+
+export const resetUserError = () => (dispatch) => {
+    dispatch(userErrorReset());
 };
 
 export const getIsLoggedIn = () => (state) => state.user.isLoggedIn;
@@ -230,6 +251,7 @@ export const getCurrentWorkoutSchedule = () => (state) => {
         return state.user.userData.schedule[currentWorkoutKey];
     }
 };
+
 export const getUserTrainingStatus = () => (state) => ({
     trainingStartedAt: state.user.userData.trainingStartedAt,
     trainingFinishedAt: state.user.userData.trainingFinishedAt

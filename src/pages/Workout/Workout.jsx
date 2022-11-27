@@ -2,9 +2,15 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { Col, Row, Spin } from 'antd';
-import { getWorkoutByNumber, getWorkoutsErrors, getWorkoutsLoadingStatus, loadWorkout } from '../../store/workouts';
+import {
+    getWorkoutByNumber,
+    getWorkoutsErrors,
+    getWorkoutsLoadingStatus,
+    loadWorkout,
+    resetWorkoutError
+} from '../../store/workouts';
 import WorkoutCard from '../../components/WorkoutCard';
-import showEerrorToast from '../../utils/errorToast';
+import showErrorToast from '../../utils/errorToast';
 import { StyledBorderBox } from '../../components/StyledBorderBox';
 
 const Workout = () => {
@@ -21,7 +27,8 @@ const Workout = () => {
 
     useEffect(() => {
         if (workoutLoadingErrors) {
-            showEerrorToast(workoutLoadingErrors);
+            showErrorToast(workoutLoadingErrors);
+            dispatch(resetWorkoutError());
         }
     }, [workoutLoadingErrors]);
 

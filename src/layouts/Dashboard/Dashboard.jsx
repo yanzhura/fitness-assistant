@@ -1,13 +1,19 @@
 import React, { useEffect } from 'react';
 import { Col, Divider, Row, Spin } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
-import { getTrainingPlanErrors, getTrainingPlanLoadingStatus } from '../../store/trainingPlan';
-import { getUserCurrentWorkout, getUserErrors, getUserLoadingStatus } from '../../store/user';
-import { getWorkoutByNumber, getWorkoutsErrors, getWorkoutsLoadingStatus, loadWorkout } from '../../store/workouts';
+import { getTrainingPlanErrors, getTrainingPlanLoadingStatus, resetTrainingPlanError } from '../../store/trainingPlan';
+import { getUserCurrentWorkout, getUserErrors, getUserLoadingStatus, resetUserError } from '../../store/user';
+import {
+    getWorkoutByNumber,
+    getWorkoutsErrors,
+    getWorkoutsLoadingStatus,
+    loadWorkout,
+    resetWorkoutError
+} from '../../store/workouts';
 import CalendarSmall from '../../components/CalendarSmall';
 import WorkoutSteps from '../../components/WorkoutSteps';
 import WorkoutCard from '../../components/WorkoutCard';
-import showEerrorToast from '../../utils/errorToast';
+import showErrorToast from '../../utils/errorToast';
 //* styles
 import { StyledBorderBox } from '../../components/StyledBorderBox';
 
@@ -34,11 +40,14 @@ const Dashboard = () => {
 
     useEffect(() => {
         if (workoutLoadingErrors) {
-            showEerrorToast(workoutLoadingErrors);
+            showErrorToast(workoutLoadingErrors);
+            dispatch(resetWorkoutError());
         } else if (userLoadngErrors) {
-            showEerrorToast(userLoadngErrors);
+            showErrorToast(userLoadngErrors);
+            dispatch(resetUserError());
         } else if (trainigplanLoadingErrors) {
-            showEerrorToast(trainigplanLoadingErrors);
+            showErrorToast(trainigplanLoadingErrors);
+            dispatch(resetTrainingPlanError());
         }
     }, [trainigplanLoadingErrors, userLoadngErrors, workoutLoadingErrors]);
 

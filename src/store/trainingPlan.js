@@ -21,12 +21,15 @@ const trainingPlanSlice = createSlice({
         trainingPlanDataFailed: (state, action) => {
             state.isLoading = false;
             state.error = action.payload;
+        },
+        trainingPlanErrorReset: (state) => {
+            state.error = undefined;
         }
     }
 });
 
 const { actions, reducer: trainingPlanReducer } = trainingPlanSlice;
-const { trainingPlanDataRequested, trainingPlanDataReceived, trainingPlanDataFailed } = actions;
+const { trainingPlanDataRequested, trainingPlanDataReceived, trainingPlanDataFailed, trainingPlanErrorReset } = actions;
 
 export const loadTrainingPlan = () => async (dispatch) => {
     dispatch(trainingPlanDataRequested());
@@ -37,6 +40,10 @@ export const loadTrainingPlan = () => async (dispatch) => {
         console.error('store/trainingPlan > loadTraininglan() > error :', error);
         dispatch(trainingPlanDataFailed('Ошибка при запросе данных по тренировкам с сервера.'));
     }
+};
+
+export const resetTrainingPlanError = () => (dispatch) => {
+    dispatch(trainingPlanErrorReset());
 };
 
 export const getTrainingPlanLoadingStatus = () => (state) => state.trainingPlan.isLoading;

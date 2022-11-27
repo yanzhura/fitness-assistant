@@ -1,13 +1,14 @@
 import { Col, Row, Spin } from 'antd';
 import React, { useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { StyledBorderBox } from '../components/StyledBorderBox';
 import StatsSummary from '../pages/StatsSummary/StatsSummary';
-import { getTrainingPlanErrors, getTrainingPlanLoadingStatus } from '../store/trainingPlan';
-import { getUserErrors, getUserLoadingStatus } from '../store/user';
-import showEerrorToast from '../utils/errorToast';
+import { getTrainingPlanErrors, getTrainingPlanLoadingStatus, resetTrainingPlanError } from '../store/trainingPlan';
+import { getUserErrors, getUserLoadingStatus, resetUserError } from '../store/user';
+import showErrorToast from '../utils/errorToast';
 
 const Stats = () => {
+    const dispatch = useDispatch();
     const trainigplanLoadingStatus = useSelector(getTrainingPlanLoadingStatus());
     const userLoadingStatus = useSelector(getUserLoadingStatus());
 
@@ -16,9 +17,11 @@ const Stats = () => {
 
     useEffect(() => {
         if (userLoadngErrors) {
-            showEerrorToast(userLoadngErrors);
+            showErrorToast(userLoadngErrors);
+            dispatch(resetUserError());
         } else if (trainigplanLoadingErrors) {
-            showEerrorToast(trainigplanLoadingErrors);
+            showErrorToast(trainigplanLoadingErrors);
+            dispatch(resetTrainingPlanError());
         }
     }, [trainigplanLoadingErrors, userLoadngErrors]);
 

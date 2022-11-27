@@ -21,12 +21,15 @@ const workoutsSlice = createSlice({
         workoutDataRequestFailed: (state, action) => {
             state.isLoading = false;
             state.error = action.payload;
+        },
+        workoutErrorReset: (state) => {
+            state.error = undefined;
         }
     }
 });
 
 const { actions, reducer: workoutsReducer } = workoutsSlice;
-const { workoutDataRequested, workoutDataReceived, workoutDataRequestFailed } = actions;
+const { workoutDataRequested, workoutDataReceived, workoutDataRequestFailed, workoutErrorReset } = actions;
 
 export const loadWorkout = (number) => async (dispatch, getState) => {
     const { workouts } = getState();
@@ -40,6 +43,10 @@ export const loadWorkout = (number) => async (dispatch, getState) => {
             dispatch(workoutDataRequestFailed('Ошибка при запросе данных по тренировкам с сервера.'));
         }
     }
+};
+
+export const resetWorkoutError = () => (dispatch) => {
+    dispatch(workoutErrorReset());
 };
 
 export const getWorkoutsLoadingStatus = () => (state) => state.workouts.isLoading;

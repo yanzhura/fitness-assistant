@@ -5,9 +5,9 @@ import { Layout } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import Navbar from '../../components/NavBar';
 import AppRouter from '../../router/AppRouter';
-import { getIsLoggedIn, getUserErrors, loadUserData } from '../../store/user';
-import { getTrainingPlanErrors, loadTrainingPlan } from '../../store/trainingPlan';
-import showEerrorToast from '../../utils/errorToast';
+import { getIsLoggedIn, getUserErrors, loadUserData, resetUserError } from '../../store/user';
+import { getTrainingPlanErrors, loadTrainingPlan, resetTrainingPlanError } from '../../store/trainingPlan';
+import showErrorToast from '../../utils/errorToast';
 //* styles
 import { headerOverride, footerOverride, mainContent, contentWrapper } from './styles';
 
@@ -28,9 +28,11 @@ const Main = () => {
 
     useEffect(() => {
         if (trainingPlanLoadErrors) {
-            showEerrorToast(trainingPlanLoadErrors);
+            showErrorToast(trainingPlanLoadErrors);
+            dispatch(resetTrainingPlanError());
         } else if (userErrors) {
-            showEerrorToast(userErrors);
+            showErrorToast(userErrors);
+            dispatch(resetUserError());
         }
     }, [trainingPlanLoadErrors, userErrors]);
 
