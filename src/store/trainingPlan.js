@@ -23,7 +23,7 @@ const trainingPlanSlice = createSlice({
             state.error = action.payload;
         },
         trainingPlanErrorReset: (state) => {
-            state.error = undefined;
+            state.error = null;
         }
     }
 });

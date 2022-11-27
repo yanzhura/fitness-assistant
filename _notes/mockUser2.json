@@ -1,5 +1,5 @@
 {
-    "currentWorkout": 25,
+    "currentWorkout": 36,
     "name": "Анна Новикова",
     "schedule": {
         "workout1": {
@@ -225,6 +225,112 @@
                 "exercise29": 8
             },
             "sequenceNumber": 24
+        },
+        "workout25": {
+            "date": "20221027",
+            "result": {
+                "exercise06": 9,
+                "exercise09": 9,
+                "exercise18": 9,
+                "exercise21": 9
+            },
+            "sequenceNumber": 25
+        },
+        "workout26": {
+            "date": "20221029",
+            "result": {
+                "exercise03": 9,
+                "exercise12": 9,
+                "exercise15": 9,
+                "exercise24": 9
+            },
+            "sequenceNumber": 26
+        },
+        "workout27": {
+            "date": "20221031",
+            "result": {
+                "exercise27": 9,
+                "exercise30": 9
+            },
+            "sequenceNumber": 27
+        },
+        "workout28": {
+            "date": "20221102",
+            "result": {
+                "exercise06": 10,
+                "exercise09": 10,
+                "exercise18": 10,
+                "exercise21": 10
+            },
+            "sequenceNumber": 28
+        },
+        "workout29": {
+            "date": "20221104",
+            "result": {
+                "exercise03": 10,
+                "exercise12": 10,
+                "exercise15": 10,
+                "exercise24": 10
+            },
+            "sequenceNumber": 29
+        },
+        "workout30": {
+            "date": "20221106",
+            "result": {
+                "exercise27": 10,
+                "exercise30": 10
+            },
+            "sequenceNumber": 30
+        },
+        "workout31": {
+            "date": "20221107",
+            "result": {
+                "exercise06": 11,
+                "exercise09": 11,
+                "exercise18": 11,
+                "exercise21": 11
+            },
+            "sequenceNumber": 31
+        },
+        "workout32": {
+            "date": "20221109",
+            "result": {
+                "exercise03": 11,
+                "exercise12": 11,
+                "exercise15": 11,
+                "exercise24": 11
+            },
+            "sequenceNumber": 32
+        },
+        "workout33": {
+            "date": "20221111",
+            "result": {
+                "exercise27": 11,
+                "exercise30": 11
+            },
+            "sequenceNumber": 33
+        },
+        "workout34": {
+            "date": "20221114",
+            "result": {
+                "exercise06": 12,
+                "exercise09": 12,
+                "exercise18": 12,
+                "exercise21": 12
+            },
+            "sequenceNumber": 34
+        },
+        "workout35": {
+            "date": "20221116",
+            "result": {
+                "exercise03": 12,
+                "exercise12": 12,
+                "exercise15": 12,
+                "exercise24": 12
+            },
+            "sequenceNumber": 35
         }
-    }
+    },
+    "trainingFinishedAt": false,
+    "trainingStartedAt": "20220903"
 }

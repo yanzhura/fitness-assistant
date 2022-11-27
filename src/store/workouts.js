@@ -23,7 +23,7 @@ const workoutsSlice = createSlice({
             state.error = action.payload;
         },
         workoutErrorReset: (state) => {
-            state.error = undefined;
+            state.error = null;
         }
     }
 });

@@ -109,7 +109,7 @@ const userSlice = createSlice({
             state.userData.currentWorkout = parseInt(state.userData.currentWorkout) + 1;
         },
         userErrorReset: (state) => {
-            state.error = undefined;
+            state.error = null;
         },
         trainingStarted: (state, action) => {
             state.userData.trainingStartedAt = action.payload;
@@ -224,12 +224,15 @@ export const completeCurrentWorkout =
         const lastWorkout = trainingPlan.entities.length;
         if (userCurrentWorkout === 1) {
             dispatch(trainingStarted(completeDate));
+        } else if (userCurrentWorkout > 1 && userCurrentWorkout < lastWorkout) {
+            dispatch(updateUserSchedule(userCurrentWorkout, completeDate, workoutResult));
+            dispatch(userWorkoutCompleted());
+            dispatch(updateUser());
         } else if (userCurrentWorkout === lastWorkout) {
+            dispatch(updateUserSchedule(userCurrentWorkout, completeDate, workoutResult));
             dispatch(trainingFinished(completeDate));
+            dispatch(updateUser());
         }
-        dispatch(updateUserSchedule(userCurrentWorkout, completeDate, workoutResult));
-        dispatch(userWorkoutCompleted());
-        dispatch(updateUser());
     };
 
 export const resetUserError = () => (dispatch) => {
