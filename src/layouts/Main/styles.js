@@ -13,3 +13,7 @@ export const contentWrapper = css`
     padding: 24px;
     background: #ffffff;
 `;
+
+export const footerOverride = css`
+    color: #bbbbbb;
+`;

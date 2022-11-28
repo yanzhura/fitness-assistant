@@ -2,7 +2,6 @@ import React from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import Login from '../layouts/Login';
 import Home from '../layouts/Home';
-import Schedule from '../layouts/Sсhedule';
 import Stats from '../layouts/Stats';
 import Dashboard from '../layouts/Dashboard';
 import Help from '../layouts/Help';
@@ -10,6 +9,7 @@ import Logout from '../layouts/Logout';
 import PrivateRoute from './PrivateRoute';
 import NotFound from '../layouts/NotFound';
 import Workouts from '../layouts/Workouts';
+import Schedule from '../layouts/Schedule';
 
 const AppRouter = () => {
     return (

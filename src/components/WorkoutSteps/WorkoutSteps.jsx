@@ -5,15 +5,37 @@ import { EllipsisOutlined } from '@ant-design/icons';
 import { getTrainingPlan } from '../../store/trainingPlan';
 import { getUserCurrentWorkout } from '../../store/user';
 
-const Progress = () => {
+const WorkoutSteps = () => {
     const currentWorkout = useSelector(getUserCurrentWorkout());
-    const [progressRange, setProgressRange] = useState([currentWorkout - 3, currentWorkout + 2]);
     const trainingPlan = useSelector(getTrainingPlan());
-    const [start, setStart] = useState(currentWorkout - 3);
+    const totalWorkouts = trainingPlan.length;
+
+    const getInitialProgressRange = () => {
+        if (currentWorkout <= 5) {
+            return [0, 5];
+        } else if (currentWorkout > totalWorkouts - 6) {
+            return [totalWorkouts - 5, totalWorkouts];
+        } else {
+            return [currentWorkout - 3, currentWorkout + 2];
+        }
+    };
+
+    const getInitialStart = () => {
+        if (currentWorkout <= 5) {
+            return null;
+        } else if (currentWorkout > totalWorkouts - 6) {
+            return totalWorkouts - 6;
+        } else {
+            return currentWorkout - 3;
+        }
+    };
+
+    const [progressRange, setProgressRange] = useState(getInitialProgressRange());
+    const [start, setStart] = useState(getInitialStart());
 
     const trainingPlanSlice = trainingPlan.slice(...progressRange);
     const isUpButtonDisabled = progressRange[0] === 0;
-    const isDownButtonDisabled = progressRange[0] === trainingPlan.length - 5;
+    const isDownButtonDisabled = progressRange[0] === totalWorkouts - 5;
 
     const stepsItems = trainingPlanSlice.map((item) => {
         return {
@@ -64,4 +86,4 @@ const Progress = () => {
     );
 };
 
-export default Progress;
+export default WorkoutSteps;

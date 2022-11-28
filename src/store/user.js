@@ -4,7 +4,6 @@ import userService from '../services/userService';
 import authService from '../services/authService';
 import localstorageService from '../services/localstorageService';
 import customHistory from '../utils/customHistory';
-import moment from 'moment';
 
 const getInitialState = () => {
     const userId = localstorageService.getUserId();
@@ -28,7 +27,16 @@ const getInitialState = () => {
 };
 
 const initialUserData = {
-    currentWorkout: 1
+    currentWorkout: 1,
+    completedWorkouts: 0,
+    trainingStartedAt: false,
+    trainingFinishedAt: false,
+    schedule: {
+        workout1: {
+            date: 0,
+            sequenceNumber: 1
+        }
+    }
 };
 
 const userSlice = createSlice({
@@ -98,8 +106,20 @@ const userSlice = createSlice({
                 }
             };
         },
-        userWorkoutCompleted: (state) => {
-            state.userData.currentWorkout += 1;
+        currentWorkoutIncreased: (state) => {
+            state.userData.currentWorkout = parseInt(state.userData.currentWorkout) + 1;
+        },
+        completedWorkoutIncreased: (state) => {
+            state.userData.completedWorkouts = parseInt(state.userData.completedWorkouts) + 1;
+        },
+        userErrorReset: (state) => {
+            state.error = null;
+        },
+        trainingStarted: (state, action) => {
+            state.userData.trainingStartedAt = action.payload;
+        },
+        trainingFinished: (state, action) => {
+            state.userData.trainingFinishedAt = action.payload;
         }
     }
 });
@@ -121,7 +141,11 @@ const {
     userUpdateSucceeded,
     userUpdateFailed,
     userScheduleUpdated,
-    userWorkoutCompleted
+    currentWorkoutIncreased,
+    completedWorkoutIncreased,
+    userErrorReset,
+    trainingStarted,
+    trainingFinished
 } = actions;
 
 export const login = (userData) => async (dispatch) => {
@@ -169,8 +193,7 @@ export const createUser =
             dispatch(
                 userCreateSucceeded({
                     userId: authData.localId,
-                    userData: { ...initialUserData, ...rest },
-                    schedule: {}
+                    userData: { ...initialUserData, ...rest }
                 })
             );
             localstorageService.setTokens(authData);
@@ -198,13 +221,33 @@ export const updateUserSchedule = (workoutSequenceNumber, plannedDate, workoutRe
     dispatch(updateUser());
 };
 
-export const completeCurrentWorkout = (workoutResult) => async (dispatch, getState) => {
-    const { user } = getState();
-    const userCurrentWorkout = user.userData.currentWorkout;
-    const workoutCompleteDate = moment().format('YYYYMMDD');
-    dispatch(updateUserSchedule(userCurrentWorkout, workoutCompleteDate, workoutResult));
-    dispatch(userWorkoutCompleted());
-    dispatch(updateUser());
+export const completeCurrentWorkout =
+    ({ workoutResult, completeDate }) =>
+    async (dispatch, getState) => {
+        const { user, trainingPlan } = getState();
+        const userCurrentWorkout = user.userData.currentWorkout;
+        const lastWorkout = trainingPlan.entities.length;
+        if (userCurrentWorkout === 1) {
+            dispatch(trainingStarted(completeDate));
+            dispatch(updateUserSchedule(userCurrentWorkout, completeDate, workoutResult));
+            dispatch(currentWorkoutIncreased());
+            dispatch(completedWorkoutIncreased());
+            dispatch(updateUser());
+        } else if (userCurrentWorkout > 1 && userCurrentWorkout < lastWorkout) {
+            dispatch(updateUserSchedule(userCurrentWorkout, completeDate, workoutResult));
+            dispatch(currentWorkoutIncreased());
+            dispatch(completedWorkoutIncreased());
+            dispatch(updateUser());
+        } else if (userCurrentWorkout === lastWorkout) {
+            dispatch(trainingFinished(completeDate));
+            dispatch(updateUserSchedule(userCurrentWorkout, completeDate, workoutResult));
+            dispatch(completedWorkoutIncreased());
+            dispatch(updateUser());
+        }
+    };
+
+export const resetUserError = () => (dispatch) => {
+    dispatch(userErrorReset());
 };
 
 export const getIsLoggedIn = () => (state) => state.user.isLoggedIn;
@@ -215,10 +258,17 @@ export const getCurrentUser = () => (state) => ({
     userData: state.user.userData
 });
 export const getUserCurrentWorkout = () => (state) => state.user.userData?.currentWorkout;
+export const getUserCompletedWorkouts = () => (state) => state.user.userData?.completedWorkouts;
 export const getUserSchedule = () => (state) => state.user.userData?.schedule;
 export const getCurrentWorkoutSchedule = () => (state) => {
-    const currentWorkoutName = `workout${state.user.userData.currentWorkout}`;
-    return state.user.userData.schedule[currentWorkoutName];
+    const currentWorkoutKey = `workout${state.user.userData.currentWorkout}`;
+    if (state.user.userData?.schedule) {
+        return state.user.userData.schedule[currentWorkoutKey];
+    }
 };
+export const getUserTrainingStatus = () => (state) => ({
+    trainingStartedAt: state.user.userData?.trainingStartedAt,
+    trainingFinishedAt: state.user.userData?.trainingFinishedAt
+});
 
 export default userReducer;

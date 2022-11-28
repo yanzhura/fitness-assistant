@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
-import { Button, Calendar, Col, Row, Divider, Statistic, Tag } from 'antd';
+import { Button, Calendar, Col, Row, Divider, Statistic } from 'antd';
 import { LeftOutlined, CarryOutOutlined, RightOutlined } from '@ant-design/icons';
 import moment from 'moment';
 import 'moment/locale/ru';
 import { useSelector } from 'react-redux';
-import { getUserCurrentWorkout, getUserSchedule } from '../store/user';
-import { getTrainingPlan } from '../store/trainingPlan';
+import { getUserCompletedWorkouts, getUserCurrentWorkout, getUserSchedule } from '../../store/user';
+import { getTrainingPlan } from '../../store/trainingPlan';
 import { Link } from 'react-router-dom';
+import { StyledTag, tagColors } from './styles';
 moment.locale('ru');
 
 const Sсhedule = () => {
@@ -14,6 +15,7 @@ const Sсhedule = () => {
 
     const userSchedule = useSelector(getUserSchedule());
     const currentWorkout = useSelector(getUserCurrentWorkout());
+    const userCompletedWorkouts = useSelector(getUserCompletedWorkouts());
     const trainingPlan = useSelector(getTrainingPlan());
 
     const handleClick = (action) => {
@@ -53,14 +55,16 @@ const Sсhedule = () => {
 
     const getWorkoutTag = (workoutNumber) => {
         const workout = trainingPlan[workoutNumber - 1];
-        const color = currentWorkout === workout.sequenceNumber ? '#ff7a45' : '#bae637';
+        const workoutStatus = workoutNumber <= userCompletedWorkouts ? 'completed' : 'current';
         return (
             <Link to={`/workouts/${workoutNumber}`}>
                 <Row justify={'end'}>
                     <Col>
-                        <Tag
+                        <StyledTag
                             style={{ color: '#000' }}
-                            color={color}>{`Тренировка ${workout.sequenceNumber}${workout.kindName}`}</Tag>
+                            color={
+                                tagColors[workoutStatus]
+                            }>{`Тренировка ${workout.sequenceNumber}${workout.kindName}`}</StyledTag>
                     </Col>
                 </Row>
             </Link>

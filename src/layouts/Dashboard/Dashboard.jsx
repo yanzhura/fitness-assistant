@@ -1,30 +1,43 @@
 import React, { useEffect } from 'react';
 import { Col, Divider, Row, Spin } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
-import { getTrainingPlanErrors, getTrainingPlanLoadingStatus } from '../../store/trainingPlan';
-import { getUserCurrentWorkout, getUserErrors, getUserLoadingStatus } from '../../store/user';
-import { getWorkoutByNumber, getWorkoutsErrors, getWorkoutsLoadingStatus, loadWorkout } from '../../store/workouts';
+import { getTrainingPlanErrors, getTrainingPlanLoadingStatus, resetTrainingPlanError } from '../../store/trainingPlan';
+import {
+    getUserCurrentWorkout,
+    getUserErrors,
+    getUserLoadingStatus,
+    getUserTrainingStatus,
+    resetUserError
+} from '../../store/user';
+import {
+    getWorkoutByNumber,
+    getWorkoutsErrors,
+    getWorkoutsLoadingStatus,
+    loadWorkout,
+    resetWorkoutError
+} from '../../store/workouts';
 import CalendarSmall from '../../components/CalendarSmall';
-import Progress from '../../components/Progress/Progress';
+import WorkoutSteps from '../../components/WorkoutSteps';
 import WorkoutCard from '../../components/WorkoutCard';
-import showEerrorToast from '../../utils/errorToast';
+import showErrorToast from '../../utils/errorToast';
 //* styles
 import { StyledBorderBox } from '../../components/StyledBorderBox';
+import CompleteCongrats from '../../components/CompleteCongrats/CompleteCongrats';
 
 const Dashboard = () => {
     const dispatch = useDispatch();
 
     const userLoadingStatus = useSelector(getUserLoadingStatus());
     const workoutLoadingStatus = useSelector(getWorkoutsLoadingStatus());
+    const trainigplanLoadingStatus = useSelector(getTrainingPlanLoadingStatus());
 
     const userLoadngErrors = useSelector(getUserErrors());
     const workoutLoadingErrors = useSelector(getWorkoutsErrors());
-
-    const trainigplanLoadingStatus = useSelector(getTrainingPlanLoadingStatus());
     const trainigplanLoadingErrors = useSelector(getTrainingPlanErrors());
-    const userCurrentWorkout = useSelector(getUserCurrentWorkout());
 
+    const userCurrentWorkout = useSelector(getUserCurrentWorkout());
     const workout = useSelector(getWorkoutByNumber(userCurrentWorkout));
+    const { trainingFinishedAt } = useSelector(getUserTrainingStatus());
 
     useEffect(() => {
         if (userCurrentWorkout) {
@@ -34,11 +47,14 @@ const Dashboard = () => {
 
     useEffect(() => {
         if (workoutLoadingErrors) {
-            showEerrorToast(workoutLoadingErrors);
+            showErrorToast(workoutLoadingErrors);
+            dispatch(resetWorkoutError());
         } else if (userLoadngErrors) {
-            showEerrorToast(userLoadngErrors);
+            showErrorToast(userLoadngErrors);
+            dispatch(resetUserError());
         } else if (trainigplanLoadingErrors) {
-            showEerrorToast(trainigplanLoadingErrors);
+            showErrorToast(trainigplanLoadingErrors);
+            dispatch(resetTrainingPlanError());
         }
     }, [trainigplanLoadingErrors, userLoadngErrors, workoutLoadingErrors]);
 
@@ -51,7 +67,9 @@ const Dashboard = () => {
                         <Row justify={'center'} gutter={[20]}>
                             <Col span={16}>
                                 <StyledBorderBox>
-                                    {workoutLoadingStatus || !workout ? (
+                                    {trainingFinishedAt ? (
+                                        <CompleteCongrats />
+                                    ) : workoutLoadingStatus || !workout ? (
                                         <Spin />
                                     ) : (
                                         <WorkoutCard sequenceNumber={userCurrentWorkout} />
@@ -70,7 +88,7 @@ const Dashboard = () => {
                                 <Row>
                                     <Col span={24}>
                                         <StyledBorderBox>
-                                            {trainigplanLoadingStatus ? <Spin /> : <Progress />}
+                                            {trainigplanLoadingStatus ? <Spin /> : <WorkoutSteps />}
                                         </StyledBorderBox>
                                     </Col>
                                 </Row>

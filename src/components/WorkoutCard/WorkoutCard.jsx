@@ -8,7 +8,8 @@ import {
     getUserCurrentWorkout,
     getUserSchedule,
     updateUserSchedule,
-    getCurrentWorkoutSchedule
+    getCurrentWorkoutSchedule,
+    getUserCompletedWorkouts
 } from '../../store/user';
 import Exercise from '../Exercise';
 import { capitalize } from '../../utils/capitalize';
@@ -23,18 +24,26 @@ const WorkoutCard = ({ sequenceNumber }) => {
 
     const { complexityLevel, kindName, typeName, exercises } = useSelector(getWorkoutByNumber(sequenceNumber));
     const userCurrentWorkout = useSelector(getUserCurrentWorkout());
+    const userCompletedWorkouts = useSelector(getUserCompletedWorkouts());
     const userSchedule = useSelector(getUserSchedule());
     const currentWorkoutSchedule = useSelector(getCurrentWorkoutSchedule());
     const [form] = Form.useForm();
 
-    const lastWorkoutCompleted = Object.values(userSchedule).find(
-        (item) => item.sequenceNumber === userCurrentWorkout - 1
-    );
-    const nowDate = moment().format('YYYYMMDD');
-    const isWorkoutCompleteUnable = String(lastWorkoutCompleted.date) === nowDate;
+    const lastWorkoutCompleted =
+        userCurrentWorkout > 1 &&
+        Object.values(userSchedule).find((item) => item.sequenceNumber === userCurrentWorkout - 1);
 
-    const disabledDate = (current) => {
+    const nowDate = moment().format('YYYYMMDD');
+    const isWorkoutCompleteUnable = userCurrentWorkout > 1 && lastWorkoutCompleted.date === nowDate;
+
+    const disabledPastDates = (current) => {
         return current && current < moment().endOf('day');
+    };
+
+    const disabledFutureDates = (current) => {
+        return (
+            (current && current < moment(lastWorkoutCompleted.date).endOf('day')) || current >= moment().endOf('day')
+        );
     };
 
     const handleDatePick = (date) => {
@@ -46,22 +55,19 @@ const WorkoutCard = ({ sequenceNumber }) => {
         setPlanedDate('');
     };
 
-    const completeWorkout = (workoutResult) => {
-        if (isWorkoutCompleteUnable) {
-            message.error('Сегодня Вы уже завершили одну тренировку. Запланируйте следующую на другой день.');
-        } else {
-            dispatch(completeCurrentWorkout(workoutResult));
-        }
-    };
-
     const getCompleteInfo = () => {
-        if (currentWorkoutSchedule) {
-            if (sequenceNumber === userCurrentWorkout) {
+        if (sequenceNumber <= userCompletedWorkouts) {
+            const completeDate = userSchedule[`workout${sequenceNumber}`].date;
+            return <p>{`Тренировка завершена ${moment(completeDate).format('DD MMMM YYYY')} г.`}</p>;
+        } else if (sequenceNumber === 1 && currentWorkoutSchedule.date === 0) {
+            return <p>Это ваша первая тренировка. Она ещё не запланирована.</p>;
+        } else if (sequenceNumber === userCurrentWorkout) {
+            if (currentWorkoutSchedule) {
                 return (
-                    <p>Тренировка запланирована на {moment(currentWorkoutSchedule.date).format('DD MMMM YYYY')} г.</p>
+                    <p>{`Тренировка запланирована на ${moment(currentWorkoutSchedule.date).format(
+                        'DD MMMM YYYY'
+                    )} г.`}</p>
                 );
-            } else {
-                return <p>Тренировка завершена {moment(currentWorkoutSchedule.date).format('DD MMMM YYYY')} г.</p>;
             }
         }
     };
@@ -73,7 +79,11 @@ const WorkoutCard = ({ sequenceNumber }) => {
     };
 
     const modalOpen = () => {
-        setIsModalOpen(true);
+        if (isWorkoutCompleteUnable) {
+            message.error('Сегодня Вы уже завершили одну тренировку. Запланируйте следующую на другой день.');
+        } else {
+            setIsModalOpen(true);
+        }
     };
 
     const modalCancel = () => {
@@ -85,8 +95,15 @@ const WorkoutCard = ({ sequenceNumber }) => {
         form.submit();
     };
 
-    const formSubmit = (values) => {
-        completeWorkout(values);
+    const formSubmit = ({ completeDate, ...rest }) => {
+        dispatch(
+            completeCurrentWorkout({
+                completeDate: completeDate.format('YYYYMMDD'),
+                workoutResult: rest
+            })
+        );
+        form.resetFields();
+        setIsModalOpen(false);
     };
 
     const modalFooter = [
@@ -141,20 +158,24 @@ const WorkoutCard = ({ sequenceNumber }) => {
                 {sequenceNumber === userCurrentWorkout ? (
                     <>
                         <Divider>Планирование тренировки</Divider>
-                        <Space>
-                            <DatePicker
-                                disabledDate={disabledDate}
-                                format={'DD.MM.YYYY'}
-                                showToday={false}
-                                value={planedDate}
-                                onChange={(value) => handleDatePick(value)}
-                            />
-                            <Button type="primary" onClick={submitToSchedule}>
-                                Запланировать
-                            </Button>
-                            <Button type="ghost" onClick={modalOpen}>
-                                Внести результаты и завершить
-                            </Button>
+                        <Space direction="vertical" size={'middle'}>
+                            <Space>
+                                <DatePicker
+                                    disabledDate={disabledPastDates}
+                                    format={'DD.MM.YYYY'}
+                                    showToday={false}
+                                    value={planedDate}
+                                    onChange={(value) => handleDatePick(value)}
+                                />
+                                <Button type="primary" onClick={submitToSchedule} disabled={!planedDate}>
+                                    Запланировать
+                                </Button>
+                            </Space>
+                            <div>
+                                <Button type="ghost" onClick={modalOpen}>
+                                    Внести результаты и завершить
+                                </Button>
+                            </div>
                         </Space>
                     </>
                 ) : (
@@ -162,16 +183,23 @@ const WorkoutCard = ({ sequenceNumber }) => {
                 )}
             </div>
             <Modal open={isModalOpen} closable={false} destroyOnClose={true} footer={modalFooter} centered={true}>
-                <div>Фиксация результатов упражнений</div>
+                <Divider>Результаты тренировки</Divider>
                 <Form
                     name="workoutResults"
                     form={form}
                     onFinish={formSubmit}
-                    requiredMark={'optional'}
+                    requiredMark={false}
                     colon={false}
-                    labelCol={{ span: 19 }}
-                    labelAlign={'left'}>
+                    labelCol={{ span: 18 }}
+                    labelAlign={'left'}
+                    initialValues={{
+                        completeDate: moment()
+                    }}>
                     {getFormElemetns()}
+                    <Divider>Дата завершения</Divider>
+                    <Form.Item key={'datepicker'} name="completeDate" label={'   '}>
+                        <DatePicker disabledDate={disabledFutureDates} format={'DD.MM.YYYY'} showToday={true} />
+                    </Form.Item>
                 </Form>
             </Modal>
         </div>

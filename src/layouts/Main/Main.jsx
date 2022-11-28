@@ -5,11 +5,11 @@ import { Layout } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import Navbar from '../../components/NavBar';
 import AppRouter from '../../router/AppRouter';
-import { getIsLoggedIn, getUserErrors, loadUserData } from '../../store/user';
+import { getIsLoggedIn, getUserErrors, loadUserData, resetUserError } from '../../store/user';
+import { getTrainingPlanErrors, loadTrainingPlan, resetTrainingPlanError } from '../../store/trainingPlan';
+import showErrorToast from '../../utils/errorToast';
 //* styles
-import { headerOverride, mainContent, contentWrapper } from './styles';
-import { getTrainingPlanErrors, loadTrainingPlan } from '../../store/trainingPlan';
-import showEerrorToast from '../../utils/errorToast';
+import { headerOverride, footerOverride, mainContent, contentWrapper } from './styles';
 
 const { Header, Content, Footer } = Layout;
 
@@ -28,9 +28,11 @@ const Main = () => {
 
     useEffect(() => {
         if (trainingPlanLoadErrors) {
-            showEerrorToast(trainingPlanLoadErrors);
+            showErrorToast(trainingPlanLoadErrors);
+            dispatch(resetTrainingPlanError());
         } else if (userErrors) {
-            showEerrorToast(userErrors);
+            showErrorToast(userErrors);
+            dispatch(resetUserError());
         }
     }, [trainingPlanLoadErrors, userErrors]);
 
@@ -44,7 +46,10 @@ const Main = () => {
                     <AppRouter />
                 </div>
             </Content>
-            <Footer>XXXXX -=- Footer -=- XXXXX</Footer>
+            <Footer css={footerOverride}>
+                <p>&copy;2022 Михаил Янжура</p>
+                <p>Дипломная работа для курса &#171;Профессия Junior Frontend-разработчик&#187;.</p>
+            </Footer>
         </Layout>
     );
 };
