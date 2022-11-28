@@ -2,7 +2,13 @@ import React, { useEffect } from 'react';
 import { Col, Divider, Row, Spin } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { getTrainingPlanErrors, getTrainingPlanLoadingStatus, resetTrainingPlanError } from '../../store/trainingPlan';
-import { getUserCurrentWorkout, getUserErrors, getUserLoadingStatus, resetUserError } from '../../store/user';
+import {
+    getUserCurrentWorkout,
+    getUserErrors,
+    getUserLoadingStatus,
+    getUserTrainingStatus,
+    resetUserError
+} from '../../store/user';
 import {
     getWorkoutByNumber,
     getWorkoutsErrors,
@@ -16,6 +22,7 @@ import WorkoutCard from '../../components/WorkoutCard';
 import showErrorToast from '../../utils/errorToast';
 //* styles
 import { StyledBorderBox } from '../../components/StyledBorderBox';
+import CompleteCongrats from '../../components/CompleteCongrats/CompleteCongrats';
 
 const Dashboard = () => {
     const dispatch = useDispatch();
@@ -29,8 +36,8 @@ const Dashboard = () => {
     const trainigplanLoadingErrors = useSelector(getTrainingPlanErrors());
 
     const userCurrentWorkout = useSelector(getUserCurrentWorkout());
-
     const workout = useSelector(getWorkoutByNumber(userCurrentWorkout));
+    const { trainingFinishedAt } = useSelector(getUserTrainingStatus());
 
     useEffect(() => {
         if (userCurrentWorkout) {
@@ -60,7 +67,9 @@ const Dashboard = () => {
                         <Row justify={'center'} gutter={[20]}>
                             <Col span={16}>
                                 <StyledBorderBox>
-                                    {workoutLoadingStatus || !workout ? (
+                                    {trainingFinishedAt ? (
+                                        <CompleteCongrats />
+                                    ) : workoutLoadingStatus || !workout ? (
                                         <Spin />
                                     ) : (
                                         <WorkoutCard sequenceNumber={userCurrentWorkout} />

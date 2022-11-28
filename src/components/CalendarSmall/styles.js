@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { lime, volcano } from '@ant-design/colors';
 
 export const StyledCell = styled.div`
     margin-left: 5px;
@@ -7,10 +8,10 @@ export const StyledCell = styled.div`
     background: ${(props) => {
         switch (props.workoutStatus) {
             case 'current':
-                return '#ff7a45';
+                return volcano[5];
 
             case 'completed':
-                return '#bae637';
+                return lime[5];
 
             default:
                 break;

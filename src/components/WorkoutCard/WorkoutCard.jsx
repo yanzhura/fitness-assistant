@@ -8,7 +8,8 @@ import {
     getUserCurrentWorkout,
     getUserSchedule,
     updateUserSchedule,
-    getCurrentWorkoutSchedule
+    getCurrentWorkoutSchedule,
+    getUserCompletedWorkouts
 } from '../../store/user';
 import Exercise from '../Exercise';
 import { capitalize } from '../../utils/capitalize';
@@ -23,6 +24,7 @@ const WorkoutCard = ({ sequenceNumber }) => {
 
     const { complexityLevel, kindName, typeName, exercises } = useSelector(getWorkoutByNumber(sequenceNumber));
     const userCurrentWorkout = useSelector(getUserCurrentWorkout());
+    const userCompletedWorkouts = useSelector(getUserCompletedWorkouts());
     const userSchedule = useSelector(getUserSchedule());
     const currentWorkoutSchedule = useSelector(getCurrentWorkoutSchedule());
     const [form] = Form.useForm();
@@ -54,7 +56,10 @@ const WorkoutCard = ({ sequenceNumber }) => {
     };
 
     const getCompleteInfo = () => {
-        if (sequenceNumber === 1 && currentWorkoutSchedule.date === 0) {
+        if (sequenceNumber <= userCompletedWorkouts) {
+            const completeDate = userSchedule[`workout${sequenceNumber}`].date;
+            return <p>{`Тренировка завершена ${moment(completeDate).format('DD MMMM YYYY')} г.`}</p>;
+        } else if (sequenceNumber === 1 && currentWorkoutSchedule.date === 0) {
             return <p>Это ваша первая тренировка. Она ещё не запланирована.</p>;
         } else if (sequenceNumber === userCurrentWorkout) {
             if (currentWorkoutSchedule) {
@@ -64,9 +69,6 @@ const WorkoutCard = ({ sequenceNumber }) => {
                     )} г.`}</p>
                 );
             }
-        } else if (sequenceNumber < userCurrentWorkout) {
-            const completeDate = userSchedule[`workout${sequenceNumber}`].date;
-            return <p>{`Тренировка завершена ${moment(completeDate).format('DD MMMM YYYY')} г.`}</p>;
         }
     };
 

@@ -3,13 +3,13 @@ import { useSelector } from 'react-redux';
 import { Col, Divider, Pagination, Row, Spin } from 'antd';
 import { getTrainingPlan, getTrainingPlanLoadingStatus } from '../store/trainingPlan';
 import TrainingPlanCard from '../components/TrainingPlanCard';
-import { getCurrentUser, getUserCurrentWorkout } from '../store/user';
+import { getUserCompletedWorkouts, getUserCurrentWorkout } from '../store/user';
 
 const TrainingPlan = () => {
     const trainingPlan = useSelector(getTrainingPlan());
     const trainingPlanLoadingStatus = useSelector(getTrainingPlanLoadingStatus());
-    const { userData } = useSelector(getCurrentUser());
     const currentUserWorkout = useSelector(getUserCurrentWorkout());
+    const userCompletedWorkouts = useSelector(getUserCompletedWorkouts());
 
     const totalPages = trainingPlan ? trainingPlan.length : 1;
     const pageSize = 9;
@@ -28,12 +28,12 @@ const TrainingPlan = () => {
     const getWorkoutCards = () => {
         return getTrainingPlanPage().map((workout) => {
             let completeStatus;
-            if (workout.sequenceNumber < userData.currentWorkout) {
-                completeStatus = 'complete';
-            } else if (workout.sequenceNumber === userData.currentWorkout) {
+            if (workout.sequenceNumber <= userCompletedWorkouts) {
+                completeStatus = 'completed';
+            } else if (workout.sequenceNumber === userCompletedWorkouts + 1) {
                 completeStatus = 'current';
             } else {
-                completeStatus = 'incomplete';
+                completeStatus = 'incompleted';
             }
             return (
                 <Col key={workout.sequenceNumber} span={8}>

@@ -28,6 +28,7 @@ const getInitialState = () => {
 
 const initialUserData = {
     currentWorkout: 1,
+    completedWorkouts: 0,
     trainingStartedAt: false,
     trainingFinishedAt: false,
     schedule: {
@@ -105,8 +106,11 @@ const userSlice = createSlice({
                 }
             };
         },
-        userWorkoutCompleted: (state) => {
+        currentWorkoutIncreased: (state) => {
             state.userData.currentWorkout = parseInt(state.userData.currentWorkout) + 1;
+        },
+        completedWorkoutIncreased: (state) => {
+            state.userData.completedWorkouts = parseInt(state.userData.completedWorkouts) + 1;
         },
         userErrorReset: (state) => {
             state.error = null;
@@ -137,7 +141,8 @@ const {
     userUpdateSucceeded,
     userUpdateFailed,
     userScheduleUpdated,
-    userWorkoutCompleted,
+    currentWorkoutIncreased,
+    completedWorkoutIncreased,
     userErrorReset,
     trainingStarted,
     trainingFinished
@@ -224,13 +229,19 @@ export const completeCurrentWorkout =
         const lastWorkout = trainingPlan.entities.length;
         if (userCurrentWorkout === 1) {
             dispatch(trainingStarted(completeDate));
+            dispatch(updateUserSchedule(userCurrentWorkout, completeDate, workoutResult));
+            dispatch(currentWorkoutIncreased());
+            dispatch(completedWorkoutIncreased());
+            dispatch(updateUser());
         } else if (userCurrentWorkout > 1 && userCurrentWorkout < lastWorkout) {
             dispatch(updateUserSchedule(userCurrentWorkout, completeDate, workoutResult));
-            dispatch(userWorkoutCompleted());
+            dispatch(currentWorkoutIncreased());
+            dispatch(completedWorkoutIncreased());
             dispatch(updateUser());
         } else if (userCurrentWorkout === lastWorkout) {
-            dispatch(updateUserSchedule(userCurrentWorkout, completeDate, workoutResult));
             dispatch(trainingFinished(completeDate));
+            dispatch(updateUserSchedule(userCurrentWorkout, completeDate, workoutResult));
+            dispatch(completedWorkoutIncreased());
             dispatch(updateUser());
         }
     };
@@ -247,6 +258,7 @@ export const getCurrentUser = () => (state) => ({
     userData: state.user.userData
 });
 export const getUserCurrentWorkout = () => (state) => state.user.userData?.currentWorkout;
+export const getUserCompletedWorkouts = () => (state) => state.user.userData?.completedWorkouts;
 export const getUserSchedule = () => (state) => state.user.userData?.schedule;
 export const getCurrentWorkoutSchedule = () => (state) => {
     const currentWorkoutKey = `workout${state.user.userData.currentWorkout}`;
@@ -254,10 +266,9 @@ export const getCurrentWorkoutSchedule = () => (state) => {
         return state.user.userData.schedule[currentWorkoutKey];
     }
 };
-
 export const getUserTrainingStatus = () => (state) => ({
-    trainingStartedAt: state.user.userData.trainingStartedAt,
-    trainingFinishedAt: state.user.userData.trainingFinishedAt
+    trainingStartedAt: state.user.userData?.trainingStartedAt,
+    trainingFinishedAt: state.user.userData?.trainingFinishedAt
 });
 
 export default userReducer;

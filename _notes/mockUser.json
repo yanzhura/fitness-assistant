@@ -1,5 +1,6 @@
 {
     "currentWorkout": 25,
+    "completedWorkouts": 24,
     "name": "Сергей Кузнецов",
     "schedule": {
         "workout1": {
@@ -226,5 +227,7 @@
             },
             "sequenceNumber": 24
         }
-    }
+    },
+    "trainingFinishedAt": false,
+    "trainingStartedAt": "20221003"
 }

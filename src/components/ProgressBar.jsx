@@ -3,22 +3,22 @@ import React from 'react';
 import { lime } from '@ant-design/colors';
 import { useSelector } from 'react-redux';
 import { getTrainingPlan } from '../store/trainingPlan';
-import { getUserCurrentWorkout } from '../store/user';
+import { getUserCompletedWorkouts } from '../store/user';
 
 const ProgressBar = () => {
-    const userCurrentWorkout = useSelector(getUserCurrentWorkout());
+    const userCompletedWorkouts = useSelector(getUserCompletedWorkouts());
     const trainingPlan = useSelector(getTrainingPlan());
 
     const workoutsTotal = trainingPlan.length;
-    const percent = Math.round(((userCurrentWorkout - 1) / workoutsTotal) * 100);
-    const lineStrokes = Array(userCurrentWorkout - 1)
+    const percent = Math.round((userCompletedWorkouts / workoutsTotal) * 100);
+    const lineStrokes = Array(userCompletedWorkouts)
         .fill('1')
         .map((el) => lime[5]);
 
     return (
         <>
             <Space>
-                <Statistic title="Выполнено" value={userCurrentWorkout - 1} />
+                <Statistic title="Выполнено" value={userCompletedWorkouts} />
                 <Statistic title="Всего" value={workoutsTotal} />
             </Space>
             <div>

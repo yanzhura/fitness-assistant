@@ -1,14 +1,15 @@
 import { css } from '@emotion/react';
+import { lime, volcano, grey } from '@ant-design/colors';
 
 export const headStyles = {
-    complete: {
-        backgroundColor: '#bae637'
+    completed: {
+        backgroundColor: lime[5]
     },
     current: {
-        backgroundColor: '#ff7a45'
+        backgroundColor: volcano[5]
     },
-    incomplete: {
-        backgroundColor: '#d9d9d9'
+    incompleted: {
+        backgroundColor: grey[5]
     }
 };
 
@@ -16,7 +17,3 @@ export const cardOverride = css`
     height: 100%;
     border-radius: 5px;
 `;
-
-// complete #c0ff85
-// current #ffac85
-// incomplete #cecece
