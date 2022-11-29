@@ -20,9 +20,9 @@ import CalendarSmall from '../../components/CalendarSmall';
 import WorkoutSteps from '../../components/WorkoutSteps';
 import WorkoutCard from '../../components/WorkoutCard';
 import showErrorToast from '../../utils/errorToast';
-//* styles
-import { StyledBorderBox } from '../../components/StyledBorderBox';
 import CompleteCongrats from '../../components/CompleteCongrats/CompleteCongrats';
+//* styles
+import { StyledBorderBox } from '../../components/StyledComponents';
 
 const Dashboard = () => {
     const dispatch = useDispatch();

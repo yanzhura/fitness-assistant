@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-export const StyledBorderBox = styled.div`
+const StyledBorderBox = styled.div`
     border-style: solid;
     border-color: #ccc;
     border-radius: 5px;
@@ -9,3 +9,5 @@ export const StyledBorderBox = styled.div`
     width: 100%;
     height: 100%;
 `;
+
+export default StyledBorderBox;

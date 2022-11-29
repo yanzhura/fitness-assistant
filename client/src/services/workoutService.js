@@ -96,7 +96,13 @@ const fetchBodyParts = async (bodyPartsKeys) => {
     return bodyParts;
 };
 
+const fetchExerciseGroups = async () => {
+    const { data: exerciseGroups } = await httpService.get(`${exerciseGroupsLocation}.json`);
+    return exerciseGroups;
+};
+
 export default {
     fetchFullTrainingPlan,
-    fetchWorkoutBySeqNumber
+    fetchWorkoutBySeqNumber,
+    fetchExerciseGroups
 };

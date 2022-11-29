@@ -1,12 +1,18 @@
+import { Divider } from 'antd';
 import React from 'react';
-import Title from 'antd/lib/typography/Title';
+import GroupProgress from '../../components/GroupProgress/GroupProgress';
+import OverallScore from '../../components/OverallScore';
 import ProgressBar from '../../components/ProgressBar';
+import TrainingStats from '../../components/TrainingStats';
 
 const StatsSummary = () => {
     return (
         <div>
-            <Title level={3}>Тренировки</Title>
             <ProgressBar />
+            <TrainingStats />
+            <GroupProgress />
+            <Divider />
+            <OverallScore />
         </div>
     );
 };
