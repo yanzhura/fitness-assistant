@@ -1,4 +1,5 @@
 import React from 'react';
+import OverallScore from '../../components/OverallScore';
 import ProgressBar from '../../components/ProgressBar';
 import TrainingStats from '../../components/TrainingStats';
 
@@ -7,6 +8,7 @@ const StatsSummary = () => {
         <div>
             <ProgressBar />
             <TrainingStats />
+            <OverallScore />
         </div>
     );
 };

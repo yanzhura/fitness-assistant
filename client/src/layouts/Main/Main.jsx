@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unknown-property */
 /** @jsxImportSource @emotion/react */
 
 import React, { useEffect } from 'react';
@@ -47,7 +48,6 @@ const Main = () => {
                 </div>
             </Content>
             <Footer css={footerOverride}>
-                <p>&copy;2022 Михаил Янжура</p>
                 <p>Дипломная работа для курса &#171;Профессия Junior Frontend-разработчик&#187;.</p>
             </Footer>
         </Layout>
