@@ -3,6 +3,7 @@ import workoutService from '../services/workoutService';
 
 const initialState = {
     entities: null,
+    exerciseGroups: null,
     isLoading: true,
     error: null
 };
@@ -15,7 +16,8 @@ const trainingPlanSlice = createSlice({
             state.isLoading = true;
         },
         trainingPlanDataReceived: (state, action) => {
-            state.entities = action.payload;
+            state.entities = action.payload.trainingplanData;
+            state.exerciseGroups = action.payload.exerciseGroupsData;
             state.isLoading = false;
         },
         trainingPlanDataFailed: (state, action) => {
@@ -35,7 +37,8 @@ export const loadTrainingPlan = () => async (dispatch) => {
     dispatch(trainingPlanDataRequested());
     try {
         const trainingplanData = await workoutService.fetchFullTrainingPlan();
-        dispatch(trainingPlanDataReceived(trainingplanData));
+        const exerciseGroupsData = await workoutService.fetchExerciseGroups();
+        dispatch(trainingPlanDataReceived({ trainingplanData, exerciseGroupsData }));
     } catch (error) {
         console.error('store/trainingPlan > loadTraininglan() > error :', error);
         dispatch(trainingPlanDataFailed('Ошибка при запросе данных по тренировкам с сервера.'));
@@ -49,5 +52,6 @@ export const resetTrainingPlanError = () => (dispatch) => {
 export const getTrainingPlanLoadingStatus = () => (state) => state.trainingPlan.isLoading;
 export const getTrainingPlanErrors = () => (state) => state.trainingPlan.error;
 export const getTrainingPlan = () => (state) => state.trainingPlan.entities;
+export const getExerciseGroups = () => (state) => state.trainingPlan.exerciseGroups;
 
 export default trainingPlanReducer;

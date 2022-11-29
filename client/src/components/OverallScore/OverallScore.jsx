@@ -1,11 +1,12 @@
-import Title from 'antd/lib/typography/Title';
 import React from 'react';
+import Title from 'antd/lib/typography/Title';
 import { ResponsiveLine } from '@nivo/line';
 import { useSelector } from 'react-redux';
 import { getUserCompletedWorkouts, getUserSchedule } from '../../store/user';
-import { StyledBorderBox } from '../StyledBorderBox';
 import { green } from '@ant-design/colors';
 import { getTrainingPlan } from '../../store/trainingPlan';
+//* styles
+import { StyledGraphBox } from '../StyledComponents';
 
 const OverallScore = () => {
     const userSchedule = useSelector(getUserSchedule());
@@ -51,7 +52,7 @@ const OverallScore = () => {
 
     return (
         <div>
-            <StyledBorderBox style={{ height: '600px', wodth: '100%' }}>
+            <StyledGraphBox>
                 <Title level={3}>Общий прогресс в баллах</Title>
                 <ResponsiveLine
                     data={data}
@@ -66,7 +67,7 @@ const OverallScore = () => {
                     axisLeft={null}
                     axisBottom={{ legend: 'Тренировки', legendPosition: 'middle', legendOffset: 40 }}
                 />
-            </StyledBorderBox>
+            </StyledGraphBox>
         </div>
     );
 };

@@ -13,6 +13,7 @@ module.exports = {
     },
     plugins: ['react'],
     rules: {
+        'react/no-unknown-property': ['error', { ignore: ['css'] }],
         indent: ['error', 4, { SwitchCase: 1, offsetTernaryExpressions: true }],
         semi: [2, 'always'],
         'space-before-function-paren': [

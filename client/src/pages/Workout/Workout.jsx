@@ -11,7 +11,7 @@ import {
 } from '../../store/workouts';
 import WorkoutCard from '../../components/WorkoutCard';
 import showErrorToast from '../../utils/errorToast';
-import { StyledBorderBox } from '../../components/StyledBorderBox';
+import { StyledBorderBox } from '../../components/StyledComponents';
 
 const Workout = () => {
     const dispatch = useDispatch();

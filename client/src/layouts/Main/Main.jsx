@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unknown-property */
 /** @jsxImportSource @emotion/react */
 
 import React, { useEffect } from 'react';

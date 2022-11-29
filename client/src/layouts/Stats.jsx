@@ -1,11 +1,12 @@
 import { Col, Row, Spin } from 'antd';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { StyledBorderBox } from '../components/StyledBorderBox';
 import StatsSummary from '../pages/StatsSummary/StatsSummary';
 import { getTrainingPlanErrors, getTrainingPlanLoadingStatus, resetTrainingPlanError } from '../store/trainingPlan';
 import { getUserErrors, getUserLoadingStatus, resetUserError } from '../store/user';
 import showErrorToast from '../utils/errorToast';
+//* styles
+import { StyledBorderBox } from '../components/StyledComponents';
 
 const Stats = () => {
     const dispatch = useDispatch();
