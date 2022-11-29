@@ -1,0 +1,42 @@
+[
+    {
+        "exercises": ["exercise01", "exercise02", "exercise03"],
+        "name": "Горизонтальный жим"
+    },
+    {
+        "exercises": ["exercise04", "exercise05", "exercise06"],
+        "name": "Вертикальный жим"
+    },
+    {
+        "exercises": ["exercise07", "exercise08", "exercise09"],
+        "name": "Горизонтальная тяга"
+    },
+    {
+        "exercises": ["exercise10", "exercise11", "exercise12"],
+        "name": "Вертикальная тяга"
+    },
+    {
+        "exercises": ["exercise13", "exercise14", "exercise15"],
+        "name": "Разгибания бёдер"
+    },
+    {
+        "exercises": ["exercise16", "exercise17", "exercise18"],
+        "name": "Приседания"
+    },
+    {
+        "exercises": ["exercise19", "exercise20", "exercise21"],
+        "name": "Статические выпады"
+    },
+    {
+        "exercises": ["exercise22", "exercise23", "exercise24"],
+        "name": "Динамические выпады"
+    },
+    {
+        "exercises": ["exercise25", "exercise26", "exercise27"],
+        "name": "Скручивания"
+    },
+    {
+        "exercises": ["exercise28", "exercise29", "exercise30"],
+        "name": "Пронос тяжестей"
+    }
+]
