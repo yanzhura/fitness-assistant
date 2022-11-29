@@ -1,12 +1,12 @@
 import React from 'react';
-import Title from 'antd/lib/typography/Title';
 import ProgressBar from '../../components/ProgressBar';
+import TrainingStats from '../../components/TrainingStats';
 
 const StatsSummary = () => {
     return (
         <div>
-            <Title level={3}>Тренировки</Title>
             <ProgressBar />
+            <TrainingStats />
         </div>
     );
 };

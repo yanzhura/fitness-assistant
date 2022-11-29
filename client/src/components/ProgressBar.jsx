@@ -4,6 +4,7 @@ import { lime } from '@ant-design/colors';
 import { useSelector } from 'react-redux';
 import { getTrainingPlan } from '../store/trainingPlan';
 import { getUserCompletedWorkouts } from '../store/user';
+import Title from 'antd/lib/typography/Title';
 
 const ProgressBar = () => {
     const userCompletedWorkouts = useSelector(getUserCompletedWorkouts());
@@ -17,6 +18,7 @@ const ProgressBar = () => {
 
     return (
         <>
+            <Title level={3}>Тренировки</Title>
             <Space>
                 <Statistic title="Выполнено" value={userCompletedWorkouts} />
                 <Statistic title="Всего" value={workoutsTotal} />
