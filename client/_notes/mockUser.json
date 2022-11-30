@@ -1,7 +1,10 @@
 {
     "currentWorkout": 25,
     "completedWorkouts": 24,
+    "email": "user2@example.com",
     "name": "Сергей Кузнецов",
+    "showWelcomePage": true,
+    "showQuickTour": true,
     "schedule": {
         "workout1": {
             "date": "20221003",
