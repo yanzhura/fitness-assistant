@@ -17,12 +17,11 @@ const Navbar = () => {
     const location = useLocation();
 
     const navItems = [
-        { key: '0', path: '/', label: 'Главная', private: 'none' },
-        { key: '1', path: '/dashboard', label: 'Сводка', private: true },
-        { key: '2', path: '/workouts', label: 'Тренировки', private: true },
-        { key: '3', path: '/schedule', label: 'Расписание', private: true },
-        { key: '4', path: '/stats', label: 'Статистика', private: true },
-        { key: '5', path: '/help', label: 'Помощь', private: true }
+        { key: '0', path: '/home', label: 'Сводка', private: true },
+        { key: '1', path: '/workouts', label: 'Тренировки', private: true },
+        { key: '2', path: '/schedule', label: 'Расписание', private: true },
+        { key: '3', path: '/stats', label: 'Статистика', private: true },
+        { key: '4', path: '/help', label: 'Помощь', private: true }
     ];
 
     const currentNavItem = navItems.find((item) => item.path === location.pathname);
@@ -49,12 +48,10 @@ const Navbar = () => {
             </Col>
             <Col span={4}>
                 <div css={profileContainer}>
-                    {isLoggedIn && !isDataLoading ? (
+                    {isLoggedIn && !isDataLoading && (
                         <>
                             {currentUser.userData.name} <Divider type="vertical" /> <Link to="/logout">Выход</Link>
                         </>
-                    ) : (
-                        <Link to="/login">Вход</Link>
                     )}
                 </div>
             </Col>

@@ -29,6 +29,8 @@ const getInitialState = () => {
 const initialUserData = {
     currentWorkout: 1,
     completedWorkouts: 0,
+    showWelcomePage: true,
+    showQuickTour: true,
     trainingStartedAt: false,
     trainingFinishedAt: false,
     schedule: {
@@ -120,6 +122,12 @@ const userSlice = createSlice({
         },
         trainingFinished: (state, action) => {
             state.userData.trainingFinishedAt = action.payload;
+        },
+        welcomePageHidden: (state) => {
+            state.userData.showWelcomePage = false;
+        },
+        quickTourHidden: (state) => {
+            state.userData.showQuickTour = false;
         }
     }
 });
@@ -145,7 +153,9 @@ const {
     completedWorkoutIncreased,
     userErrorReset,
     trainingStarted,
-    trainingFinished
+    trainingFinished,
+    welcomePageHidden,
+    quickTourHidden
 } = actions;
 
 export const login = (userData) => async (dispatch) => {
@@ -189,11 +199,11 @@ export const createUser =
         dispatch(userCreateRequested());
         try {
             const authData = await authService.signUp({ email, password });
-            await userService.createNewUser(authData.localId, { ...initialUserData, ...rest });
+            await userService.createNewUser(authData.localId, { ...initialUserData, email, ...rest });
             dispatch(
                 userCreateSucceeded({
                     userId: authData.localId,
-                    userData: { ...initialUserData, ...rest }
+                    userData: { ...initialUserData, email, ...rest }
                 })
             );
             localstorageService.setTokens(authData);
@@ -250,6 +260,16 @@ export const resetUserError = () => (dispatch) => {
     dispatch(userErrorReset());
 };
 
+export const hideWelcomPage = () => async (dispatch) => {
+    dispatch(welcomePageHidden());
+    dispatch(updateUser());
+};
+
+export const hideQuickTour = () => async (dispatch) => {
+    dispatch(quickTourHidden());
+    dispatch(updateUser());
+};
+
 export const getIsLoggedIn = () => (state) => state.user.isLoggedIn;
 export const getUserLoadingStatus = () => (state) => state.user.isLoading;
 export const getUserErrors = () => (state) => state.user.error;
@@ -270,5 +290,7 @@ export const getUserTrainingStatus = () => (state) => ({
     trainingStartedAt: state.user.userData?.trainingStartedAt,
     trainingFinishedAt: state.user.userData?.trainingFinishedAt
 });
+export const getShowWelcomePage = () => (state) => state.user.userData?.showWelcomePage;
+export const getShowQuickTour = () => (state) => state.user.userData?.showQuickTour;
 
 export default userReducer;

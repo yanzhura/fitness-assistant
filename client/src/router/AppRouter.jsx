@@ -1,12 +1,13 @@
 import React from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import Login from '../layouts/Login';
-import Home from '../layouts/Home';
+import Start from '../pages/Start';
 import Stats from '../layouts/Stats';
-import Dashboard from '../layouts/Dashboard';
+import Home from '../layouts/Home';
 import Help from '../layouts/Help';
 import Logout from '../layouts/Logout';
 import PrivateRoute from './PrivateRoute';
+import PublicRoute from './PublicRoute';
 import NotFound from '../layouts/NotFound';
 import Workouts from '../layouts/Workouts';
 import Schedule from '../layouts/Schedule';
@@ -14,13 +15,13 @@ import Schedule from '../layouts/Schedule';
 const AppRouter = () => {
     return (
         <Switch>
-            <Route exact path="/" component={Home} />
+            <PublicRoute exact path="/" component={Start} />
             <Redirect exact from="/login" to="/login/signIn" />
-            <Route path="/login/signIn" component={Login} />
-            <Route path="/login/signUp" component={Login} />
+            <PublicRoute path="/login/signIn" component={Login} />
+            <PublicRoute path="/login/signUp" component={Login} />
             <PrivateRoute path="/workouts/:seqNumber?" component={Workouts} />
             <PrivateRoute path="/schedule" component={Schedule} />
-            <PrivateRoute path="/dashboard" component={Dashboard} />
+            <PrivateRoute path="/home" component={Home} />
             <PrivateRoute path="/stats" component={Stats} />
             <PrivateRoute path="/help" component={Help} />
             <Route path="/logout" component={Logout} />
