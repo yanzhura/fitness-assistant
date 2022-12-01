@@ -90,7 +90,7 @@ const Sсhedule = () => {
 
     return (
         <>
-            <h3>Расписание и планировщик</h3>
+            <h3>Расписание</h3>
             <div>
                 <Row justify={'center'}>
                     <Col span={16}>

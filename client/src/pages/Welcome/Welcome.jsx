@@ -3,15 +3,14 @@ import React, { useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { StyledBorderBox } from '../../components/StyledComponents';
 import { hideWelcomPage } from '../../store/user';
+import { helpTopics } from '../../components/HelpTopics';
+import WelcomeSlide from './WelcomeSlide';
+//* styles
 import { CarouselWrapper, StyledButtonsBox, StyledCarouselBox, StyledComponentBox } from './styles';
-
-import { HelpPage1, HelpPage2, HelpPage3, HelpPage4 } from '../HelpTopics';
 
 const Welcome = () => {
     const carousel = useRef();
     const dispatch = useDispatch();
-
-    const components = [<HelpPage1 key={0} />, <HelpPage2 key={1} />, <HelpPage3 key={2} />, <HelpPage4 key={3} />];
 
     const handleNext = () => {
         carousel.current.next();
@@ -21,16 +20,18 @@ const Welcome = () => {
         dispatch(hideWelcomPage());
     };
 
-    const getCarouselElements = () => {
+    const getCarouselElements = (elements) => {
         let keyCounter = 0;
-        return components.map((component, index) => {
-            const handler = index < components.length - 1 ? handleNext : handleFinish;
-            const title = index < components.length - 1 ? 'Далее' : 'Завершить';
+        return elements.map((el, index) => {
+            const handler = index < elements.length - 1 ? handleNext : handleFinish;
+            const title = index < elements.length - 1 ? 'Далее' : 'Завершить';
             keyCounter++;
             return (
                 <div key={keyCounter}>
                     <StyledCarouselBox>
-                        <StyledComponentBox>{component}</StyledComponentBox>
+                        <StyledComponentBox>
+                            <WelcomeSlide title={el.title} body={el.body} />
+                        </StyledComponentBox>
                         <StyledButtonsBox>
                             <Button type="primary" onClick={handler}>
                                 {title}
@@ -46,7 +47,7 @@ const Welcome = () => {
         <Col span={16} offset={4}>
             <Row justify={'center'}>
                 <StyledBorderBox>
-                    <CarouselWrapper ref={carousel}>{getCarouselElements()}</CarouselWrapper>
+                    <CarouselWrapper ref={carousel}>{getCarouselElements(helpTopics)}</CarouselWrapper>
                 </StyledBorderBox>
             </Row>
         </Col>
