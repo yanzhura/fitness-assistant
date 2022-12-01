@@ -5,6 +5,8 @@ import StatsSummary from '../pages/StatsSummary/StatsSummary';
 import { getTrainingPlanErrors, getTrainingPlanLoadingStatus, resetTrainingPlanError } from '../store/trainingPlan';
 import { getUserErrors, getUserLoadingStatus, resetUserError } from '../store/user';
 import showErrorToast from '../utils/errorToast';
+import HelpDrawer from '../components/HelpDrawer/HelpDrawer';
+import { AboutStats } from '../pages/QuickTour';
 //* styles
 import { StyledBorderBox } from '../components/StyledComponents';
 
@@ -36,6 +38,9 @@ const Stats = () => {
                     </StyledBorderBox>
                 </Row>
             </Col>
+            <HelpDrawer>
+                <AboutStats />
+            </HelpDrawer>
         </div>
     );
 };

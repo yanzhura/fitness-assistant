@@ -1,7 +1,7 @@
 import Title from 'antd/lib/typography/Title';
 import React from 'react';
 
-const WelcomePage4 = () => {
+const HelpPage4 = () => {
     return (
         <div>
             <Title level={3}>Как выполнять упражнения</Title>
@@ -10,4 +10,4 @@ const WelcomePage4 = () => {
     );
 };
 
-export default WelcomePage4;
+export default HelpPage4;

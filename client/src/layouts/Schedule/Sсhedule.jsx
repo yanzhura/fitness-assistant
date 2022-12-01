@@ -8,6 +8,8 @@ import { getUserCompletedWorkouts, getUserCurrentWorkout, getUserSchedule } from
 import { getTrainingPlan } from '../../store/trainingPlan';
 import { Link } from 'react-router-dom';
 import { StyledTag, tagColors } from './styles';
+import HelpDrawer from '../../components/HelpDrawer/HelpDrawer';
+import { AboutSchedule } from '../../pages/QuickTour';
 moment.locale('ru');
 
 const Sсhedule = () => {
@@ -101,6 +103,9 @@ const Sсhedule = () => {
                     </Col>
                 </Row>
             </div>
+            <HelpDrawer>
+                <AboutSchedule />
+            </HelpDrawer>
         </>
     );
 };

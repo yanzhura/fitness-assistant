@@ -4,7 +4,7 @@ import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Col, Divider, Menu, Row } from 'antd';
 import { useSelector } from 'react-redux';
-import { getCurrentUser, getIsLoggedIn, getUserLoadingStatus } from '../../store/user';
+import { getCurrentUser, getIsLoggedIn, getShowQuickTour, getUserLoadingStatus } from '../../store/user';
 import logo from '../../assets/logo.png';
 //* styles
 import { logoImage, logoContainer, profileContainer } from './styles';
@@ -13,6 +13,7 @@ const Navbar = () => {
     const isLoggedIn = useSelector(getIsLoggedIn());
     const isDataLoading = useSelector(getUserLoadingStatus());
     const currentUser = useSelector(getCurrentUser());
+    const isQuickTourOpen = useSelector(getShowQuickTour());
 
     const location = useLocation();
 
@@ -30,10 +31,21 @@ const Navbar = () => {
     const getMenuItems = () => {
         return navItems
             .filter((item) => item.private === isLoggedIn || item.private === 'none')
-            .map((item) => ({
-                key: item.key,
-                label: <Link to={item.path}>{item.label}</Link>
-            }));
+            .map((item) => {
+                let menuItem;
+                if (isQuickTourOpen) {
+                    menuItem = {
+                        key: item.key,
+                        label: item.label
+                    };
+                } else {
+                    menuItem = {
+                        key: item.key,
+                        label: <Link to={item.path}>{item.label}</Link>
+                    };
+                }
+                return menuItem;
+            });
     };
 
     return (
