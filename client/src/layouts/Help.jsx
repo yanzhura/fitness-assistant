@@ -1,19 +1,31 @@
+import { Col, Collapse, Row } from 'antd';
 import React from 'react';
 import HelpDrawer from '../components/HelpDrawer/HelpDrawer';
 import { AboutHelp } from '../pages/QuickTour';
+import { StyledBorderBox } from '../components/StyledComponents';
+import CollapsePanel from 'antd/lib/collapse/CollapsePanel';
+import { helpTopics } from '../components/HelpTopics';
 
 const Help = () => {
+    const getHelpItems = (elements, index) => {
+        return elements.map((el) => (
+            <CollapsePanel key={index} header={el.title}>
+                {el.body}
+            </CollapsePanel>
+        ));
+    };
+
     return (
         <>
             <div>
-                <h2>Страница с помощью</h2>
-                <p>
-                    Сюда переедет вступительное слово и помощь по навигации, после того, как их прощёлкает вновь
-                    зарегистрировавшийся пользователь
-                </p>
-                <p>
-                    Здесь так же будет информация с карточками по каждому упражнению: фото, схемы, аннотация как делать.
-                </p>
+                <h3>Помощь</h3>
+                <Col span={16} offset={4}>
+                    <Row justify={'center'}>
+                        <StyledBorderBox>
+                            <Collapse accordion>{getHelpItems(helpTopics)}</Collapse>
+                        </StyledBorderBox>
+                    </Row>
+                </Col>
             </div>
             <HelpDrawer>
                 <AboutHelp />
