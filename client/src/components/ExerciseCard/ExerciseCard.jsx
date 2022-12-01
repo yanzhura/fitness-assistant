@@ -4,8 +4,8 @@ import { useSelector } from 'react-redux';
 import { getWorkoutByNumber } from '../../store/workouts';
 import BodyPartsTags from '../BodyPartsTags/BodyPartsTags';
 
-const ExerciseCard = ({ workoutNumber, exerciseKey }) => {
-    const workout = useSelector(getWorkoutByNumber(workoutNumber));
+const ExerciseCard = ({ sequenceNumber, exerciseKey }) => {
+    const workout = useSelector(getWorkoutByNumber(sequenceNumber));
     const exercise = workout.exercises[exerciseKey];
     return (
         <div>
@@ -19,7 +19,7 @@ const ExerciseCard = ({ workoutNumber, exerciseKey }) => {
 };
 
 ExerciseCard.propTypes = {
-    workoutNumber: PropTypes.number.isRequired,
+    sequenceNumber: PropTypes.number.isRequired,
     exerciseKey: PropTypes.string.isRequired
 };
 

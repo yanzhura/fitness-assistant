@@ -15,6 +15,7 @@ import Exercise from '../Exercise';
 import { capitalize } from '../../utils/capitalize';
 import customHistory from '../../utils/customHistory';
 import { getWorkoutByNumber } from '../../store/workouts';
+import { useLocation } from 'react-router-dom';
 
 const WorkoutCard = ({ sequenceNumber }) => {
     const dispatch = useDispatch();
@@ -28,6 +29,9 @@ const WorkoutCard = ({ sequenceNumber }) => {
     const userSchedule = useSelector(getUserSchedule());
     const currentWorkoutSchedule = useSelector(getCurrentWorkoutSchedule());
     const [form] = Form.useForm();
+    const { pathname } = useLocation();
+
+    const isWorkoutCompleted = sequenceNumber <= userCompletedWorkouts;
 
     const lastWorkoutCompleted =
         userCurrentWorkout > 1 &&
@@ -56,7 +60,7 @@ const WorkoutCard = ({ sequenceNumber }) => {
     };
 
     const getCompleteInfo = () => {
-        if (sequenceNumber <= userCompletedWorkouts) {
+        if (isWorkoutCompleted) {
             const completeDate = userSchedule[`workout${sequenceNumber}`].date;
             return <p>{`Тренировка завершена ${moment(completeDate).format('DD MMMM YYYY')} г.`}</p>;
         } else if (sequenceNumber === 1 && currentWorkoutSchedule.date === 0) {
@@ -74,7 +78,7 @@ const WorkoutCard = ({ sequenceNumber }) => {
 
     const getExercisesElements = () => {
         return Object.keys(exercises).map((key) => {
-            return <Exercise key={key} workoutNumber={sequenceNumber} exerciseKey={key} />;
+            return <Exercise key={key} sequenceNumber={sequenceNumber} exerciseKey={key} />;
         });
     };
 
@@ -142,7 +146,7 @@ const WorkoutCard = ({ sequenceNumber }) => {
 
     return (
         <div>
-            <Button onClick={handleBackButton}>Назад</Button>
+            {pathname !== '/home' && <Button onClick={handleBackButton}>Назад</Button>}
             <div>
                 <p>Номер: {sequenceNumber}</p>
                 <p>Сложность: {complexityLevel}</p>

@@ -1,12 +1,25 @@
-import Title from 'antd/lib/typography/Title';
+import { Button, Result } from 'antd';
 import React from 'react';
+import customHistory from '../../utils/customHistory';
 
 const CompleteCongrats = () => {
+    const handleClick = () => {
+        customHistory.push('/stats');
+    };
+
     return (
-        <div>
-            <Title level={2}>Поздравляем!</Title>
-            <p>Вы закончили тренировочную программу!</p>
-        </div>
+        <>
+            <Result
+                status="success"
+                title="Поздравляем! Вы закончили тренировочную программу!"
+                subTitle="Посмотрите на ваши итоговые результаты и прогресс."
+                extra={
+                    <Button type="primary" onClick={handleClick}>
+                        К статистике
+                    </Button>
+                }
+            />
+        </>
     );
 };
 

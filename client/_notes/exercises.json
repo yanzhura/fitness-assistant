@@ -147,7 +147,7 @@
         "bodyParts": ["bodyPart07", "bodyPart08"],
         "level": 1,
         "name": "скручивания с наклоном вперёд",
-        "bodyWeight": false
+        "bodyWeight": true
     },
     "exercise26": {
         "bodyParts": ["bodyPart07", "bodyPart08"],
