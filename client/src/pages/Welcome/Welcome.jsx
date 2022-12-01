@@ -4,21 +4,14 @@ import { useDispatch } from 'react-redux';
 import { StyledBorderBox } from '../../components/StyledComponents';
 import { hideWelcomPage } from '../../store/user';
 import { CarouselWrapper, StyledButtonsBox, StyledCarouselBox, StyledComponentBox } from './styles';
-import WelcomePage1 from './WelcomePage1';
-import WelcomePage2 from './WelcomePage2';
-import WelcomePage3 from './WelcomePage3';
-import WelcomePage4 from './WelcomePage4';
+
+import { HelpPage1, HelpPage2, HelpPage3, HelpPage4 } from '../HelpTopics';
 
 const Welcome = () => {
     const carousel = useRef();
     const dispatch = useDispatch();
 
-    const components = [
-        <WelcomePage1 key={0} />,
-        <WelcomePage2 key={1} />,
-        <WelcomePage3 key={2} />,
-        <WelcomePage4 key={3} />
-    ];
+    const components = [<HelpPage1 key={0} />, <HelpPage2 key={1} />, <HelpPage3 key={2} />, <HelpPage4 key={3} />];
 
     const handleNext = () => {
         carousel.current.next();

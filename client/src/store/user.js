@@ -13,7 +13,8 @@ const getInitialState = () => {
             userData: null,
             isLoggedIn: true,
             isLoading: true,
-            error: null
+            error: null,
+            quickTourPage: 0
         };
     } else {
         return {
@@ -21,7 +22,8 @@ const getInitialState = () => {
             userData: null,
             isLoggedIn: false,
             isLoading: true,
-            error: null
+            error: null,
+            quickTourPage: 0
         };
     }
 };
@@ -128,6 +130,9 @@ const userSlice = createSlice({
         },
         quickTourHidden: (state) => {
             state.userData.showQuickTour = false;
+        },
+        quickTourPageChanged: (state) => {
+            state.quickTourPage = state.quickTourPage + 1;
         }
     }
 });
@@ -155,7 +160,8 @@ const {
     trainingStarted,
     trainingFinished,
     welcomePageHidden,
-    quickTourHidden
+    quickTourHidden,
+    quickTourPageChanged
 } = actions;
 
 export const login = (userData) => async (dispatch) => {
@@ -260,15 +266,21 @@ export const resetUserError = () => (dispatch) => {
     dispatch(userErrorReset());
 };
 
-export const hideWelcomPage = () => async (dispatch) => {
+export const hideWelcomPage = () => (dispatch) => {
     dispatch(welcomePageHidden());
     dispatch(updateUser());
 };
 
-export const hideQuickTour = () => async (dispatch) => {
+export const hideQuickTour = () => (dispatch) => {
     dispatch(quickTourHidden());
     dispatch(updateUser());
 };
+
+export const nextQuickTourPage = () => (dispatch) => {
+    dispatch(quickTourPageChanged());
+};
+
+// Selectors
 
 export const getIsLoggedIn = () => (state) => state.user.isLoggedIn;
 export const getUserLoadingStatus = () => (state) => state.user.isLoading;
@@ -292,5 +304,6 @@ export const getUserTrainingStatus = () => (state) => ({
 });
 export const getShowWelcomePage = () => (state) => state.user.userData?.showWelcomePage;
 export const getShowQuickTour = () => (state) => state.user.userData?.showQuickTour;
+export const getQuickTourPage = () => (state) => state.user.quickTourPage;
 
 export default userReducer;

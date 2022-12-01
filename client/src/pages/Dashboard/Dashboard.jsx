@@ -1,3 +1,5 @@
+/** @jsxImportSource @emotion/react */
+
 import React from 'react';
 import { Col, Divider, Row } from 'antd';
 import { useSelector } from 'react-redux';
@@ -7,13 +9,15 @@ import { StyledBorderBox } from '../../components/StyledComponents';
 import WorkoutCard from '../../components/WorkoutCard';
 import WorkoutSteps from '../../components/WorkoutSteps';
 import { getUserCurrentWorkout, getUserTrainingStatus } from '../../store/user';
+import HelpDrawer from '../../components/HelpDrawer/HelpDrawer';
+import { AboutHome } from '../QuickTour';
 
 const Dashboard = () => {
     const { trainingFinishedAt } = useSelector(getUserTrainingStatus());
     const userCurrentWorkout = useSelector(getUserCurrentWorkout());
 
     return (
-        <div>
+        <>
             <h3>Сводная информация</h3>
             <div>
                 <Row justify={'center'}>
@@ -49,7 +53,10 @@ const Dashboard = () => {
                     </Col>
                 </Row>
             </div>
-        </div>
+            <HelpDrawer>
+                <AboutHome />
+            </HelpDrawer>
+        </>
     );
 };
 
