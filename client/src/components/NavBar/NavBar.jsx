@@ -1,13 +1,11 @@
-/** @jsxImportSource @emotion/react */
-
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Col, Divider, Menu, Row } from 'antd';
+import { Divider, Menu } from 'antd';
 import { useSelector } from 'react-redux';
 import { getCurrentUser, getIsLoggedIn, getShowQuickTour, getUserLoadingStatus } from '../../store/user';
-import logo from '../../assets/logo.png';
 //* styles
-import { logoImage, logoContainer, profileContainer } from './styles';
+import { Logo, LogoWrapper, menuOverride, MenuWrapper, Profile } from './styles';
+import logo from '../../assets/logo4.png';
 
 const Navbar = () => {
     const isLoggedIn = useSelector(getIsLoggedIn());
@@ -48,26 +46,30 @@ const Navbar = () => {
             });
     };
 
+    console.log('menuOverride :>> ', menuOverride);
+
     return (
-        <Row>
-            <Col span={3}>
-                <div css={logoContainer}>
-                    <img src={logo} css={logoImage} />
-                </div>
-            </Col>
-            <Col span={17}>
-                <Menu theme="dark" mode="horizontal" items={getMenuItems()} selectedKeys={currentNavKey} />
-            </Col>
-            <Col span={4}>
-                <div css={profileContainer}>
-                    {isLoggedIn && !isDataLoading && (
-                        <>
-                            {currentUser.userData.name} <Divider type="vertical" /> <Link to="/logout">Выход</Link>
-                        </>
-                    )}
-                </div>
-            </Col>
-        </Row>
+        <>
+            <LogoWrapper>
+                <Logo src={logo} />
+            </LogoWrapper>
+            <MenuWrapper>
+                <Menu
+                    theme="dark"
+                    mode="horizontal"
+                    items={getMenuItems()}
+                    selectedKeys={currentNavKey}
+                    style={menuOverride}
+                />
+            </MenuWrapper>
+            <Profile>
+                {isLoggedIn && !isDataLoading && (
+                    <>
+                        {currentUser.userData.name} <Divider type="vertical" /> <Link to="/logout">Выход</Link>
+                    </>
+                )}
+            </Profile>
+        </>
     );
 };
 

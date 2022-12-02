@@ -1,23 +1,32 @@
-import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 
-export const logoContainer = css`
-    display: flex;
-    justify-content: center;
-    align-items: center;
+export const LogoWrapper = styled.div`
     height: 100%;
-    width: 100%;
+    padding-top: 10px;
+    padding-bottom: 10px;
 `;
 
-export const logoImage = css`
-    height: 50px;
+export const Logo = styled.img`
+    max-width: 100%;
+    max-height: 100%;
 `;
 
-export const profileContainer = css`
+export const MenuWrapper = styled.div`
+    height: 100%;
+    flex-grow: 1;
+`;
+
+export const Profile = styled.div`
+    height: 100%;
+    width: 200px;
     display: flex;
     justify-content: flex-end;
-    padding-right: 20px;
     align-items: center;
-    height: 100%;
-    width: 100%;
     color: #ffffff;
 `;
+
+export const menuOverride = {
+    height: '100%',
+    background: 'rgba(100, 100, 100, 0%)',
+    lineHeight: '110px'
+};
