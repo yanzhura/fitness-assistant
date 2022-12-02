@@ -1,9 +1,11 @@
 import React from 'react';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
-import { Button, Col, Form, Input, Row } from 'antd';
+import { Form, Input } from 'antd';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { createUser } from '../store/user';
+import { createUser } from '../../store/user';
+import { StyledButton, FormWrapper, formOverride, CenteredWrapper } from './styles';
+import { StyledTitle } from '../../components/StyledComponents';
 
 const RegisterPage = () => {
     const dispatch = useDispatch();
@@ -13,9 +15,16 @@ const RegisterPage = () => {
     };
 
     return (
-        <Row justify={'center'}>
-            <Col span={8}>
+        <CenteredWrapper>
+            <FormWrapper>
+                <StyledTitle level="3">Регистрация</StyledTitle>
                 <Form
+                    style={formOverride}
+                    requiredMark="optional"
+                    labelAlign="left"
+                    labelWrap={true}
+                    colon={false}
+                    layout="horizontal"
                     name="registerForm"
                     onFinish={onFinish}
                     labelCol={{
@@ -110,24 +119,16 @@ const RegisterPage = () => {
                             offset: 8,
                             span: 16
                         }}>
-                        <Button type="primary" htmlType="submit" className="login-form-button">
+                        <StyledButton type="primary" htmlType="submit" className="login-form-button">
                             Регистрация
-                        </Button>{' '}
-                    </Form.Item>
-
-                    <Form.Item
-                        wrapperCol={{
-                            offset: 8,
-                            span: 16
-                        }}>
-                        ... или{' '}
-                        <Link to="/login/signIn">
-                            <span>войдите, если у вас уже есть учётная запись.</span>
-                        </Link>
+                        </StyledButton>
                     </Form.Item>
                 </Form>
-            </Col>
-        </Row>
+                <Link to="/login/signIn">
+                    <span>...войдите, если у вас уже есть учётная запись.</span>
+                </Link>
+            </FormWrapper>
+        </CenteredWrapper>
     );
 };
 

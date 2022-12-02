@@ -1,9 +1,11 @@
 import React from 'react';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
-import { Button, Col, Form, Input, Row } from 'antd';
+import { Form, Input } from 'antd';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { login } from '../store/user';
+import { login } from '../../store/user';
+import { StyledButton, FormWrapper, formOverride, CenteredWrapper } from './styles';
+import { StyledTitle } from '../../components/StyledComponents';
 
 const LoginPage = () => {
     const dispatch = useDispatch();
@@ -13,9 +15,16 @@ const LoginPage = () => {
     };
 
     return (
-        <Row justify={'center'}>
-            <Col span={8}>
+        <CenteredWrapper>
+            <FormWrapper>
+                <StyledTitle level="3">Вход</StyledTitle>
                 <Form
+                    style={formOverride}
+                    requiredMark="optional"
+                    labelAlign="left"
+                    labelWrap={true}
+                    colon={false}
+                    layout="horizontal"
                     name="loginForm"
                     onFinish={onFinish}
                     labelCol={{
@@ -31,11 +40,11 @@ const LoginPage = () => {
                         rules={[
                             {
                                 required: true,
-                                message: 'Для входа указажите ваш E-mail '
+                                message: 'Для регистрации необходим Ваш E-mail '
                             },
                             {
                                 type: 'email',
-                                message: 'Неверный формат адреса электроной почты '
+                                message: 'Неверный формат адреса электронной почты '
                             }
                         ]}>
                         <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="E-mail" />
@@ -49,6 +58,10 @@ const LoginPage = () => {
                             {
                                 required: true,
                                 message: 'Пароль не может быть пустым'
+                            },
+                            {
+                                min: 8,
+                                message: 'Минимальная длина пароля 8 символов'
                             }
                         ]}>
                         <Input.Password
@@ -63,24 +76,16 @@ const LoginPage = () => {
                             offset: 8,
                             span: 16
                         }}>
-                        <Button type="primary" htmlType="submit" className="login-form-button">
-                            Войти
-                        </Button>{' '}
-                    </Form.Item>
-
-                    <Form.Item
-                        wrapperCol={{
-                            offset: 8,
-                            span: 16
-                        }}>
-                        ... или{' '}
-                        <Link to="/login/signUp">
-                            <span>зарегистрируйтесь, если у вас нет учётной записи.</span>
-                        </Link>
+                        <StyledButton type="primary" htmlType="submit" className="login-form-button">
+                            Вход
+                        </StyledButton>
                     </Form.Item>
                 </Form>
-            </Col>
-        </Row>
+                <Link to="/login/signUp">
+                    <span>...зарегистрируйтесь, если у вас нет учётной записи.</span>
+                </Link>
+            </FormWrapper>
+        </CenteredWrapper>
     );
 };
 

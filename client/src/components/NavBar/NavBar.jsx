@@ -5,7 +5,8 @@ import { useSelector } from 'react-redux';
 import { getCurrentUser, getIsLoggedIn, getShowQuickTour, getUserLoadingStatus } from '../../store/user';
 //* styles
 import { Logo, LogoWrapper, menuOverride, MenuWrapper, Profile } from './styles';
-import logo from '../../assets/logo4.png';
+import logo from '../../assets/logoWithText.png';
+import EnterButtons from '../EnterButtons/EnterButtons';
 
 const Navbar = () => {
     const isLoggedIn = useSelector(getIsLoggedIn());
@@ -46,12 +47,12 @@ const Navbar = () => {
             });
     };
 
-    console.log('menuOverride :>> ', menuOverride);
-
     return (
         <>
             <LogoWrapper>
-                <Logo src={logo} />
+                <Link to={'/'}>
+                    <Logo src={logo} />
+                </Link>
             </LogoWrapper>
             <MenuWrapper>
                 <Menu
@@ -63,10 +64,12 @@ const Navbar = () => {
                 />
             </MenuWrapper>
             <Profile>
-                {isLoggedIn && !isDataLoading && (
+                {isLoggedIn && !isDataLoading ? (
                     <>
                         {currentUser.userData.name} <Divider type="vertical" /> <Link to="/logout">Выход</Link>
                     </>
+                ) : (
+                    <EnterButtons />
                 )}
             </Profile>
         </>

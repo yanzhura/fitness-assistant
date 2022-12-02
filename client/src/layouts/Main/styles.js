@@ -10,18 +10,22 @@ export const MainWrapper = styled.div`
 `;
 
 export const HeaderWrapper = styled.div`
+    position: fixed;
+    width: 100%;
+    top: 0;
     display: flex;
     height: 110px;
     padding-left: 20px;
     padding-right: 20px;
     background: ${gray[9]};
     gap: 20px;
+    z-index: 1;
 `;
 
 export const Body = styled.div`
     display: flex;
     flex-direction: column;
-    flex-grow: 1;
+    min-height: 100vh;
 `;
 
 export const Footer = styled.div`
