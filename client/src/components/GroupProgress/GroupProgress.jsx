@@ -80,30 +80,33 @@ const GroupProgress = () => {
     const { graphData, graphKeys } = getGraphData();
 
     return (
-        <div>
-            <StyledGraphBox>
-                <Title level={3}>Прогресс по группам</Title>
-                <ResponsiveBar
-                    data={graphData}
-                    keys={graphKeys}
-                    indexBy="exerciseGroup"
-                    margin={{ top: 30, right: 50, bottom: 100, left: 50 }}
-                    groupMode="grouped"
-                    colors={({ id, data }) => {
-                        return String(data[`${id}Color`]);
-                    }}
-                    borderWidth={1}
-                    borderColor={{
-                        from: 'color',
-                        modifiers: [['darker', 0.2]]
-                    }}
-                    enableLabel={false}
-                    axisLeft={null}
-                    axisBottom={{ legend: 'Группы упражнений', legendPosition: 'middle', legendOffset: 40 }}
-                    isInteractive={false}
-                />
-            </StyledGraphBox>
-        </div>
+        <StyledGraphBox>
+            <Title level={4}>Прогресс по группам</Title>
+            <ResponsiveBar
+                data={graphData}
+                keys={graphKeys}
+                indexBy="exerciseGroup"
+                margin={{ top: 30, right: 50, bottom: 100, left: 50 }}
+                groupMode="grouped"
+                colors={({ id, data }) => {
+                    return String(data[`${id}Color`]);
+                }}
+                borderWidth={1}
+                borderColor={{
+                    from: 'color',
+                    modifiers: [['darker', 0.2]]
+                }}
+                enableLabel={false}
+                axisLeft={null}
+                axisBottom={{
+                    legend: 'Группы упражнений',
+                    legendPosition: 'middle',
+                    legendOffset: 60,
+                    tickRotation: 15
+                }}
+                isInteractive={false}
+            />
+        </StyledGraphBox>
     );
 };
 

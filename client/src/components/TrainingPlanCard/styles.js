@@ -1,5 +1,6 @@
-import { css } from '@emotion/react';
 import { lime, volcano, grey } from '@ant-design/colors';
+import styled from '@emotion/styled';
+import { Card } from 'antd';
 
 export const headStyles = {
     completed: {
@@ -13,7 +14,9 @@ export const headStyles = {
     }
 };
 
-export const cardOverride = css`
-    height: 100%;
+export const StyledCard = styled(Card)`
+    height: 200px;
+    width: 280px;
     border-radius: 5px;
+    overflow: hidden;
 `;

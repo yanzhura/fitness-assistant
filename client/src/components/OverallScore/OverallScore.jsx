@@ -53,7 +53,7 @@ const OverallScore = () => {
     return (
         <div>
             <StyledGraphBox>
-                <Title level={3}>Общий прогресс в баллах</Title>
+                <Title level={4}>Общий прогресс в баллах</Title>
                 <ResponsiveLine
                     data={data}
                     margin={{ top: 30, right: 50, bottom: 100, left: 50 }}

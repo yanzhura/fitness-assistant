@@ -1,11 +1,10 @@
-/** @jsxImportSource @emotion/react */
-
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Card } from 'antd';
+// import { Card } from 'antd';
 import { Link } from 'react-router-dom';
 //* styles
-import { headStyles, cardOverride } from './styles';
+import { StyledCard } from './styles';
+import CompleteIcon from '../../ui/icons/CompleteIcon';
 
 const TrainingPlanCard = ({
     sequenceNumber,
@@ -17,16 +16,11 @@ const TrainingPlanCard = ({
 }) => {
     return (
         <Link to={`/workouts/${sequenceNumber}`}>
-            <Card
-                title={`Тренировка ${sequenceNumber}`}
-                extra={<p>{typeName}</p>}
-                size={'small'}
-                headStyle={headStyles[completeStatus]}
-                css={cardOverride}>
+            <StyledCard title={<CompleteIcon />} extra={<p>{typeName}</p>} size={'small'}>
                 <p>Вид: {kindName}</p>
                 <p>Сложность: {complexityLevel}</p>
                 <p>Виды упражнений: {exerciseGroupNames}</p>
-            </Card>
+            </StyledCard>
         </Link>
     );
 };

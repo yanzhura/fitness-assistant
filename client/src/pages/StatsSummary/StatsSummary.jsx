@@ -1,19 +1,26 @@
-import { Divider } from 'antd';
 import React from 'react';
 import GroupProgress from '../../components/GroupProgress/GroupProgress';
 import OverallScore from '../../components/OverallScore';
 import ProgressBar from '../../components/ProgressBar';
 import TrainingStats from '../../components/TrainingStats';
+import { StatBox } from './styles';
 
 const StatsSummary = () => {
     return (
-        <div>
-            <ProgressBar />
-            <TrainingStats />
-            <GroupProgress />
-            <Divider />
-            <OverallScore />
-        </div>
+        <>
+            <StatBox>
+                <ProgressBar />
+            </StatBox>
+            <StatBox>
+                <TrainingStats />
+            </StatBox>
+            <StatBox>
+                <GroupProgress />
+            </StatBox>
+            <StatBox>
+                <OverallScore />
+            </StatBox>
+        </>
     );
 };
 

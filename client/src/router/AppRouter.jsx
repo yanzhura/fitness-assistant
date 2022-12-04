@@ -7,7 +7,7 @@ import Login from '../layouts/Login';
 import Start from '../layouts/Start';
 import Stats from '../layouts/Stats';
 import Home from '../layouts/Home';
-import Help from '../layouts/Help';
+import Help from '../layouts/Help/Help';
 import NotFound from '../layouts/NotFound';
 import Workouts from '../layouts/Workouts';
 import Schedule from '../layouts/Schedule';

@@ -18,7 +18,7 @@ const ProgressBar = () => {
 
     return (
         <>
-            <Title level={3}>Тренировки</Title>
+            <Title level={4}>Тренировки</Title>
             <Space>
                 <Statistic title="Выполнено" value={userCompletedWorkouts} />
                 <Statistic title="Всего" value={workoutsTotal} />

@@ -86,7 +86,7 @@ const TrainingStats = () => {
 
     return (
         <>
-            <Title level={3}>Продолжительность</Title>
+            <Title level={4}>Продолжительность</Title>
             <Steps current={current} percent={percent} labelPlacement="horizontal" items={items} />
         </>
     );

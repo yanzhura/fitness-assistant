@@ -1,6 +1,7 @@
 import { Spin } from 'antd';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { LayoutColumn, LayoutWrapper } from '../../components/StyledComponents';
 import Dashboard from '../../pages/Dashboard/Dashboard';
 import Welcome from '../../pages/Welcome/Welcome';
 import { getTrainingPlanErrors, getTrainingPlanLoadingStatus, resetTrainingPlanError } from '../../store/trainingPlan';
@@ -56,7 +57,13 @@ const Home = () => {
 
     const isDataReady = !userLoadingStatus && !workoutLoadingStatus && !trainigplanLoadingStatus && workout;
 
-    return <div>{!isDataReady ? <Spin /> : <>{isWelcomePageOpen ? <Welcome /> : <Dashboard />}</>}</div>;
+    return (
+        <LayoutWrapper>
+            <LayoutColumn>
+                {!isDataReady ? <Spin /> : <>{isWelcomePageOpen ? <Welcome /> : <Dashboard />}</>}
+            </LayoutColumn>
+        </LayoutWrapper>
+    );
 };
 
 export default Home;
