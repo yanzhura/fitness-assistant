@@ -1,181 +1,211 @@
 [
     {
-        "bodyParts": ["bodyPart01", "bodyPart02"],
+        "bodyParts": ["грудь", "трицепс"],
         "bodyWeight": true,
+        "group": "горизонтальный жим",
         "level": 1,
         "name": "отжимания от пола"
     },
     {
-        "bodyParts": ["bodyPart01", "bodyPart02"],
+        "bodyParts": ["грудь", "трицепс"],
         "bodyWeight": false,
+        "group": "горизонтальный жим",
         "level": 2,
         "name": "жим гантелей от груди лёжа"
     },
     {
-        "bodyParts": ["bodyPart01", "bodyPart02"],
+        "bodyParts": ["грудь", "трицепс"],
         "bodyWeight": false,
+        "group": "горизонтальный жим",
         "level": 3,
         "name": "жим штанги от груди лёжа"
     },
     {
-        "bodyParts": ["bodyPart01", "bodyPart02", "bodyPart03"],
+        "bodyParts": ["плечи", "трицепс", "грудь"],
         "bodyWeight": false,
+        "group": "вертикальный жим",
         "level": 1,
-        "name": "жим гантелей одной рукой"
+        "name": "жим одной гантели над головой"
     },
     {
-        "bodyParts": ["bodyPart01", "bodyPart02", "bodyPart03"],
+        "bodyParts": ["плечи", "трицепс", "грудь"],
         "bodyWeight": false,
+        "group": "вертикальный жим",
         "level": 2,
-        "name": "жим гантелей двумя руками"
+        "name": "жим гантелей над головой"
     },
     {
-        "bodyParts": ["bodyPart01", "bodyPart02", "bodyPart03"],
+        "bodyParts": ["плечи", "трицепс", "грудь"],
         "bodyWeight": false,
+        "group": "вертикальный жим",
         "level": 3,
         "name": "жим штанги над головой"
     },
     {
-        "bodyParts": ["bodyPart04", "bodyPart05"],
+        "bodyParts": ["спина", "бицепс"],
         "bodyWeight": false,
+        "group": "горизонтальная тяга",
         "level": 1,
         "name": "тяга гантелей на наклонной скамье"
     },
     {
-        "bodyParts": ["bodyPart04", "bodyPart05"],
+        "bodyParts": ["спина", "бицепс"],
         "bodyWeight": false,
+        "group": "горизонтальная тяга",
         "level": 2,
         "name": "тяга гантели в наклоне одной рукой"
     },
     {
-        "bodyParts": ["bodyPart04", "bodyPart05"],
+        "bodyParts": ["спина", "бицепс"],
         "bodyWeight": false,
+        "group": "горизонтальная тяга",
         "level": 3,
         "name": "тяга штанги в наклоне"
     },
     {
-        "bodyParts": ["bodyPart04", "bodyPart05"],
+        "bodyParts": ["спина", "бицепс"],
         "bodyWeight": false,
+        "group": "вертикальная тяга",
         "level": 1,
         "name": "тяга верхнего блока"
     },
     {
-        "bodyParts": ["bodyPart04", "bodyPart05"],
+        "bodyParts": ["спина", "бицепс"],
         "bodyWeight": true,
+        "group": "вертикальная тяга",
         "level": 2,
         "name": "подтягивания на турнике с резинкой"
     },
     {
-        "bodyParts": ["bodyPart04", "bodyPart05"],
+        "bodyParts": ["спина", "бицепс"],
         "bodyWeight": true,
+        "group": "вертикальная тяга",
         "level": 3,
         "name": "подтягивания на турнике"
     },
     {
-        "bodyParts": ["bodyPart06"],
+        "bodyParts": ["ноги"],
         "bodyWeight": false,
+        "group": "разгибания бёдер",
         "level": 1,
         "name": "тяга нижнего блока между ног"
     },
     {
-        "bodyParts": ["bodyPart06"],
+        "bodyParts": ["ноги"],
         "bodyWeight": false,
+        "group": "разгибания бёдер",
         "level": 2,
         "name": "румынская тяга"
     },
     {
-        "bodyParts": ["bodyPart06"],
+        "bodyParts": ["ноги"],
         "bodyWeight": false,
+        "group": "разгибания бёдер",
         "level": 3,
         "name": "становая тяга"
     },
     {
-        "bodyParts": ["bodyPart06"],
+        "bodyParts": ["ноги"],
         "bodyWeight": false,
+        "group": "приседания",
         "level": 1,
         "name": "приседания плие с гантелей"
     },
     {
-        "bodyParts": ["bodyPart06"],
+        "bodyParts": ["ноги"],
         "bodyWeight": false,
+        "group": "приседания",
         "level": 2,
         "name": "приседания с гантелей у груди"
     },
     {
-        "bodyParts": ["bodyPart06"],
+        "bodyParts": ["ноги"],
         "bodyWeight": false,
+        "group": "приседания",
         "level": 3,
         "name": "приседания со штангой"
     },
     {
-        "bodyParts": ["bodyPart06"],
+        "bodyParts": ["ноги"],
         "bodyWeight": true,
+        "group": "статические выпады",
         "level": 1,
-        "name": "выпады"
+        "name": "выпады вперёд"
     },
     {
-        "bodyParts": ["bodyPart06"],
+        "bodyParts": ["ноги"],
         "bodyWeight": false,
+        "group": "статические выпады",
         "level": 2,
-        "name": "выпады с гантелями"
+        "name": "выпады вперёд с гантелями"
     },
     {
-        "bodyParts": ["bodyPart06"],
+        "bodyParts": ["ноги"],
         "bodyWeight": false,
+        "group": "статические выпады",
         "level": 3,
-        "name": "болгарские приседания"
+        "name": "болгарские приседания с гантелями"
     },
     {
-        "bodyParts": ["bodyPart06"],
+        "bodyParts": ["ноги"],
         "bodyWeight": true,
+        "group": "динамические выпады",
         "level": 1,
         "name": "выпады назад"
     },
     {
-        "bodyParts": ["bodyPart06"],
+        "bodyParts": ["ноги"],
         "bodyWeight": false,
+        "group": "динамические выпады",
         "level": 2,
         "name": "выпады назад с гантелей"
     },
     {
-        "bodyParts": ["bodyPart06"],
+        "bodyParts": ["ноги"],
         "bodyWeight": false,
+        "group": "динамические выпады",
         "level": 3,
         "name": "выпады назад с двумя гантелями"
     },
     {
-        "bodyParts": ["bodyPart07", "bodyPart08"],
-        "bodyWeight": false,
+        "bodyParts": ["кор", "поясница"],
+        "bodyWeight": true,
+        "group": "скручивания",
         "level": 1,
         "name": "скручивания с наклоном вперёд"
     },
     {
-        "bodyParts": ["bodyPart07", "bodyPart08"],
+        "bodyParts": ["кор", "поясница"],
         "bodyWeight": true,
+        "group": "скручивания",
         "level": 2,
         "name": "скручивания с подтягиванием колена"
     },
     {
-        "bodyParts": ["bodyPart07", "bodyPart08"],
+        "bodyParts": ["кор", "поясница"],
         "bodyWeight": true,
+        "group": "скручивания",
         "level": 3,
         "name": "подтягивания коленей к груди в висе на турнике"
     },
     {
-        "bodyParts": ["bodyPart07", "bodyPart08"],
+        "bodyParts": ["кор", "поясница"],
         "bodyWeight": false,
+        "group": "пронос тяжестей",
         "level": 1,
         "name": "прогулка фермера с одной гантелей"
     },
     {
-        "bodyParts": ["bodyPart07", "bodyPart08"],
+        "bodyParts": ["кор", "поясница"],
         "bodyWeight": false,
+        "group": "пронос тяжестей",
         "level": 2,
         "name": "прогулка фермера с двумя гантелями"
     },
     {
-        "bodyParts": ["bodyPart07", "bodyPart08"],
+        "bodyParts": ["кор", "поясница"],
         "bodyWeight": false,
+        "group": "пронос тяжестей",
         "level": 3,
         "name": "прогулка фермера с гантелями над головой"
     }

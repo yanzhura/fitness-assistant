@@ -2,8 +2,9 @@ const { Schema, model } = require('mongoose');
 
 const schema = new Schema(
     {
-        bodyParts: [{ type: Schema.Types.ObjectId, ref: 'BodyPart', required: true }],
+        bodyParts: [{ type: String, required: true }],
         bodyWeight: { type: Boolean, required: true },
+        group: { type: String, required: true },
         level: { type: Number, required: true },
         name: { type: String, required: true }
     },
