@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 
 const LayoutColumn = styled.div`
     height: fit-content;
-    width: 50%;
+    width: 920px;
     padding: 120px 20px 20px 20px;
     flex-grow: 1;
     display: flex;

@@ -3,19 +3,20 @@ import { useSelector } from 'react-redux';
 import { Divider, Pagination, Spin } from 'antd';
 import { getTrainingPlan, getTrainingPlanLoadingStatus } from '../../store/trainingPlan';
 import TrainingPlanCard from '../../components/TrainingPlanCard';
-import { getUserCompletedWorkouts, getUserCurrentWorkout } from '../../store/user';
+import { getUserCompletedWorkouts, getUserCurrentWorkout, getCurrentWorkoutSchedule } from '../../store/user';
 import { StyledTitle } from '../../components/StyledComponents';
 import { PlanWrapper } from './styles';
 
 const TrainingPlan = () => {
     const trainingPlan = useSelector(getTrainingPlan());
     const trainingPlanLoadingStatus = useSelector(getTrainingPlanLoadingStatus());
-    const currentUserWorkout = useSelector(getUserCurrentWorkout());
+    const userCurrentWorkout = useSelector(getUserCurrentWorkout());
     const userCompletedWorkouts = useSelector(getUserCompletedWorkouts());
+    const currentWorkoutSchedule = useSelector(getCurrentWorkoutSchedule());
 
     const totalPages = trainingPlan ? trainingPlan.length : 1;
     const pageSize = 9;
-    const initialPage = Math.ceil(currentUserWorkout / pageSize);
+    const initialPage = Math.ceil(userCurrentWorkout / pageSize);
 
     const [currentPage, setCurrentPage] = useState(initialPage || 1);
 
@@ -29,17 +30,24 @@ const TrainingPlan = () => {
 
     const getWorkoutCards = () => {
         return getTrainingPlanPage().map((workout) => {
+            const isWorkoutCompleted = workout.sequenceNumber <= userCompletedWorkouts;
             let completeStatus;
-            if (workout.sequenceNumber <= userCompletedWorkouts) {
+            let plannedStatus;
+            if (isWorkoutCompleted) {
                 completeStatus = 'completed';
-            } else if (workout.sequenceNumber === userCompletedWorkouts + 1) {
+            } else if (workout.sequenceNumber === 1 && currentWorkoutSchedule.date === 0) {
+                completeStatus = 'incompleted';
+            } else if (workout.sequenceNumber === userCurrentWorkout) {
                 completeStatus = 'current';
+                if (currentWorkoutSchedule) {
+                    plannedStatus = 'planned';
+                }
             } else {
                 completeStatus = 'incompleted';
             }
             return (
                 <div key={workout.sequenceNumber}>
-                    <TrainingPlanCard {...workout} completeStatus={completeStatus} />
+                    <TrainingPlanCard {...workout} {...{ completeStatus, plannedStatus }} />
                 </div>
             );
         });

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Calendar, Divider } from 'antd';
-import { LeftOutlined, CarryOutOutlined, RightOutlined } from '@ant-design/icons';
+import { Calendar } from 'antd';
 import moment from 'moment';
 import 'moment/locale/ru';
 import { useSelector } from 'react-redux';
@@ -9,8 +8,10 @@ import { getTrainingPlan } from '../../store/trainingPlan';
 import { Link } from 'react-router-dom';
 import HelpDrawer from '../../components/HelpDrawer/HelpDrawer';
 import { AboutSchedule } from '../../pages/QuickTour';
-import { ButtonsBox, CalendarHeader, DateBox, StyledTag } from './styles';
+import { ButtonsBox, CalendarHeader, DateBox, IconButton, StyledTag } from './styles';
 import { LayoutColumn, LayoutWrapper, StyledTitle } from '../../components/StyledComponents';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBackward, faForward, faCalendarDay } from '@fortawesome/free-solid-svg-icons';
 
 moment.locale('ru');
 
@@ -42,17 +43,15 @@ const Schedule = () => {
         <CalendarHeader>
             <DateBox>{date.format('DD MMMM YYYY')}</DateBox>
             <ButtonsBox>
-                <Button size="small" onClick={() => handleClick('minus')}>
-                    <LeftOutlined />
-                </Button>
-                <Divider type="vertical" />
-                <Button size="small" onClick={() => handleClick('now')}>
-                    <CarryOutOutlined />
-                </Button>
-                <Divider type="vertical" />
-                <Button size="small" onClick={() => handleClick('plus')}>
-                    <RightOutlined />
-                </Button>
+                <IconButton onClick={() => handleClick('minus')}>
+                    <FontAwesomeIcon icon={faBackward} />
+                </IconButton>
+                <IconButton onClick={() => handleClick('now')}>
+                    <FontAwesomeIcon icon={faCalendarDay} />
+                </IconButton>
+                <IconButton onClick={() => handleClick('plus')}>
+                    <FontAwesomeIcon icon={faForward} />
+                </IconButton>
             </ButtonsBox>
         </CalendarHeader>
     );
@@ -62,7 +61,8 @@ const Schedule = () => {
         const workoutStatus = workoutNumber <= userCompletedWorkouts ? 'completed' : 'current';
         return (
             <Link to={`/workouts/${workoutNumber}`}>
-                <StyledTag status={workoutStatus}>{`Тренировка ${workout.sequenceNumber}${workout.kindName}`}</StyledTag>
+                <StyledTag
+                    status={workoutStatus}>{`Тренировка ${workout.sequenceNumber}${workout.kindName}`}</StyledTag>
             </Link>
         );
     };

@@ -33,4 +33,22 @@ export const DateBox = styled.div`
     color: ${gray[6]};
 `;
 
-export const ButtonsBox = styled.div``;
+export const ButtonsBox = styled.div`
+    margin-bottom: 20px;
+    display: flex;
+    gap: 10px;
+`;
+
+export const IconButton = styled.div`
+    height: 40px;
+    width: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    cursor: pointer;
+    border-style: solid;
+    border-color: #ccc;
+    border-radius: 3px;
+    border-width: 1px;
+`;

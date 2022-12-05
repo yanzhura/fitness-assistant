@@ -1,10 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-// import { Card } from 'antd';
 import { Link } from 'react-router-dom';
+import CardHeader from './CardHeader';
 //* styles
 import { StyledCard } from './styles';
-import CompleteIcon from '../../ui/icons/CompleteIcon';
 
 const TrainingPlanCard = ({
     sequenceNumber,
@@ -12,11 +11,13 @@ const TrainingPlanCard = ({
     kindName,
     typeName,
     exerciseGroupNames,
-    completeStatus
+    completeStatus,
+    plannedStatus
 }) => {
     return (
         <Link to={`/workouts/${sequenceNumber}`}>
-            <StyledCard title={<CompleteIcon />} extra={<p>{typeName}</p>} size={'small'}>
+            <StyledCard title={<CardHeader {...{ completeStatus, plannedStatus, sequenceNumber }} />} size={'small'}>
+                <p>{typeName}</p>
                 <p>Вид: {kindName}</p>
                 <p>Сложность: {complexityLevel}</p>
                 <p>Виды упражнений: {exerciseGroupNames}</p>
@@ -31,7 +32,8 @@ TrainingPlanCard.propTypes = {
     kindName: PropTypes.string.isRequired,
     typeName: PropTypes.string.isRequired,
     exerciseGroupNames: PropTypes.arrayOf(PropTypes.string).isRequired,
-    completeStatus: PropTypes.string.isRequired
+    completeStatus: PropTypes.string.isRequired,
+    plannedStatus: PropTypes.string
 };
 
 export default TrainingPlanCard;
