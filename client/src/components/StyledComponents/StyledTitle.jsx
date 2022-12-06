@@ -18,7 +18,7 @@ const StyledTitle = styled.div((props) => {
         fontFamily: '"Montserrat", "sans-serif"',
         paddingBottom: '20px',
         fontSize: size,
-        color: `${gray[7]}`
+        color: `${gray[8]}`
     };
 });
 

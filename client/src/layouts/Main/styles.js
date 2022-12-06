@@ -19,7 +19,7 @@ export const HeaderWrapper = styled.div`
     padding-right: 20px;
     background: ${gray[9]};
     gap: 20px;
-    z-index: 1;
+    z-index: 10;
 `;
 
 export const Body = styled.div`

@@ -2,8 +2,22 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import CardHeader from './CardHeader';
+import { capitalize } from '../../utils/capitalize';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faDumbbell } from '@fortawesome/free-solid-svg-icons';
 //* styles
-import { StyledCard } from './styles';
+import {
+    BackgroudNumber,
+    DarkBadge,
+    CardBody,
+    CardLine,
+    CardText,
+    StyledCard,
+    Label,
+    LightBadge,
+    GroupsBadges,
+    StyledHr
+} from './styles';
 
 const TrainingPlanCard = ({
     sequenceNumber,
@@ -14,13 +28,39 @@ const TrainingPlanCard = ({
     completeStatus,
     plannedStatus
 }) => {
+    const getExerciseGroups = () => {
+        return exerciseGroupNames.map((g, index) => (
+            <LightBadge key={index}>
+                <FontAwesomeIcon icon={faDumbbell} /> {g}
+            </LightBadge>
+        ));
+    };
+
     return (
         <Link to={`/workouts/${sequenceNumber}`}>
-            <StyledCard title={<CardHeader {...{ completeStatus, plannedStatus, sequenceNumber }} />} size={'small'}>
-                <p>{typeName}</p>
-                <p>Вид: {kindName}</p>
-                <p>Сложность: {complexityLevel}</p>
-                <p>Виды упражнений: {exerciseGroupNames}</p>
+            <StyledCard
+                status={completeStatus}
+                title={<CardHeader {...{ completeStatus, plannedStatus, sequenceNumber }} />}
+                size={'small'}>
+                <CardBody>
+                    <CardText>
+                        <CardLine>
+                            <Label>Уровень сложности</Label>
+                            <DarkBadge>{complexityLevel}</DarkBadge>
+                        </CardLine>
+                        <CardLine>
+                            <Label>Вид тренировки</Label>
+                            <DarkBadge>{capitalize(typeName)}</DarkBadge>
+                        </CardLine>
+                        <StyledHr />
+                        <CardLine>
+                            <Label>Набор упражнений</Label>
+                            <DarkBadge>{kindName}</DarkBadge>
+                        </CardLine>
+                        <GroupsBadges>{getExerciseGroups()}</GroupsBadges>
+                    </CardText>
+                    <BackgroudNumber>{sequenceNumber}</BackgroudNumber>
+                </CardBody>
             </StyledCard>
         </Link>
     );

@@ -62,8 +62,8 @@ const TrainingPlan = () => {
             <StyledTitle level="3">Список тренировок</StyledTitle>
             <PlanWrapper>
                 <>{trainingPlanLoadingStatus ? <Spin /> : getWorkoutCards()}</>
-                <Divider />
             </PlanWrapper>
+            <Divider />
             <Pagination current={currentPage} total={totalPages} onChange={handlePageChange} pageSize={pageSize} />
         </>
     );
