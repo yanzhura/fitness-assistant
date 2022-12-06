@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Calendar } from 'antd';
+import { Button, Calendar } from 'antd';
 import moment from 'moment';
 import 'moment/locale/ru';
 import { useSelector } from 'react-redux';
@@ -8,7 +8,7 @@ import { getTrainingPlan } from '../../store/trainingPlan';
 import { Link } from 'react-router-dom';
 import HelpDrawer from '../../components/HelpDrawer/HelpDrawer';
 import { AboutSchedule } from '../../pages/QuickTour';
-import { ButtonsBox, CalendarHeader, DateBox, IconButton, StyledTag } from './styles';
+import { ButtonsBox, CalendarHeader, DateBox, StyledTag } from './styles';
 import { LayoutColumn, LayoutWrapper, StyledTitle } from '../../components/StyledComponents';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBackward, faForward, faCalendarDay } from '@fortawesome/free-solid-svg-icons';
@@ -43,15 +43,15 @@ const Schedule = () => {
         <CalendarHeader>
             <DateBox>{date.format('DD MMMM YYYY')}</DateBox>
             <ButtonsBox>
-                <IconButton onClick={() => handleClick('minus')}>
+                <Button onClick={() => handleClick('minus')}>
                     <FontAwesomeIcon icon={faBackward} />
-                </IconButton>
-                <IconButton onClick={() => handleClick('now')}>
+                </Button>
+                <Button onClick={() => handleClick('now')}>
                     <FontAwesomeIcon icon={faCalendarDay} />
-                </IconButton>
-                <IconButton onClick={() => handleClick('plus')}>
+                </Button>
+                <Button onClick={() => handleClick('plus')}>
                     <FontAwesomeIcon icon={faForward} />
-                </IconButton>
+                </Button>
             </ButtonsBox>
         </CalendarHeader>
     );

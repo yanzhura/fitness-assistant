@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { Col, Row, Spin } from 'antd';
+import { Spin } from 'antd';
 import {
     getWorkoutByNumber,
     getWorkoutsErrors,
@@ -9,9 +9,9 @@ import {
     loadWorkout,
     resetWorkoutError
 } from '../../store/workouts';
-import WorkoutCard from '../../components/WorkoutCard';
 import showErrorToast from '../../utils/errorToast';
-import { StyledBorderBox } from '../../components/StyledComponents';
+import { WorkoutWrapper } from './styles';
+import WorkoutCard from '../../components/WorkoutCard';
 
 const Workout = () => {
     const dispatch = useDispatch();
@@ -33,13 +33,9 @@ const Workout = () => {
     }, [workoutLoadingErrors]);
 
     return (
-        <Col span={16} offset={4}>
-            <Row justify={'center'}>
-                <StyledBorderBox>
-                    {workoutLoadingStatus || !workout ? <Spin /> : <WorkoutCard sequenceNumber={sequenceNumber} />}
-                </StyledBorderBox>
-            </Row>
-        </Col>
+        <WorkoutWrapper>
+            {workoutLoadingStatus || !workout ? <Spin /> : <WorkoutCard sequenceNumber={sequenceNumber} />}
+        </WorkoutWrapper>
     );
 };
 
