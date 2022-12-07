@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import { blue } from '@ant-design/colors';
 import { Carousel } from 'antd';
+import { gray } from '../../components/StyledComponents';
 
 export const CarouselWrapper = styled(Carousel)`
     > .slick-dots li button {
@@ -15,7 +16,17 @@ export const CarouselWrapper = styled(Carousel)`
     }
 `;
 
-export const StyledCarouselBox = styled.div`
+export const SlideWrapper = styled.div`
+    height: 100%;
+    width: 100%;
+    padding: 10px;
+    border-style: dotted;
+    border-color: ${gray[5]};
+    border-width: 1px;
+    border-radius: 5px;
+`;
+
+export const CarouselBox = styled.div`
     height: 600px;
     padding: 20px;
     display: flex;
@@ -23,11 +34,11 @@ export const StyledCarouselBox = styled.div`
     gap: 20px;
 `;
 
-export const StyledComponentBox = styled.div`
+export const ComponentBox = styled.div`
     height: 100%;
 `;
 
-export const StyledButtonsBox = styled.div`
+export const ButtonsBox = styled.div`
     display: flex;
     justify-content: end;
 `;

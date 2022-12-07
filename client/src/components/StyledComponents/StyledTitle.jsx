@@ -10,15 +10,17 @@ const StyledTitle = styled.div((props) => {
     } else if (props.level === '3') {
         size = '24px';
     } else if (props.level === '4') {
-        size = '12px';
+        size = '18px';
     } else if (props.level === '5') {
-        size = '10px';
+        size = '12px';
     }
+    const fontStyle = props.italic && 'italic';
     return {
         fontFamily: '"Montserrat", "sans-serif"',
         paddingBottom: '20px',
         fontSize: size,
-        color: `${gray[7]}`
+        fontStyle,
+        color: `${gray[8]}`
     };
 });
 

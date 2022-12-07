@@ -4,17 +4,24 @@ import Workout from '../pages/Workout';
 import TrainingPlan from '../pages/TrainingPlan';
 import HelpDrawer from '../components/HelpDrawer/HelpDrawer';
 import { AboutWorkouts } from '../pages/QuickTour';
+import { LayoutColumn, LayoutWrapper } from '../components/StyledComponents';
+import { useSelector } from 'react-redux';
+import { getUserLoadingStatus } from '../store/user';
+import Loader from '../components/Loader/Loader';
 
 const Workouts = () => {
     const { seqNumber } = useParams();
+    const userDataLoadingStatus = useSelector(getUserLoadingStatus());
 
     return (
-        <>
-            <div>{seqNumber ? <Workout /> : <TrainingPlan />}</div>
-            <HelpDrawer>
-                <AboutWorkouts />
-            </HelpDrawer>
-        </>
+        <LayoutWrapper>
+            <LayoutColumn>
+                {userDataLoadingStatus ? <Loader /> : <>{seqNumber ? <Workout /> : <TrainingPlan />}</>}
+                <HelpDrawer>
+                    <AboutWorkouts />
+                </HelpDrawer>
+            </LayoutColumn>
+        </LayoutWrapper>
     );
 };
 

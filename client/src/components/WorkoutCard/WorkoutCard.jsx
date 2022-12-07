@@ -1,21 +1,40 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import { Button, DatePicker, Divider, Modal, Space, message, Form, InputNumber } from 'antd';
-import moment from 'moment';
+import { useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-    completeCurrentWorkout,
-    getUserCurrentWorkout,
-    getUserSchedule,
-    updateUserSchedule,
-    getCurrentWorkoutSchedule,
-    getUserCompletedWorkouts
-} from '../../store/user';
+import PropTypes from 'prop-types';
+import { Button, DatePicker, Divider, Modal, message, Form, InputNumber, Space } from 'antd';
+import moment from 'moment';
+import { completeCurrentWorkout, getUserCurrentWorkout, getUserSchedule, updateUserSchedule } from '../../store/user';
 import Exercise from '../Exercise';
 import { capitalize } from '../../utils/capitalize';
 import customHistory from '../../utils/customHistory';
 import { getWorkoutByNumber } from '../../store/workouts';
-import { useLocation } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCalendarDays, faCircleCheck, faCirclePlay, faDumbbell } from '@fortawesome/free-solid-svg-icons';
+import {
+    CardBody,
+    CardFooter,
+    CardHeader,
+    CardInfo,
+    CardLabels,
+    CardLine,
+    CardStatus,
+    CardWrapper,
+    DarkBadge,
+    CardBadges,
+    HeaderNumber,
+    HeaderText,
+    HeaderTitle,
+    Label,
+    LightBadge,
+    StatusIcon,
+    StatusLine,
+    ExercisesWrapper,
+    FooterPlan,
+    BackgroudNumber
+} from './styles';
+import { blue, lime, orange } from '@ant-design/colors';
+import { gray } from '../StyledComponents';
 
 const WorkoutCard = ({ sequenceNumber }) => {
     const dispatch = useDispatch();
@@ -25,13 +44,11 @@ const WorkoutCard = ({ sequenceNumber }) => {
 
     const { complexityLevel, kindName, typeName, exercises } = useSelector(getWorkoutByNumber(sequenceNumber));
     const userCurrentWorkout = useSelector(getUserCurrentWorkout());
-    const userCompletedWorkouts = useSelector(getUserCompletedWorkouts());
     const userSchedule = useSelector(getUserSchedule());
-    const currentWorkoutSchedule = useSelector(getCurrentWorkoutSchedule());
     const [form] = Form.useForm();
     const { pathname } = useLocation();
 
-    const isWorkoutCompleted = sequenceNumber <= userCompletedWorkouts;
+    const exerciseGroupNames = Object.keys(exercises).map((key) => exercises[key].group);
 
     const lastWorkoutCompleted =
         userCurrentWorkout > 1 &&
@@ -57,23 +74,6 @@ const WorkoutCard = ({ sequenceNumber }) => {
     const submitToSchedule = () => {
         dispatch(updateUserSchedule(sequenceNumber, planedDate.format('YYYYMMDD')));
         setPlanedDate('');
-    };
-
-    const getCompleteInfo = () => {
-        if (isWorkoutCompleted) {
-            const completeDate = userSchedule[`workout${sequenceNumber}`].date;
-            return <p>{`Тренировка завершена ${moment(completeDate).format('DD MMMM YYYY')} г.`}</p>;
-        } else if (sequenceNumber === 1 && currentWorkoutSchedule.date === 0) {
-            return <p>Это ваша первая тренировка. Она ещё не запланирована.</p>;
-        } else if (sequenceNumber === userCurrentWorkout) {
-            if (currentWorkoutSchedule) {
-                return (
-                    <p>{`Тренировка запланирована на ${moment(currentWorkoutSchedule.date).format(
-                        'DD MMMM YYYY'
-                    )} г.`}</p>
-                );
-            }
-        }
     };
 
     const getExercisesElements = () => {
@@ -144,48 +144,145 @@ const WorkoutCard = ({ sequenceNumber }) => {
         customHistory.goBack();
     };
 
+    const getExerciseGroups = () => {
+        return exerciseGroupNames.map((g, index) => (
+            <LightBadge key={index}>
+                <FontAwesomeIcon icon={faDumbbell} /> {g}
+            </LightBadge>
+        ));
+    };
+
+    let completeStatus = '';
+    if (sequenceNumber === userCurrentWorkout) {
+        completeStatus = 'current';
+    } else if (sequenceNumber < userCurrentWorkout) {
+        completeStatus = 'completed';
+    } else if (sequenceNumber > userCurrentWorkout) {
+        completeStatus = 'future';
+    }
+
+    const getCompleteIcon = () => {
+        if (completeStatus === 'completed') {
+            return <FontAwesomeIcon icon={faCircleCheck} color={lime[5]} />;
+        } else if (completeStatus === 'current') {
+            return <FontAwesomeIcon icon={faCirclePlay} color={orange[5]} />;
+        } else if (completeStatus === 'future') {
+            return <FontAwesomeIcon icon={faCircleCheck} color={gray[3]} />;
+        }
+    };
+
+    const getPlannedIcon = () => {
+        if (completeStatus === 'completed') {
+            return <FontAwesomeIcon icon={faCalendarDays} color={lime[5]} />;
+        } else if (completeStatus === 'current') {
+            if (sequenceNumber === 1 && userSchedule.workout1.date === 0) {
+                return <FontAwesomeIcon icon={faCalendarDays} color={gray[3]} />;
+            } else if (!userSchedule[`workout${sequenceNumber}`]) {
+                return <FontAwesomeIcon icon={faCalendarDays} color={gray[3]} />;
+            } else {
+                return <FontAwesomeIcon icon={faCalendarDays} color={blue[5]} />;
+            }
+        } else if (completeStatus === 'future') {
+            return <FontAwesomeIcon icon={faCalendarDays} color={gray[3]} />;
+        }
+    };
+
+    const getCompleteInfo = () => {
+        if (completeStatus === 'completed') {
+            return 'Завершена';
+        } else if (completeStatus === 'current') {
+            return 'Текущая';
+        } else if (completeStatus === 'future') {
+            return 'Предстоящая';
+        }
+    };
+
+    const getPlannedInfo = () => {
+        if (completeStatus === 'completed') {
+            const workoutDate = userSchedule[`workout${sequenceNumber}`].date;
+            return moment(workoutDate).format('DD.MM.YYYY');
+        } else if (completeStatus === 'current') {
+            if (sequenceNumber === 1 && userSchedule.workout1.date === 0) {
+                return 'Не запланирована.';
+            } else if (!userSchedule[`workout${sequenceNumber}`]) {
+                return 'Не запланирована';
+            } else {
+                const workoutDate = userSchedule[`workout${sequenceNumber}`].date;
+                return <>{`На ${moment(workoutDate).format('DD.MM.YYYY')}`}</>;
+            }
+        } else if (completeStatus === 'future') {
+            return 'Не запланирована';
+        }
+    };
+
     return (
-        <div>
-            {pathname !== '/home' && <Button onClick={handleBackButton}>Назад</Button>}
-            <div>
-                <p>Номер: {sequenceNumber}</p>
-                <p>Сложность: {complexityLevel}</p>
-                <p>Вид: {kindName}</p>
-                <p>Тип: {typeName}</p>
-            </div>
-            <div>
-                <h4>Упражнения</h4>
-                <div>{getExercisesElements()}</div>
-            </div>
-            <div>
-                {getCompleteInfo()}
-                {sequenceNumber === userCurrentWorkout ? (
-                    <>
-                        <Divider>Планирование тренировки</Divider>
-                        <Space direction="vertical" size={'middle'}>
+        <>
+            <CardWrapper>
+                <CardHeader>
+                    <HeaderTitle>
+                        <HeaderText>Тренировка&nbsp;</HeaderText>
+                        <HeaderNumber>{sequenceNumber}</HeaderNumber>
+                    </HeaderTitle>
+                    {pathname !== '/home' && <Button onClick={handleBackButton}>Назад</Button>}
+                </CardHeader>
+                <CardBody>
+                    <CardInfo>
+                        <CardStatus>
+                            <StatusLine>
+                                <StatusIcon>{getCompleteIcon()}</StatusIcon>
+                                <DarkBadge>{getCompleteInfo()}</DarkBadge>
+                            </StatusLine>
+                            <StatusLine>
+                                <StatusIcon>{getPlannedIcon()}</StatusIcon>
+                                <DarkBadge>{getPlannedInfo()}</DarkBadge>
+                            </StatusLine>
+                        </CardStatus>
+                        <CardLabels>
+                            <CardLine>
+                                <Label>Уровень сложности</Label>
+                                <DarkBadge>{complexityLevel}</DarkBadge>
+                            </CardLine>
+                            <CardLine>
+                                <Label>Вид тренировки</Label>
+                                <DarkBadge>{capitalize(typeName)}</DarkBadge>
+                            </CardLine>
+                            <CardLine>
+                                <Label>Набор упражнений</Label>
+                                <DarkBadge>{kindName}</DarkBadge>
+                            </CardLine>
+                        </CardLabels>
+                        <CardBadges>{getExerciseGroups()}</CardBadges>
+                    </CardInfo>
+                    <ExercisesWrapper>
+                        {getExercisesElements()}
+                        <BackgroudNumber>{sequenceNumber}</BackgroudNumber>
+                    </ExercisesWrapper>
+                </CardBody>
+                <CardFooter>
+                    <FooterPlan>
+                        <DatePicker
+                            disabledDate={disabledPastDates}
+                            format={'DD.MM.YYYY'}
+                            showToday={false}
+                            value={planedDate}
+                            onChange={(value) => handleDatePick(value)}
+                            disabled={!(completeStatus === 'current')}
+                        />
+                        <Button type="primary" onClick={submitToSchedule} disabled={!planedDate}>
                             <Space>
-                                <DatePicker
-                                    disabledDate={disabledPastDates}
-                                    format={'DD.MM.YYYY'}
-                                    showToday={false}
-                                    value={planedDate}
-                                    onChange={(value) => handleDatePick(value)}
-                                />
-                                <Button type="primary" onClick={submitToSchedule} disabled={!planedDate}>
-                                    Запланировать
-                                </Button>
+                                <FontAwesomeIcon icon={faCalendarDays} color={gray[0]} size="xl" />
+                                <span>Запланировать</span>
                             </Space>
-                            <div>
-                                <Button type="ghost" onClick={modalOpen}>
-                                    Внести результаты и завершить
-                                </Button>
-                            </div>
+                        </Button>
+                    </FooterPlan>
+                    <Button type="primary" disabled={!(completeStatus === 'current')} onClick={modalOpen}>
+                        <Space>
+                            <FontAwesomeIcon icon={faCircleCheck} color={gray[0]} size="xl" />
+                            <span>Завершить</span>
                         </Space>
-                    </>
-                ) : (
-                    ''
-                )}
-            </div>
+                    </Button>
+                </CardFooter>
+            </CardWrapper>
             <Modal open={isModalOpen} closable={false} destroyOnClose={true} footer={modalFooter} centered={true}>
                 <Divider>Результаты тренировки</Divider>
                 <Form
@@ -206,7 +303,7 @@ const WorkoutCard = ({ sequenceNumber }) => {
                     </Form.Item>
                 </Form>
             </Modal>
-        </div>
+        </>
     );
 };
 

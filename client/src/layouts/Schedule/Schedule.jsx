@@ -1,18 +1,21 @@
 import React, { useState } from 'react';
-import { Button, Calendar, Col, Row, Divider, Statistic } from 'antd';
-import { LeftOutlined, CarryOutOutlined, RightOutlined } from '@ant-design/icons';
+import { Button, Calendar } from 'antd';
 import moment from 'moment';
 import 'moment/locale/ru';
 import { useSelector } from 'react-redux';
 import { getUserCompletedWorkouts, getUserCurrentWorkout, getUserSchedule } from '../../store/user';
 import { getTrainingPlan } from '../../store/trainingPlan';
 import { Link } from 'react-router-dom';
-import { StyledTag, tagColors } from './styles';
 import HelpDrawer from '../../components/HelpDrawer/HelpDrawer';
 import { AboutSchedule } from '../../pages/QuickTour';
+import { ButtonsBox, CalendarHeader, CalendarWrapper, DateBox, StyledTag } from './styles';
+import { LayoutColumn, LayoutWrapper, StyledTitle } from '../../components/StyledComponents';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBackward, faForward, faCalendarDay } from '@fortawesome/free-solid-svg-icons';
+
 moment.locale('ru');
 
-const Sсhedule = () => {
+const Schedule = () => {
     const [date, setDate] = useState(moment());
 
     const userSchedule = useSelector(getUserSchedule());
@@ -37,22 +40,20 @@ const Sсhedule = () => {
     };
 
     const onHeaderRender = () => (
-        <Row justify={'center'}>
-            <Col>
-                <Statistic value={date.format('DD MMMM YYYY')} />
+        <CalendarHeader>
+            <DateBox>{date.format('DD MMMM YYYY')}</DateBox>
+            <ButtonsBox>
                 <Button onClick={() => handleClick('minus')}>
-                    <LeftOutlined />
+                    <FontAwesomeIcon icon={faBackward} />
                 </Button>
-                <Divider type="vertical" />
                 <Button onClick={() => handleClick('now')}>
-                    <CarryOutOutlined />
+                    <FontAwesomeIcon icon={faCalendarDay} />
                 </Button>
-                <Divider type="vertical" />
                 <Button onClick={() => handleClick('plus')}>
-                    <RightOutlined />
+                    <FontAwesomeIcon icon={faForward} />
                 </Button>
-            </Col>
-        </Row>
+            </ButtonsBox>
+        </CalendarHeader>
     );
 
     const getWorkoutTag = (workoutNumber) => {
@@ -60,15 +61,8 @@ const Sсhedule = () => {
         const workoutStatus = workoutNumber <= userCompletedWorkouts ? 'completed' : 'current';
         return (
             <Link to={`/workouts/${workoutNumber}`}>
-                <Row justify={'end'}>
-                    <Col>
-                        <StyledTag
-                            style={{ color: '#000' }}
-                            color={
-                                tagColors[workoutStatus]
-                            }>{`Тренировка ${workout.sequenceNumber}${workout.kindName}`}</StyledTag>
-                    </Col>
-                </Row>
+                <StyledTag
+                    status={workoutStatus}>{`Тренировка ${workout.sequenceNumber}${workout.kindName}`}</StyledTag>
             </Link>
         );
     };
@@ -89,25 +83,23 @@ const Sсhedule = () => {
     };
 
     return (
-        <>
-            <h3>Расписание</h3>
-            <div>
-                <Row justify={'center'}>
-                    <Col span={16}>
-                        <Calendar
-                            headerRender={onHeaderRender}
-                            dateCellRender={onCellRender}
-                            value={date}
-                            onSelect={(selected) => handleSelect(selected)}
-                        />
-                    </Col>
-                </Row>
-            </div>
-            <HelpDrawer>
-                <AboutSchedule />
-            </HelpDrawer>
-        </>
+        <LayoutWrapper>
+            <LayoutColumn>
+                <StyledTitle level="3">Календарь</StyledTitle>
+                <CalendarWrapper>
+                    <Calendar
+                        headerRender={onHeaderRender}
+                        dateCellRender={onCellRender}
+                        value={date}
+                        onSelect={(selected) => handleSelect(selected)}
+                    />
+                </CalendarWrapper>
+                <HelpDrawer>
+                    <AboutSchedule />
+                </HelpDrawer>
+            </LayoutColumn>
+        </LayoutWrapper>
     );
 };
 
-export default Sсhedule;
+export default Schedule;
