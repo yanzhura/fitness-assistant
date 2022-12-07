@@ -14,10 +14,12 @@ const StyledTitle = styled.div((props) => {
     } else if (props.level === '5') {
         size = '12px';
     }
+    const fontStyle = props.italic && 'italic';
     return {
         fontFamily: '"Montserrat", "sans-serif"',
         paddingBottom: '20px',
         fontSize: size,
+        fontStyle,
         color: `${gray[8]}`
     };
 });

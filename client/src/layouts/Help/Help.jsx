@@ -3,13 +3,21 @@ import HelpDrawer from '../../components/HelpDrawer/HelpDrawer';
 import { AboutHelp } from '../../pages/QuickTour';
 import CollapsePanel from 'antd/lib/collapse/CollapsePanel';
 import { helpTopics } from '../../components/HelpTopics';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faQuestion } from '@fortawesome/free-solid-svg-icons';
 import { LayoutColumn, LayoutWrapper, StyledTitle } from '../../components/StyledComponents';
-import { StyledCollapse, StyledHeader } from './styles';
+import { BackgroudSymbol, HelpWrapper, StyledCollapse } from './styles';
 
 const Help = () => {
     const getHelpItems = (elements) => {
         return elements.map((el, index) => (
-            <CollapsePanel key={index} header={<StyledHeader level="4">{el.title}</StyledHeader>}>
+            <CollapsePanel
+                key={index}
+                header={
+                    <StyledTitle level="4" italic>
+                        {el.title}
+                    </StyledTitle>
+                }>
                 {el.body}
             </CollapsePanel>
         ));
@@ -19,7 +27,12 @@ const Help = () => {
         <LayoutWrapper>
             <LayoutColumn>
                 <StyledTitle level="3">Помощь</StyledTitle>
-                <StyledCollapse accordion>{getHelpItems(helpTopics)}</StyledCollapse>
+                <HelpWrapper>
+                    <StyledCollapse accordion>{getHelpItems(helpTopics)}</StyledCollapse>
+                    <BackgroudSymbol>
+                        <FontAwesomeIcon icon={faQuestion} />
+                    </BackgroudSymbol>
+                </HelpWrapper>
                 <HelpDrawer>
                     <AboutHelp />
                 </HelpDrawer>

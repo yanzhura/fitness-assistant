@@ -2,11 +2,10 @@ import React from 'react';
 import { Steps } from 'antd';
 import { useSelector } from 'react-redux';
 import moment from 'moment';
-
-import Title from 'antd/lib/typography/Title';
-import { getUserCompletedWorkouts, getUserSchedule, getUserTrainingStatus } from '../../store/user';
-import { getTrainingPlan } from '../../store/trainingPlan';
-import { daysDeclension, workoutsDeclension } from '../../utils/declensions';
+import { getUserCompletedWorkouts, getUserSchedule, getUserTrainingStatus } from '../store/user';
+import { getTrainingPlan } from '../store/trainingPlan';
+import { daysDeclension, workoutsDeclension } from '../utils/declensions';
+import { StyledTitle } from './StyledComponents';
 
 const TrainingStats = () => {
     const { trainingStartedAt, trainingFinishedAt } = useSelector(getUserTrainingStatus());
@@ -86,7 +85,9 @@ const TrainingStats = () => {
 
     return (
         <>
-            <Title level={4}>Продолжительность</Title>
+            <StyledTitle level="4" italic>
+                Продолжительность
+            </StyledTitle>
             <Steps current={current} percent={percent} labelPlacement="horizontal" items={items} />
         </>
     );

@@ -64,9 +64,13 @@ const Navbar = () => {
                 />
             </MenuWrapper>
             <Profile>
-                {isLoggedIn && !isDataLoading ? (
+                {isLoggedIn ? (
                     <>
-                        {currentUser.userData.name} <Divider type="vertical" /> <Link to="/logout">Выход</Link>
+                        {!isDataLoading && (
+                            <>
+                                {currentUser.userData.name} <Divider type="vertical" /> <Link to="/logout">Выход</Link>
+                            </>
+                        )}
                     </>
                 ) : (
                     <EnterButtons />

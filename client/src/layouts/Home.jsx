@@ -1,25 +1,25 @@
-import { Spin } from 'antd';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { LayoutColumn, LayoutWrapper } from '../../components/StyledComponents';
-import Dashboard from '../../pages/Dashboard/Dashboard';
-import Welcome from '../../pages/Welcome/Welcome';
-import { getTrainingPlanErrors, getTrainingPlanLoadingStatus, resetTrainingPlanError } from '../../store/trainingPlan';
+import Loader from '../components/Loader';
+import Dashboard from '../pages/Dashboard';
+import Welcome from '../pages/Welcome';
+import { getTrainingPlanErrors, getTrainingPlanLoadingStatus, resetTrainingPlanError } from '../store/trainingPlan';
 import {
     getShowWelcomePage,
     getUserCurrentWorkout,
     getUserErrors,
     getUserLoadingStatus,
     resetUserError
-} from '../../store/user';
+} from '../store/user';
 import {
     getWorkoutByNumber,
     getWorkoutsErrors,
     getWorkoutsLoadingStatus,
     loadWorkout,
     resetWorkoutError
-} from '../../store/workouts';
-import showErrorToast from '../../utils/errorToast';
+} from '../store/workouts';
+import showErrorToast from '../utils/errorToast';
+import { LayoutColumn, LayoutWrapper } from '../components/StyledComponents';
 
 const Home = () => {
     const dispatch = useDispatch();
@@ -60,7 +60,7 @@ const Home = () => {
     return (
         <LayoutWrapper>
             <LayoutColumn>
-                {!isDataReady ? <Spin /> : <>{isWelcomePageOpen ? <Welcome /> : <Dashboard />}</>}
+                {!isDataReady ? <Loader /> : <>{isWelcomePageOpen ? <Welcome /> : <Dashboard />}</>}
             </LayoutColumn>
         </LayoutWrapper>
     );

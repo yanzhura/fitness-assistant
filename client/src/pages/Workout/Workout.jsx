@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { Spin } from 'antd';
 import {
     getWorkoutByNumber,
     getWorkoutsErrors,
@@ -12,6 +11,7 @@ import {
 import showErrorToast from '../../utils/errorToast';
 import { WorkoutWrapper } from './styles';
 import WorkoutCard from '../../components/WorkoutCard';
+import Loader from '../../components/Loader/Loader';
 
 const Workout = () => {
     const dispatch = useDispatch();
@@ -34,7 +34,7 @@ const Workout = () => {
 
     return (
         <WorkoutWrapper>
-            {workoutLoadingStatus || !workout ? <Spin /> : <WorkoutCard sequenceNumber={sequenceNumber} />}
+            {workoutLoadingStatus || !workout ? <Loader /> : <WorkoutCard sequenceNumber={sequenceNumber} />}
         </WorkoutWrapper>
     );
 };

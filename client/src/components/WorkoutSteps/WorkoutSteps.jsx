@@ -1,9 +1,12 @@
-import { Button, Row, Steps } from 'antd';
+import { Button, Row, Space, Steps } from 'antd';
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { EllipsisOutlined } from '@ant-design/icons';
 import { getTrainingPlan } from '../../store/trainingPlan';
 import { getUserCurrentWorkout } from '../../store/user';
+import { capitalize } from '../../utils/capitalize';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCaretDown, faCaretUp, faHouse } from '@fortawesome/free-solid-svg-icons';
+import { GrayBadge } from './styles';
 
 const WorkoutSteps = () => {
     const currentWorkout = useSelector(getUserCurrentWorkout());
@@ -38,9 +41,16 @@ const WorkoutSteps = () => {
     const isDownButtonDisabled = progressRange[0] === totalWorkouts - 5;
 
     const stepsItems = trainingPlanSlice.map((item) => {
+        const isFutureWorkout = item.sequenceNumber > currentWorkout;
         return {
             title: `Тренировка ${item.sequenceNumber}`,
-            description: `${item.kindName} — ${item.typeName} | ${item.exerciseGroupNames.join(', ')}.`
+            description: (
+                <div>
+                    <GrayBadge light={isFutureWorkout}>{item.complexityLevel}</GrayBadge>
+                    <GrayBadge light={isFutureWorkout}>{item.kindName}</GrayBadge>
+                    <GrayBadge light={isFutureWorkout}>{capitalize(item.typeName)}</GrayBadge>
+                </div>
+            )
         };
     });
 
@@ -60,6 +70,11 @@ const WorkoutSteps = () => {
                 setStart((prevState) => prevState + 1);
                 break;
 
+            case 'home':
+                setProgressRange(getInitialProgressRange());
+                setStart(getInitialStart());
+                break;
+
             default:
                 break;
         }
@@ -68,9 +83,17 @@ const WorkoutSteps = () => {
     return (
         <>
             <Row justify={'center'}>
-                <Button disabled={isUpButtonDisabled} onClick={() => handleClick('up')}>
-                    <EllipsisOutlined />
-                </Button>
+                <Space>
+                    <Button disabled={isUpButtonDisabled} onClick={() => handleClick('up')}>
+                        <FontAwesomeIcon icon={faCaretUp} />
+                    </Button>
+                    <Button onClick={() => handleClick('home')}>
+                        <FontAwesomeIcon icon={faHouse} />
+                    </Button>
+                    <Button disabled={isDownButtonDisabled} onClick={() => handleClick('down')}>
+                        <FontAwesomeIcon icon={faCaretDown} />
+                    </Button>
+                </Space>
                 <Steps
                     direction="vertical"
                     size="small"
@@ -78,9 +101,6 @@ const WorkoutSteps = () => {
                     items={stepsItems}
                     initial={start}
                 />
-                <Button disabled={isDownButtonDisabled} onClick={() => handleClick('down')}>
-                    <EllipsisOutlined />
-                </Button>
             </Row>
         </>
     );

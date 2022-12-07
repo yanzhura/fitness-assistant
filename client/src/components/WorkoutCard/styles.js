@@ -4,7 +4,7 @@ import { gray } from '../StyledComponents';
 export const CardWrapper = styled.div`
     padding: 20px;
     width: 100%;
-    height: 600px;
+    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -47,7 +47,7 @@ export const HeaderTitle = styled.div`
 export const HeaderText = styled.div`
     font-family: 'Montserrat', sans-serif;
     font-style: italic;
-    font-size: 24px;
+    font-size: 30px;
 `;
 export const HeaderNumber = styled.div`
     font-family: 'Montserrat', sans-serif;
@@ -61,20 +61,18 @@ export const CardInfo = styled.div`
     flex-direction: column;
     align-items: flex-start;
     gap: 20px;
-    border-style: dotted;
-    border-width: 1px;
-    border-color: ${gray[4]};
-    border-radius: 5px;
+    z-index: 2;
 `;
 
 export const ExercisesWrapper = styled.div`
+    z-index: 5;
+    position: relative;
     max-height: inherit;
-    overflow-y: hidden;
+    overflow: hidden;
     flex-grow: 1;
-    border-style: dotted;
-    border-width: 1px;
-    border-color: ${gray[4]};
-    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 `;
 
 export const CardStatus = styled.div`
@@ -156,4 +154,28 @@ export const LightBadge = styled.span`
 export const FooterPlan = styled.span`
     display: flex;
     gap: 10px;
+`;
+
+export const BackgroudNumber = styled.div`
+    z-index: 1;
+    position: absolute;
+    bottom: -30px;
+    right: -30px;
+    height: 350px;
+    width: 350px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    outline-style: solid;
+    outline-width: 1px;
+    outline-color: ${gray[3]};
+    outline-offset: 5px;
+    color: #fff;
+    font-family: 'Montserrat', sans-serif;
+    font-style: italic;
+    font-size: 270px;
+    line-height: 270px;
+    letter-spacing: -10px;
+    background: ${gray[3]};
 `;

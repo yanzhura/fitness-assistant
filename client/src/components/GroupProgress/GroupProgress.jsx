@@ -1,6 +1,5 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import Title from 'antd/lib/typography/Title';
 import { ResponsiveBar } from '@nivo/bar';
 import { findKey } from 'lodash';
 import { getExerciseGroups } from '../../store/trainingPlan';
@@ -20,7 +19,8 @@ import {
     purple,
     magenta
 } from '@ant-design/colors';
-import { StyledGraphBox } from '../StyledComponents';
+import { StyledGraphBox, StyledTitle } from '../StyledComponents';
+import { TextBox, TextWrapper } from './styles';
 
 const GroupProgress = () => {
     const exerciseGroups = useSelector(getExerciseGroups());
@@ -81,31 +81,44 @@ const GroupProgress = () => {
 
     return (
         <StyledGraphBox>
-            <Title level={4}>Прогресс по группам</Title>
-            <ResponsiveBar
-                data={graphData}
-                keys={graphKeys}
-                indexBy="exerciseGroup"
-                margin={{ top: 30, right: 50, bottom: 100, left: 50 }}
-                groupMode="grouped"
-                colors={({ id, data }) => {
-                    return String(data[`${id}Color`]);
-                }}
-                borderWidth={1}
-                borderColor={{
-                    from: 'color',
-                    modifiers: [['darker', 0.2]]
-                }}
-                enableLabel={false}
-                axisLeft={null}
-                axisBottom={{
-                    legend: 'Группы упражнений',
-                    legendPosition: 'middle',
-                    legendOffset: 60,
-                    tickRotation: 15
-                }}
-                isInteractive={false}
-            />
+            {userCompletedWorkouts < 4 ? (
+                <TextWrapper>
+                    <TextBox>
+                        У нас пока недостаточно данных, чтобы отобразить график прогреса по группам. Он появится, когда
+                        вы закончите не менее 3-х тренировок.
+                    </TextBox>
+                </TextWrapper>
+            ) : (
+                <>
+                    <StyledTitle level="4" italic>
+                        Прогресс по группам
+                    </StyledTitle>
+                    <ResponsiveBar
+                        data={graphData}
+                        keys={graphKeys}
+                        indexBy="exerciseGroup"
+                        margin={{ top: 30, right: 50, bottom: 100, left: 50 }}
+                        groupMode="grouped"
+                        colors={({ id, data }) => {
+                            return String(data[`${id}Color`]);
+                        }}
+                        borderWidth={1}
+                        borderColor={{
+                            from: 'color',
+                            modifiers: [['darker', 0.2]]
+                        }}
+                        enableLabel={false}
+                        axisLeft={null}
+                        axisBottom={{
+                            legend: 'Группы упражнений',
+                            legendPosition: 'middle',
+                            legendOffset: 60,
+                            tickRotation: 15
+                        }}
+                        isInteractive={false}
+                    />
+                </>
+            )}
         </StyledGraphBox>
     );
 };

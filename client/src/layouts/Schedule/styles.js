@@ -18,10 +18,12 @@ export const StyledTag = styled.div((props) => {
     };
 });
 
-export const StyledScheduleWrapper = styled.div`
-    height: 600px;
-    width: 800px;
-    background: #ffff00;
+export const CalendarWrapper = styled.div`
+    padding: 15px;
+    border-style: dotted;
+    border-color: ${gray[5]};
+    border-width: 1px;
+    border-radius: 5px;
 `;
 
 export const CalendarHeader = styled.div`

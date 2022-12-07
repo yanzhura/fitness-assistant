@@ -30,7 +30,8 @@ import {
     StatusIcon,
     StatusLine,
     ExercisesWrapper,
-    FooterPlan
+    FooterPlan,
+    BackgroudNumber
 } from './styles';
 import { blue, lime, orange } from '@ant-design/colors';
 import { gray } from '../StyledComponents';
@@ -218,14 +219,13 @@ const WorkoutCard = ({ sequenceNumber }) => {
         <>
             <CardWrapper>
                 <CardHeader>
-                    {pathname !== '/home' && <Button onClick={handleBackButton}>Назад</Button>}
                     <HeaderTitle>
                         <HeaderText>Тренировка&nbsp;</HeaderText>
                         <HeaderNumber>{sequenceNumber}</HeaderNumber>
                     </HeaderTitle>
+                    {pathname !== '/home' && <Button onClick={handleBackButton}>Назад</Button>}
                 </CardHeader>
                 <CardBody>
-                    <ExercisesWrapper>{getExercisesElements()}</ExercisesWrapper>
                     <CardInfo>
                         <CardStatus>
                             <StatusLine>
@@ -253,6 +253,10 @@ const WorkoutCard = ({ sequenceNumber }) => {
                         </CardLabels>
                         <CardBadges>{getExerciseGroups()}</CardBadges>
                     </CardInfo>
+                    <ExercisesWrapper>
+                        {getExercisesElements()}
+                        <BackgroudNumber>{sequenceNumber}</BackgroudNumber>
+                    </ExercisesWrapper>
                 </CardBody>
                 <CardFooter>
                     <FooterPlan>
@@ -274,7 +278,7 @@ const WorkoutCard = ({ sequenceNumber }) => {
                     <Button type="primary" disabled={!(completeStatus === 'current')} onClick={modalOpen}>
                         <Space>
                             <FontAwesomeIcon icon={faCircleCheck} color={gray[0]} size="xl" />
-                            <span>Внести результаты и завершить</span>
+                            <span>Завершить</span>
                         </Space>
                     </Button>
                 </CardFooter>

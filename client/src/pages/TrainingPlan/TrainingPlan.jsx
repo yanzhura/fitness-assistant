@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Divider, Pagination, Spin } from 'antd';
+import { Divider, Pagination } from 'antd';
 import { getTrainingPlan, getTrainingPlanLoadingStatus } from '../../store/trainingPlan';
 import TrainingPlanCard from '../../components/TrainingPlanCard';
 import { getUserCompletedWorkouts, getUserCurrentWorkout, getCurrentWorkoutSchedule } from '../../store/user';
 import { StyledTitle } from '../../components/StyledComponents';
 import { PlanWrapper } from './styles';
+import Loader from '../../components/Loader/Loader';
 
 const TrainingPlan = () => {
     const trainingPlan = useSelector(getTrainingPlan());
@@ -61,7 +62,7 @@ const TrainingPlan = () => {
         <>
             <StyledTitle level="3">Список тренировок</StyledTitle>
             <PlanWrapper>
-                <>{trainingPlanLoadingStatus ? <Spin /> : getWorkoutCards()}</>
+                <>{trainingPlanLoadingStatus ? <Loader /> : getWorkoutCards()}</>
             </PlanWrapper>
             <Divider />
             <Pagination current={currentPage} total={totalPages} onChange={handlePageChange} pageSize={pageSize} />

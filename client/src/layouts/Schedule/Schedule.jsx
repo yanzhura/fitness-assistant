@@ -8,7 +8,7 @@ import { getTrainingPlan } from '../../store/trainingPlan';
 import { Link } from 'react-router-dom';
 import HelpDrawer from '../../components/HelpDrawer/HelpDrawer';
 import { AboutSchedule } from '../../pages/QuickTour';
-import { ButtonsBox, CalendarHeader, DateBox, StyledTag } from './styles';
+import { ButtonsBox, CalendarHeader, CalendarWrapper, DateBox, StyledTag } from './styles';
 import { LayoutColumn, LayoutWrapper, StyledTitle } from '../../components/StyledComponents';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBackward, faForward, faCalendarDay } from '@fortawesome/free-solid-svg-icons';
@@ -86,12 +86,14 @@ const Schedule = () => {
         <LayoutWrapper>
             <LayoutColumn>
                 <StyledTitle level="3">Календарь</StyledTitle>
-                <Calendar
-                    headerRender={onHeaderRender}
-                    dateCellRender={onCellRender}
-                    value={date}
-                    onSelect={(selected) => handleSelect(selected)}
-                />
+                <CalendarWrapper>
+                    <Calendar
+                        headerRender={onHeaderRender}
+                        dateCellRender={onCellRender}
+                        value={date}
+                        onSelect={(selected) => handleSelect(selected)}
+                    />
+                </CalendarWrapper>
                 <HelpDrawer>
                     <AboutSchedule />
                 </HelpDrawer>

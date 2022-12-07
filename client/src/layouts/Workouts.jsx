@@ -7,7 +7,7 @@ import { AboutWorkouts } from '../pages/QuickTour';
 import { LayoutColumn, LayoutWrapper } from '../components/StyledComponents';
 import { useSelector } from 'react-redux';
 import { getUserLoadingStatus } from '../store/user';
-import { Spin } from 'antd';
+import Loader from '../components/Loader/Loader';
 
 const Workouts = () => {
     const { seqNumber } = useParams();
@@ -16,7 +16,7 @@ const Workouts = () => {
     return (
         <LayoutWrapper>
             <LayoutColumn>
-                {userDataLoadingStatus ? <Spin /> : <>{seqNumber ? <Workout /> : <TrainingPlan />}</>}
+                {userDataLoadingStatus ? <Loader /> : <>{seqNumber ? <Workout /> : <TrainingPlan />}</>}
                 <HelpDrawer>
                     <AboutWorkouts />
                 </HelpDrawer>
