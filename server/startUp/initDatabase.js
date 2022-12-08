@@ -1,37 +1,57 @@
-const bodyPartsMock = require('../mock/bodyParts.json');
-const exerciseGroupsMock = require('../mock/exerciseGroups.json');
 const exercisesMock = require('../mock/exercises.json');
-const trainingPlanMock = require('../mock/trainingPlan.json');
-const workoutKindsMock = require('../mock/workoutKinds.json');
-const workoutTypesMock = require('../mock/workoutTypes.json');
-const usersMock = require('../mock/users.json');
+const workoutsMock = require('../mock/workouts.json');
 
-const BodyPart = require('../models/BodyPart');
-const WorkoutType = require('../models/WorkoutType');
+const Exercise = require('../models/Exercise');
+const Workout = require('../models/Workout');
 
 module.exports = async () => {
-    const bodyParts = await BodyPart.find();
-    if (bodyParts.length !== bodyPartsMock) {
-        await createInitialEntity(BodyPart, bodyPartsMock);
+    const exercises = await Exercise.find();
+    if (exercises.length !== exercisesMock.length) {
+        await createExercises(Exercise, exercisesMock);
     }
 
-    const workoutTypes = await WorkoutType.find();
-    if (workoutTypes.length !== workoutTypesMock) {
-        await createInitialEntity(WorkoutType, workoutTypesMock);
+    const workouts = await Workout.find();
+    if (workouts.length !== workoutsMock.length) {
+        await createWorkouts(Exercise, exercisesMock);
     }
 };
 
-const createInitialEntity = async (Model, mockData) => {
-    await Model.collection.drop();
+const createExercises = async () => {
+    await Exercise.collection.drop();
     return Promise.all(
-        mockData.map(async (item) => {
+        exercisesMock.map(async (ex) => {
             try {
-                const newItem = new Model(item);
-                await newItem.save();
-                return newItem;
+                const newEx = new Exercise(ex);
+                await newEx.save();
+                return newEx;
             } catch (error) {
                 return error;
             }
+        })
+    );
+};
+
+const createWorkouts = async () => {
+    await Workout.collection.drop();
+    return Promise.all(
+        workoutsMock.map(async (w) => {
+            const groups = w.exerciseGroups;
+            const exerciseIDs = await getExerciseIDs(groups);
+            const newWorkout = new Workout({
+                ...w,
+                exercises: exerciseIDs
+            });
+            newWorkout.save();
+            return newWorkout;
+        })
+    );
+};
+
+const getExerciseIDs = async (groups) => {
+    return await Promise.all(
+        groups.map(async (g) => {
+            const ex = await Exercise.findOne({ group: g, level: 1 });
+            return ex._id;
         })
     );
 };

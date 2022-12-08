@@ -2,11 +2,13 @@ const express = require('express');
 const router = express.Router({ mergeParams: true });
 
 const authRoutes = require('./auth.routes');
-const bodyPartsRoutes = require('./bodyParts.routes');
-const workoutTypesRoutes = require('./workoutTypes.routes');
+const userRoutes = require('./user.routes');
+const workoutRoutes = require('./workout.routes');
+const exerciseRoutes = require('./exercise.routes');
 
 router.use('/auth', authRoutes);
-router.use('/bodyParts', bodyPartsRoutes);
-router.use('/workoutTypes', workoutTypesRoutes);
+router.use('/user', userRoutes);
+router.use('/workout', workoutRoutes);
+router.use('/exercise', exerciseRoutes);
 
 module.exports = router;
