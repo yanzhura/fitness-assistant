@@ -31,7 +31,7 @@ const GroupProgress = () => {
         for (let i = 1; i <= userCompletedWorkouts; i++) {
             const { results } = userSchedule[i - 1];
             for (const result of results) {
-                const groupName = exercises.find((ex) => ex._id === result.exercise);
+                const groupName = exercises.find((ex) => ex._id === result.exercise).group;
                 if (!preDataObject[groupName]) {
                     preDataObject[groupName] = [];
                     preDataObject[groupName].push(result.count);
@@ -40,7 +40,6 @@ const GroupProgress = () => {
                 }
             }
         }
-        console.log('preDataObject', preDataObject);
         const graphData = [];
         const graphKeys = [];
         const colors = [red, volcano, orange, gold, yellow, lime, green, cyan, blue, geekblue, purple, magenta];
