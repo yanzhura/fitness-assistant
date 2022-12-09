@@ -77,9 +77,9 @@ const WorkoutCard = ({ sequenceNumber }) => {
     const disabledPastDates = (current) => {
         if (isWorkoutCompleteUnable) {
             return current && current < moment().endOf('day');
-        } else {
-            return current && current < moment().subtract(1, 'day');
         }
+
+        return current && current < moment().subtract(1, 'day');
     };
 
     const disabledFutureDates = (current) => {
@@ -88,9 +88,9 @@ const WorkoutCard = ({ sequenceNumber }) => {
                 (current && current < moment(lastWorkoutCompleted.date).endOf('day')) ||
                 current >= moment().endOf('day')
             );
-        } else {
-            return current >= moment().endOf('day');
         }
+
+        return current >= moment().endOf('day');
     };
 
     const handleDatePick = (date) => {
@@ -158,7 +158,7 @@ const WorkoutCard = ({ sequenceNumber }) => {
             const precision = exercise.bodyWeight ? 0 : 1;
             return (
                 <Form.Item
-                    key={index}
+                    key={exercise._id}
                     name={exercise._id}
                     label={capitalize(exercise.name)}
                     rules={[
@@ -197,9 +197,13 @@ const WorkoutCard = ({ sequenceNumber }) => {
     const getCompleteIcon = () => {
         if (completeStatus === 'completed') {
             return <FontAwesomeIcon icon={faCircleCheck} color={lime[5]} />;
-        } else if (completeStatus === 'current') {
+        }
+
+        if (completeStatus === 'current') {
             return <FontAwesomeIcon icon={faCirclePlay} color={orange[5]} />;
-        } else if (completeStatus === 'future') {
+        }
+
+        if (completeStatus === 'future') {
             return <FontAwesomeIcon icon={faCircleCheck} color={gray[3]} />;
         }
     };
@@ -207,13 +211,17 @@ const WorkoutCard = ({ sequenceNumber }) => {
     const getPlannedIcon = () => {
         if (completeStatus === 'completed') {
             return <FontAwesomeIcon icon={faCalendarDays} color={lime[5]} />;
-        } else if (completeStatus === 'current') {
+        }
+
+        if (completeStatus === 'current') {
             if (!workoutSchedule) {
                 return <FontAwesomeIcon icon={faCalendarDays} color={gray[3]} />;
-            } else {
-                return <FontAwesomeIcon icon={faCalendarDays} color={blue[5]} />;
             }
-        } else if (completeStatus === 'future') {
+
+            return <FontAwesomeIcon icon={faCalendarDays} color={blue[5]} />;
+        }
+
+        if (completeStatus === 'future') {
             return <FontAwesomeIcon icon={faCalendarDays} color={gray[3]} />;
         }
     };
@@ -221,9 +229,13 @@ const WorkoutCard = ({ sequenceNumber }) => {
     const getCompleteInfo = () => {
         if (completeStatus === 'completed') {
             return 'Завершена';
-        } else if (completeStatus === 'current') {
+        }
+
+        if (completeStatus === 'current') {
             return 'Текущая';
-        } else if (completeStatus === 'future') {
+        }
+
+        if (completeStatus === 'future') {
             return 'Предстоящая';
         }
     };
@@ -232,14 +244,18 @@ const WorkoutCard = ({ sequenceNumber }) => {
         if (completeStatus === 'completed') {
             const workoutDate = workoutSchedule.date;
             return moment(workoutDate).format('DD.MM.YYYY');
-        } else if (completeStatus === 'current') {
+        }
+
+        if (completeStatus === 'current') {
             if (!workoutSchedule) {
                 return 'Не запланирована';
-            } else {
-                const workoutDate = workoutSchedule.date;
-                return <>{`На ${moment(workoutDate).format('DD.MM.YYYY')}`}</>;
             }
-        } else if (completeStatus === 'future') {
+
+            const workoutDate = workoutSchedule.date;
+            return <>{`На ${moment(workoutDate).format('DD.MM.YYYY')}`}</>;
+        }
+
+        if (completeStatus === 'future') {
             return 'Не запланирована';
         }
     };
