@@ -76,6 +76,7 @@ const OverallScore = () => {
                         colors={green[5]}
                         axisLeft={null}
                         axisBottom={{ legend: 'Тренировки', legendPosition: 'middle', legendOffset: 40 }}
+                        enableArea={true}
                     />
                 </>
             )}

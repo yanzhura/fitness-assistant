@@ -28,9 +28,11 @@ if (process.env.NODE_ENV === 'production') {
 
 const start = async () => {
     try {
-        mongoose.connection.once('open', () => {
-            initDatabase();
-        });
+        // Блок заполнения БД данными отключен, т.к. предпочтительней
+        // разворачивать данные из бэкапа.
+        // mongoose.connection.once('open', () => {
+        //     initDatabase();
+        // });
         await mongoose.connect(MONGO_URI);
         console.log(chalk.green('MongoDB database connected.'));
         app.listen(PORT, () => {
