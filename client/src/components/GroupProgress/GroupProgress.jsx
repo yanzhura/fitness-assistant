@@ -40,6 +40,7 @@ const GroupProgress = () => {
                 }
             }
         }
+        console.log('preDataObject', preDataObject);
         const graphData = [];
         const graphKeys = [];
         const colors = [red, volcano, orange, gold, yellow, lime, green, cyan, blue, geekblue, purple, magenta];
