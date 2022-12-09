@@ -24,11 +24,13 @@ const CardHeader = ({ completeStatus, sequenceNumber, workoutDate }) => {
     const getPlannedIcon = () => {
         if (completeStatus === 'completed') {
             return <ColorBadge color={lime[5]}>{moment(workoutDate).format('DD.MM.YY')}</ColorBadge>;
-        } else if (completeStatus === 'current' && workoutDate !== '0') {
-            return <ColorBadge color={blue[5]}>{moment(workoutDate).format('DD.MM.YY')}</ColorBadge>;
-        } else {
-            return <FontAwesomeIcon icon={faCalendarDays} color={gray[3]} />;
         }
+
+        if (completeStatus === 'current' && workoutDate !== '0') {
+            return <ColorBadge color={blue[5]}>{moment(workoutDate).format('DD.MM.YY')}</ColorBadge>;
+        }
+
+        return <FontAwesomeIcon icon={faCalendarDays} color={gray[3]} />;
     };
 
     return (
