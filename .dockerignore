@@ -4,4 +4,3 @@ client/build
 
 server/node_modules
 server/.env*
-server/config
