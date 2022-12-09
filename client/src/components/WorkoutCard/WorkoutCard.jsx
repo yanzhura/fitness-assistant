@@ -2,15 +2,27 @@ import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Button, DatePicker, Divider, Modal, message, Form, InputNumber, Space } from 'antd';
+import { Button, DatePicker, Modal, message, Form, InputNumber, Space, Popconfirm } from 'antd';
 import moment from 'moment';
-import { completeCurrentWorkout, getUserCurrentWorkout, getUserSchedule, updateUserSchedule } from '../../store/user';
+import {
+    completeCurrentWorkout,
+    getScheduleByWorkout,
+    getUserCompletedWorkouts,
+    getUserCurrentWorkout,
+    getUserSchedule,
+    updateUserSchedule
+} from '../../store/user';
 import Exercise from '../Exercise';
 import { capitalize } from '../../utils/capitalize';
 import customHistory from '../../utils/customHistory';
-import { getWorkoutByNumber } from '../../store/workouts';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCalendarDays, faCircleCheck, faCirclePlay, faDumbbell } from '@fortawesome/free-solid-svg-icons';
+import {
+    faCalendarDays,
+    faCircleCheck,
+    faCirclePlay,
+    faDumbbell,
+    faTriangleExclamation
+} from '@fortawesome/free-solid-svg-icons';
 import {
     CardBody,
     CardFooter,
@@ -31,10 +43,14 @@ import {
     StatusLine,
     ExercisesWrapper,
     FooterPlan,
-    BackgroudNumber
+    BackgroudNumber,
+    CompleteWrapper,
+    CompleteTitle,
+    CompleteForm
 } from './styles';
-import { blue, lime, orange } from '@ant-design/colors';
-import { gray } from '../StyledComponents';
+import { blue, lime, orange, red } from '@ant-design/colors';
+import { gray, StyledTitle } from '../StyledComponents';
+import { getExercisesForWorkout, getWorkoutByNumber } from '../../store/trainingPlan';
 
 const WorkoutCard = ({ sequenceNumber }) => {
     const dispatch = useDispatch();
@@ -42,29 +58,39 @@ const WorkoutCard = ({ sequenceNumber }) => {
     const [planedDate, setPlanedDate] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const { complexityLevel, kindName, typeName, exercises } = useSelector(getWorkoutByNumber(sequenceNumber));
+    const { level, kind, type, exerciseGroups } = useSelector(getWorkoutByNumber(sequenceNumber));
+    const fullExercises = useSelector(getExercisesForWorkout(sequenceNumber));
     const userCurrentWorkout = useSelector(getUserCurrentWorkout());
     const userSchedule = useSelector(getUserSchedule());
+    const workoutSchedule = useSelector(getScheduleByWorkout(sequenceNumber));
+    const userCompletedWorkouts = useSelector(getUserCompletedWorkouts());
+
     const [form] = Form.useForm();
     const { pathname } = useLocation();
 
-    const exerciseGroupNames = Object.keys(exercises).map((key) => exercises[key].group);
-
-    const lastWorkoutCompleted =
-        userCurrentWorkout > 1 &&
-        Object.values(userSchedule).find((item) => item.sequenceNumber === userCurrentWorkout - 1);
+    const lastWorkoutCompleted = userSchedule[userCompletedWorkouts - 1];
+    const lastCompletedDate = lastWorkoutCompleted?.date ? lastWorkoutCompleted.date : null;
 
     const nowDate = moment().format('YYYYMMDD');
-    const isWorkoutCompleteUnable = userCurrentWorkout > 1 && lastWorkoutCompleted.date === nowDate;
+    const isWorkoutCompleteUnable = lastCompletedDate === nowDate;
 
     const disabledPastDates = (current) => {
-        return current && current < moment().endOf('day');
+        if (isWorkoutCompleteUnable) {
+            return current && current < moment().endOf('day');
+        } else {
+            return current && current < moment().subtract(1, 'day');
+        }
     };
 
     const disabledFutureDates = (current) => {
-        return (
-            (current && current < moment(lastWorkoutCompleted.date).endOf('day')) || current >= moment().endOf('day')
-        );
+        if (lastCompletedDate) {
+            return (
+                (current && current < moment(lastWorkoutCompleted.date).endOf('day')) ||
+                current >= moment().endOf('day')
+            );
+        } else {
+            return current >= moment().endOf('day');
+        }
     };
 
     const handleDatePick = (date) => {
@@ -77,8 +103,8 @@ const WorkoutCard = ({ sequenceNumber }) => {
     };
 
     const getExercisesElements = () => {
-        return Object.keys(exercises).map((key) => {
-            return <Exercise key={key} sequenceNumber={sequenceNumber} exerciseKey={key} />;
+        return fullExercises.map((exercise, index) => {
+            return <Exercise key={index} sequenceNumber={sequenceNumber} exercise={exercise} />;
         });
     };
 
@@ -114,27 +140,34 @@ const WorkoutCard = ({ sequenceNumber }) => {
         <Button key={1} type="ghost" onClick={modalCancel}>
             Отмена
         </Button>,
-        <Button key={2} type="primary" onClick={modalOk}>
-            Завершить
-        </Button>
+        <Popconfirm
+            key={2}
+            title="Внесённые результаты нельзя отменить. Продолжить?"
+            onConfirm={modalOk}
+            okText="Да"
+            cancelText="Нет"
+            icon={<FontAwesomeIcon icon={faTriangleExclamation} color={red[5]} />}>
+            <Button type="primary">ОК</Button>
+        </Popconfirm>
     ];
 
     const getFormElemetns = () => {
-        return Object.keys(exercises).map((key) => {
-            const units = exercises[key].bodyWeight ? 'раз' : 'кг';
-            const step = exercises[key].bodyWeight ? 1 : 0.5;
+        return fullExercises.map((exercise, index) => {
+            const units = exercise.bodyWeight ? 'раз' : 'кг';
+            const step = exercise.bodyWeight ? 1 : 0.5;
+            const precision = exercise.bodyWeight ? 0 : 1;
             return (
                 <Form.Item
-                    key={key}
-                    name={key}
-                    label={capitalize(exercises[key].name)}
+                    key={index}
+                    name={exercise._id}
+                    label={capitalize(exercise.name)}
                     rules={[
                         {
                             required: true,
                             message: 'Заполните результат упражнения'
                         }
                     ]}>
-                    <InputNumber decimalSeparator={','} precision={1} min={0} prefix={units} step={step} />
+                    <InputNumber decimalSeparator={','} precision={precision} min={0} prefix={units} step={step} />
                 </Form.Item>
             );
         });
@@ -145,7 +178,7 @@ const WorkoutCard = ({ sequenceNumber }) => {
     };
 
     const getExerciseGroups = () => {
-        return exerciseGroupNames.map((g, index) => (
+        return exerciseGroups.map((g, index) => (
             <LightBadge key={index}>
                 <FontAwesomeIcon icon={faDumbbell} /> {g}
             </LightBadge>
@@ -175,9 +208,7 @@ const WorkoutCard = ({ sequenceNumber }) => {
         if (completeStatus === 'completed') {
             return <FontAwesomeIcon icon={faCalendarDays} color={lime[5]} />;
         } else if (completeStatus === 'current') {
-            if (sequenceNumber === 1 && userSchedule.workout1.date === 0) {
-                return <FontAwesomeIcon icon={faCalendarDays} color={gray[3]} />;
-            } else if (!userSchedule[`workout${sequenceNumber}`]) {
+            if (!workoutSchedule) {
                 return <FontAwesomeIcon icon={faCalendarDays} color={gray[3]} />;
             } else {
                 return <FontAwesomeIcon icon={faCalendarDays} color={blue[5]} />;
@@ -199,15 +230,13 @@ const WorkoutCard = ({ sequenceNumber }) => {
 
     const getPlannedInfo = () => {
         if (completeStatus === 'completed') {
-            const workoutDate = userSchedule[`workout${sequenceNumber}`].date;
+            const workoutDate = workoutSchedule.date;
             return moment(workoutDate).format('DD.MM.YYYY');
         } else if (completeStatus === 'current') {
-            if (sequenceNumber === 1 && userSchedule.workout1.date === 0) {
-                return 'Не запланирована.';
-            } else if (!userSchedule[`workout${sequenceNumber}`]) {
+            if (!workoutSchedule) {
                 return 'Не запланирована';
             } else {
-                const workoutDate = userSchedule[`workout${sequenceNumber}`].date;
+                const workoutDate = workoutSchedule.date;
                 return <>{`На ${moment(workoutDate).format('DD.MM.YYYY')}`}</>;
             }
         } else if (completeStatus === 'future') {
@@ -240,15 +269,15 @@ const WorkoutCard = ({ sequenceNumber }) => {
                         <CardLabels>
                             <CardLine>
                                 <Label>Уровень сложности</Label>
-                                <DarkBadge>{complexityLevel}</DarkBadge>
+                                <DarkBadge>{level}</DarkBadge>
                             </CardLine>
                             <CardLine>
                                 <Label>Вид тренировки</Label>
-                                <DarkBadge>{capitalize(typeName)}</DarkBadge>
+                                <DarkBadge>{capitalize(type)}</DarkBadge>
                             </CardLine>
                             <CardLine>
                                 <Label>Набор упражнений</Label>
-                                <DarkBadge>{kindName}</DarkBadge>
+                                <DarkBadge>{kind}</DarkBadge>
                             </CardLine>
                         </CardLabels>
                         <CardBadges>{getExerciseGroups()}</CardBadges>
@@ -283,25 +312,36 @@ const WorkoutCard = ({ sequenceNumber }) => {
                     </Button>
                 </CardFooter>
             </CardWrapper>
-            <Modal open={isModalOpen} closable={false} destroyOnClose={true} footer={modalFooter} centered={true}>
-                <Divider>Результаты тренировки</Divider>
-                <Form
-                    name="workoutResults"
-                    form={form}
-                    onFinish={formSubmit}
-                    requiredMark={false}
-                    colon={false}
-                    labelCol={{ span: 18 }}
-                    labelAlign={'left'}
-                    initialValues={{
-                        completeDate: moment()
-                    }}>
-                    {getFormElemetns()}
-                    <Divider>Дата завершения</Divider>
-                    <Form.Item key={'datepicker'} name="completeDate" label={'   '}>
-                        <DatePicker disabledDate={disabledFutureDates} format={'DD.MM.YYYY'} showToday={true} />
-                    </Form.Item>
-                </Form>
+            <Modal
+                open={isModalOpen}
+                closable={false}
+                destroyOnClose={true}
+                footer={modalFooter}
+                centered={true}
+                width={450}>
+                <CompleteWrapper>
+                    <CompleteTitle>
+                        <StyledTitle level="4">Внесите результаты</StyledTitle>
+                    </CompleteTitle>
+                    <CompleteForm>
+                        <Form
+                            name="workoutResults"
+                            form={form}
+                            onFinish={formSubmit}
+                            requiredMark={false}
+                            colon={false}
+                            labelCol={{ span: 17 }}
+                            labelAlign={'left'}
+                            initialValues={{
+                                completeDate: moment()
+                            }}>
+                            {getFormElemetns()}
+                            <Form.Item key={'datepicker'} name="completeDate" label={'Дата'}>
+                                <DatePicker disabledDate={disabledFutureDates} format={'DD.MM.YYYY'} showToday={true} />
+                            </Form.Item>
+                        </Form>
+                    </CompleteForm>
+                </CompleteWrapper>
             </Modal>
         </>
     );

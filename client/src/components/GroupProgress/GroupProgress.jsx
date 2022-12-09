@@ -1,8 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { ResponsiveBar } from '@nivo/bar';
-import { findKey } from 'lodash';
-import { getExerciseGroups } from '../../store/trainingPlan';
+import { getExercises } from '../../store/trainingPlan';
 import { getUserCompletedWorkouts, getUserSchedule } from '../../store/user';
 //* styles
 import {
@@ -23,22 +22,21 @@ import { StyledGraphBox, StyledTitle } from '../StyledComponents';
 import { TextBox, TextWrapper } from './styles';
 
 const GroupProgress = () => {
-    const exerciseGroups = useSelector(getExerciseGroups());
+    const exercises = useSelector(getExercises());
     const userSchedule = useSelector(getUserSchedule());
     const userCompletedWorkouts = useSelector(getUserCompletedWorkouts());
 
     const getGraphData = () => {
         const preDataObject = {};
         for (let i = 1; i <= userCompletedWorkouts; i++) {
-            const { result } = userSchedule[`workout${i}`];
-            for (const exercise in result) {
-                const groupKey = findKey(exerciseGroups, (o) => o.exercises.includes(exercise));
-                const groupName = exerciseGroups[groupKey].name;
+            const { results } = userSchedule[i - 1];
+            for (const result of results) {
+                const groupName = exercises.find((ex) => ex._id === result.exercise);
                 if (!preDataObject[groupName]) {
                     preDataObject[groupName] = [];
-                    preDataObject[groupName].push(result[exercise]);
+                    preDataObject[groupName].push(result.count);
                 } else {
-                    preDataObject[groupName].push(result[exercise]);
+                    preDataObject[groupName].push(result.count);
                 }
             }
         }

@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const chalk = require('chalk');
+const cors = require('cors');
 const config = require('config');
 const initDatabase = require('./startUp/initDatabase');
 const routes = require('./routes');
@@ -15,6 +16,7 @@ const productionIndex = path.join(__dirname, 'static', 'index.html');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(cors());
 app.use('/api', routes);
 
 if (process.env.NODE_ENV === 'production') {

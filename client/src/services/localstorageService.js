@@ -1,21 +1,24 @@
-const setTokens = ({ localId, idToken, refreshToken, expiresIn }) => {
-    localStorage.setItem('userId', localId);
-    localStorage.setItem('idToken', idToken);
+const setTokens = ({ accessToken, refreshToken, expiresIn, userId }) => {
+    localStorage.setItem('accessToken', accessToken);
     localStorage.setItem('refreshToken', refreshToken);
     localStorage.setItem('expiresIn', expiresIn);
+    localStorage.setItem('userId', userId);
 };
 
 const getUserId = () => localStorage.getItem('userId');
 
+const getAccessToken = () => localStorage.getItem('accessToken');
+
 const removeTokens = () => {
-    localStorage.removeItem('userId');
-    localStorage.removeItem('idToken');
+    localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
     localStorage.removeItem('expiresIn');
+    localStorage.removeItem('userId');
 };
 
 export default {
-    setTokens,
     getUserId,
-    removeTokens
+    getAccessToken,
+    removeTokens,
+    setTokens
 };

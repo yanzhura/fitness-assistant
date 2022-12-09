@@ -23,8 +23,8 @@ const OverallScore = () => {
         ];
         for (let i = 1; i <= workoutsTotal; i++) {
             if (i <= userCompletedWorkouts) {
-                const { result } = userSchedule[`workout${i}`];
-                dailyResults.push(Object.values(result).reduce((acc, val) => acc + val, 0));
+                const { results } = userSchedule[i - 1];
+                dailyResults.push(results.reduce((acc, val) => acc + val.count, 0));
             } else {
                 dailyResults.push(0);
             }

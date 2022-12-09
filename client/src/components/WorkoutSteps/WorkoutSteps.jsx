@@ -46,9 +46,9 @@ const WorkoutSteps = () => {
             title: `Тренировка ${item.sequenceNumber}`,
             description: (
                 <div>
-                    <GrayBadge light={isFutureWorkout}>{item.complexityLevel}</GrayBadge>
-                    <GrayBadge light={isFutureWorkout}>{item.kindName}</GrayBadge>
-                    <GrayBadge light={isFutureWorkout}>{capitalize(item.typeName)}</GrayBadge>
+                    <GrayBadge light={isFutureWorkout}>{item.level}</GrayBadge>
+                    <GrayBadge light={isFutureWorkout}>{item.kind}</GrayBadge>
+                    <GrayBadge light={isFutureWorkout}>{capitalize(item.type)}</GrayBadge>
                 </div>
             )
         };

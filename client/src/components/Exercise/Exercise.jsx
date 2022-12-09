@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Modal } from 'antd';
-import { getWorkoutByNumber } from '../../store/workouts';
 import { capitalize } from '../../utils/capitalize';
 import BodyPartsTags from '../BodyPartsTags/BodyPartsTags';
 import { getUserCompletedWorkouts, getUserSchedule } from '../../store/user';
@@ -26,17 +25,16 @@ import {
 } from './styles';
 import { gray } from '../StyledComponents';
 
-const Exercise = ({ sequenceNumber, exerciseKey }) => {
+const Exercise = ({ sequenceNumber, exercise }) => {
     const userSchedule = useSelector(getUserSchedule());
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const workout = useSelector(getWorkoutByNumber(sequenceNumber));
     const userCompletedWorkouts = useSelector(getUserCompletedWorkouts());
 
     const isWorkoutCompleted = sequenceNumber <= userCompletedWorkouts;
-    const { name, bodyParts, bodyWeight } = workout.exercises[exerciseKey];
-    const { result } = isWorkoutCompleted ? userSchedule[`workout${sequenceNumber}`] : { result: 0 };
-    const exerciseResult = isWorkoutCompleted && result[exerciseKey];
-    const units = bodyWeight ? repeatsDeclension(exerciseResult) : 'кг';
+    const { name, bodyParts, bodyWeight } = exercise;
+    const { results } = isWorkoutCompleted ? userSchedule.find((w) => w.workout === sequenceNumber) : { results: 0 };
+    const { count } = isWorkoutCompleted ? results.find((res) => res.exercise === exercise._id) : { count: 0 };
+    const units = bodyWeight ? repeatsDeclension(count) : 'кг';
 
     const toggleModal = () => setIsModalOpen((prevState) => !prevState);
 
@@ -50,7 +48,7 @@ const Exercise = ({ sequenceNumber, exerciseKey }) => {
                 </PhotoFrame>
                 <ExerciseResult>
                     <ResultNumber>
-                        {isWorkoutCompleted ? exerciseResult : <FontAwesomeIcon icon={faEllipsis} color={gray[6]} />}
+                        {isWorkoutCompleted ? count : <FontAwesomeIcon icon={faEllipsis} color={gray[6]} />}
                     </ResultNumber>
                     <ResultUnits>{units}</ResultUnits>
                 </ExerciseResult>
@@ -62,7 +60,7 @@ const Exercise = ({ sequenceNumber, exerciseKey }) => {
                 </ExerciseText>
             </ExerciseWrapper>
             <Modal footer={null} open={isModalOpen} onCancel={toggleModal} centered={true} width={400}>
-                <ExerciseCard {...{ sequenceNumber, exerciseKey }} />
+                <ExerciseCard {...{ sequenceNumber, exercise }} />
             </Modal>
         </>
     );
@@ -70,7 +68,7 @@ const Exercise = ({ sequenceNumber, exerciseKey }) => {
 
 Exercise.propTypes = {
     sequenceNumber: PropTypes.number.isRequired,
-    exerciseKey: PropTypes.string.isRequired
+    exercise: PropTypes.object
 };
 
 export default Exercise;

@@ -1,7 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
-import { getWorkoutByNumber } from '../../store/workouts';
 import exPhotoA from '../../assets/exercise19-1.png';
 import exPhotoB from '../../assets/exercise19-2.png';
 import { capitalize } from '../../utils/capitalize';
@@ -21,9 +19,7 @@ import {
 const lorem =
     'Банальные, но неопровержимые выводы, а также сделанные на базе интернет-аналитики выводы будут призваны к ответу. Учитывая ключевые сценарии поведения, перспективное планирование требует анализа укрепления моральных ценностей. Как принято считать, активно развивающиеся страны третьего мира могут быть рассмотрены исключительно в разрезе маркетинговых и финансовых предпосылок. Повседневная практика показывает, что современная методология разработки, а также свежий взгляд на привычные вещи — безусловно открывает новые горизонты для стандартных подходов. Повседневная практика показывает, что укрепление и развитие внутренней структуры однозначно фиксирует необходимость экспериментов, поражающих по своей масштабности и грандиозности.';
 
-const ExerciseCard = ({ sequenceNumber, exerciseKey }) => {
-    const workout = useSelector(getWorkoutByNumber(sequenceNumber));
-    const exercise = workout.exercises[exerciseKey];
+const ExerciseCard = ({ exercise }) => {
     return (
         <ModalWrapper>
             <CardWrapper>
@@ -45,8 +41,7 @@ const ExerciseCard = ({ sequenceNumber, exerciseKey }) => {
 };
 
 ExerciseCard.propTypes = {
-    sequenceNumber: PropTypes.number.isRequired,
-    exerciseKey: PropTypes.string.isRequired
+    exercise: PropTypes.object.isRequired
 };
 
 export default ExerciseCard;

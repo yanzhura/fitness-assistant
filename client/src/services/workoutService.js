@@ -7,34 +7,13 @@ const exerciseGroupsLocation = 'exerciseGroups';
 const exercisesLocation = 'exercises';
 const bodyPartsLocation = 'bodyParts';
 
-const fetchFullTrainingPlan = async () => {
-    const { data: trainingPlan } = await httpService.get(`${trainingPlanLocation}.json`);
-    const { data: workoutKinds } = await httpService.get(`${workoutKindsLocation}.json`);
-    const { data: workoutTypes } = await httpService.get(`${workoutTypesLocation}.json`);
-    const { data: exerciseGroups } = await httpService.get(`${exerciseGroupsLocation}.json`);
-    const fullTrainingPlan = bindTrainingPlanData(trainingPlan, workoutKinds, workoutTypes, exerciseGroups);
-    return fullTrainingPlan;
+const fetchExercises = async () => {
+    const { data: exercises } = await httpService.get('/exercise');
+    return exercises;
 };
 
-const bindTrainingPlanData = (trainingPlan, workoutKinds, workoutTypes, exerciseGroups) => {
-    const fullTrainingPlan = [];
-    for (const key in trainingPlan) {
-        const { kind, complexityLevel, sequenceNumber } = trainingPlan[key];
-        const { name: kindName, type, groups } = workoutKinds[kind];
-        const { name: typeName } = workoutTypes[type];
-        const exerciseGroupNames = [];
-        for (const group of groups) {
-            exerciseGroupNames.push(exerciseGroups[group].name);
-        }
-        const workout = {
-            sequenceNumber,
-            complexityLevel,
-            kindName,
-            typeName,
-            exerciseGroupNames
-        };
-        fullTrainingPlan.push(workout);
-    }
+const fetchTrainingPlan = async () => {
+    const { data: fullTrainingPlan } = await httpService.get('/workout');
     return fullTrainingPlan;
 };
 
@@ -102,7 +81,8 @@ const fetchExerciseGroups = async () => {
 };
 
 export default {
-    fetchFullTrainingPlan,
+    fetchExercises,
+    fetchTrainingPlan,
     fetchWorkoutBySeqNumber,
     fetchExerciseGroups
 };

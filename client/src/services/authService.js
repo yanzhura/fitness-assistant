@@ -1,27 +1,18 @@
-import axios from 'axios';
-import config from '../App.config.json';
-
-const httpAuth = axios.create({
-    baseURL: config.authApiUrl,
-    params: {
-        key: process.env.REACT_APP_FIREBASE_API_KEY
-    }
-});
+import httpService from './httpService';
 
 const signIn = async ({ email, password }) => {
-    const { data } = await httpAuth.post(':signInWithPassword', {
+    const { data } = await httpService.post('/auth/signInWithPassword', {
         email,
-        password,
-        returnSecureToken: true
+        password
     });
     return data;
 };
 
-const signUp = async ({ email, password }) => {
-    const { data } = await httpAuth.post(':signUp', {
+const signUp = async ({ email, password, ...rest }) => {
+    const { data } = await httpService.post('/auth/signUp', {
         email,
         password,
-        returnSecureToken: true
+        ...rest
     });
     return data;
 };

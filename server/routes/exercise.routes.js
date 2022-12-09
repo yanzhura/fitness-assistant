@@ -4,7 +4,7 @@ const auth = require('../middleware/auth.middleware');
 
 const router = express.Router({ mergeParams: true });
 
-router.get('/:exerciseId', auth, async (req, res) => {
+router.get('/:exerciseId', async (req, res) => {
     try {
         const { exerciseId } = req.params;
         const exercise = await Exercise.findOne({ _id: exerciseId });
@@ -16,7 +16,7 @@ router.get('/:exerciseId', auth, async (req, res) => {
     }
 });
 
-router.get('/', auth, async (req, res) => {
+router.get('/', async (req, res) => {
     try {
         const exercises = await Exercise.find();
         res.status(200).send(exercises);

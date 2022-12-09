@@ -18,44 +18,41 @@ import {
     GroupsBadges,
     StyledHr
 } from './styles';
+import { useSelector } from 'react-redux';
+import { getScheduleByWorkout } from '../../store/user';
 
-const TrainingPlanCard = ({
-    sequenceNumber,
-    complexityLevel,
-    kindName,
-    typeName,
-    exerciseGroupNames,
-    completeStatus,
-    plannedStatus
-}) => {
+const TrainingPlanCard = ({ sequenceNumber, level, kind, type, exerciseGroups, completeStatus, plannedStatus }) => {
     const getExerciseGroups = () => {
-        return exerciseGroupNames.map((g, index) => (
+        return exerciseGroups.map((g, index) => (
             <LightBadge key={index}>
                 <FontAwesomeIcon icon={faDumbbell} /> {g}
             </LightBadge>
         ));
     };
 
+    const workoutSchedule = useSelector(getScheduleByWorkout(sequenceNumber));
+    const workoutDate = workoutSchedule ? workoutSchedule.date : '0';
+
     return (
         <Link to={`/workouts/${sequenceNumber}`}>
             <StyledCard
                 status={completeStatus}
-                title={<CardHeader {...{ completeStatus, plannedStatus, sequenceNumber }} />}
+                title={<CardHeader {...{ completeStatus, plannedStatus, sequenceNumber, workoutDate }} />}
                 size={'small'}>
                 <CardBody>
                     <CardText>
                         <CardLine>
                             <Label>Уровень сложности</Label>
-                            <DarkBadge>{complexityLevel}</DarkBadge>
+                            <DarkBadge>{level}</DarkBadge>
                         </CardLine>
                         <CardLine>
                             <Label>Вид тренировки</Label>
-                            <DarkBadge>{capitalize(typeName)}</DarkBadge>
+                            <DarkBadge>{capitalize(type)}</DarkBadge>
                         </CardLine>
                         <StyledHr />
                         <CardLine>
                             <Label>Набор упражнений</Label>
-                            <DarkBadge>{kindName}</DarkBadge>
+                            <DarkBadge>{kind}</DarkBadge>
                         </CardLine>
                         <GroupsBadges>{getExerciseGroups()}</GroupsBadges>
                     </CardText>
@@ -68,10 +65,10 @@ const TrainingPlanCard = ({
 
 TrainingPlanCard.propTypes = {
     sequenceNumber: PropTypes.number.isRequired,
-    complexityLevel: PropTypes.number.isRequired,
-    kindName: PropTypes.string.isRequired,
-    typeName: PropTypes.string.isRequired,
-    exerciseGroupNames: PropTypes.arrayOf(PropTypes.string).isRequired,
+    level: PropTypes.number.isRequired,
+    kind: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired,
+    exerciseGroups: PropTypes.arrayOf(PropTypes.string).isRequired,
     completeStatus: PropTypes.string.isRequired,
     plannedStatus: PropTypes.string
 };

@@ -2,7 +2,7 @@ import { Button } from 'antd';
 import React, { useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { StyledTitle } from '../../components/StyledComponents';
-import { hideWelcomPage } from '../../store/user';
+import { hideWelcomePage } from '../../store/user';
 import { helpTopics } from '../../components/HelpTopics';
 import WelcomeSlide from './WelcomeSlide';
 //* styles
@@ -17,7 +17,7 @@ const Welcome = () => {
     };
 
     const handleFinish = () => {
-        dispatch(hideWelcomPage());
+        dispatch(hideWelcomePage());
     };
 
     const getCarouselElements = (elements) => {

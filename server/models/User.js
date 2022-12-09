@@ -10,15 +10,19 @@ const schema = new Schema(
         schedule: [
             {
                 workout: { type: Number },
-                date: { type: Date },
-                result: {
-                    exercise: { type: Schema.Types.ObjectId, ref: 'Exercise' },
-                    count: { type: Number }
-                }
+                date: { type: String },
+                results: [
+                    {
+                        exercise: { type: Schema.Types.ObjectId, ref: 'Exercise' },
+                        count: { type: Number }
+                    }
+                ]
             }
         ],
-        trainingFinishedAt: { type: Date },
-        trainingStartedAt: { type: Date }
+        showWelcomePage: { type: Boolean },
+        showQuickTour: { type: Boolean },
+        trainingFinishedAt: { type: String },
+        trainingStartedAt: { type: String }
     },
     { timestamps: true }
 );

@@ -2,11 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleCheck, faCirclePlay, faCalendarDays } from '@fortawesome/free-solid-svg-icons';
-import { lime, orange, blue } from '@ant-design/colors';
+import { blue, lime, orange } from '@ant-design/colors';
 import { gray } from '../StyledComponents';
-import { BottomText, HeaderWrapper, LeftIcon, RightIcon, TextWrapper, TopText } from './styles';
+import { BottomText, ColorBadge, HeaderWrapper, LeftIcon, RightIcon, TextWrapper, TopText } from './styles';
+import moment from 'moment';
 
-const CardHeader = ({ completeStatus, plannedStatus, sequenceNumber }) => {
+const CardHeader = ({ completeStatus, sequenceNumber, workoutDate }) => {
     const getCompleteIcon = () => {
         switch (completeStatus) {
             case 'completed':
@@ -21,12 +22,12 @@ const CardHeader = ({ completeStatus, plannedStatus, sequenceNumber }) => {
     };
 
     const getPlannedIcon = () => {
-        switch (plannedStatus) {
-            case 'planned':
-                return <FontAwesomeIcon icon={faCalendarDays} color={blue[5]} />;
-
-            default:
-                return <FontAwesomeIcon icon={faCalendarDays} color={gray[3]} />;
+        if (completeStatus === 'completed') {
+            return <ColorBadge color={lime[5]}>{moment(workoutDate).format('DD.MM.YY')}</ColorBadge>;
+        } else if (completeStatus === 'current' && workoutDate !== '0') {
+            return <ColorBadge color={blue[5]}>{moment(workoutDate).format('DD.MM.YY')}</ColorBadge>;
+        } else {
+            return <FontAwesomeIcon icon={faCalendarDays} color={gray[3]} />;
         }
     };
 
@@ -44,8 +45,8 @@ const CardHeader = ({ completeStatus, plannedStatus, sequenceNumber }) => {
 
 CardHeader.propTypes = {
     completeStatus: PropTypes.string,
-    plannedStatus: PropTypes.string,
-    sequenceNumber: PropTypes.number.isRequired
+    sequenceNumber: PropTypes.number.isRequired,
+    workoutDate: PropTypes.string
 };
 
 export default CardHeader;

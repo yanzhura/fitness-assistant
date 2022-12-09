@@ -33,16 +33,10 @@ router.post('/signUp', [
             }
 
             const hashedPassword = await bcrypt.hash(password, 12);
-            console.log('hashedPassword', hashedPassword);
             const newUser = await User.create({
                 ...req.body,
-                password: hashedPassword,
-                completedWorkouts: 0,
-                currentWorkout: 1,
-                trainingFinishedAt: null,
-                trainingStartedAt: null
+                password: hashedPassword
             });
-            console.log('newUser', newUser);
 
             const tokens = tokenService.generate({ _id: newUser._id });
             await tokenService.save(newUser._id, tokens.refreshToken);
@@ -71,7 +65,6 @@ router.post('/signInWithPassword', [
                     error: {
                         message: 'INVALID_DATA',
                         code: 400
-                        // errors: validationErrors.array()
                     }
                 });
             }

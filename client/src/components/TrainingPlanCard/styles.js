@@ -156,3 +156,20 @@ export const BackgroudNumber = styled.div`
     letter-spacing: -10px;
     background: ${gray[3]};
 `;
+
+export const ColorBadge = styled.div((props) => {
+    const background = props.color || '#ccc';
+    const fontSize = props.size === 'small' ? '10px' : '12px';
+    const borderRadius = props.size === 'small' ? '0px' : '3px';
+    return {
+        maxWidth: 'fit-content',
+        display: 'inline-flex',
+        padding: '3px',
+        background,
+        color: '#fff',
+        borderRadius,
+        fontSize,
+        fontWeight: 'normal',
+        lineHeight: `${fontSize}`
+    };
+});

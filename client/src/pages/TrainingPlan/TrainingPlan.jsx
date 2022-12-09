@@ -36,8 +36,6 @@ const TrainingPlan = () => {
             let plannedStatus;
             if (isWorkoutCompleted) {
                 completeStatus = 'completed';
-            } else if (workout.sequenceNumber === 1 && currentWorkoutSchedule.date === 0) {
-                completeStatus = 'incompleted';
             } else if (workout.sequenceNumber === userCurrentWorkout) {
                 completeStatus = 'current';
                 if (currentWorkoutSchedule) {
