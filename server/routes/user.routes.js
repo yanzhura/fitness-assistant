@@ -23,10 +23,18 @@ router.patch('/:userId', auth, async (req, res) => {
     }
 });
 
-router.get('/', auth, async (req, res) => {
+router.get('/:userId', auth, async (req, res) => {
     try {
-        const usersList = await User.find();
-        res.status(200).send(usersList);
+        const { userId } = req.params;
+
+        if (userId === req.user._id) {
+            const user = await User.findOne({ _id: userId });
+            res.status(200).send(user);
+        } else {
+            res.status(401).json({
+                message: 'Unauthorized'
+            });
+        }
     } catch (error) {
         res.status(500).json({
             message: '500 Server Error. Try again later'

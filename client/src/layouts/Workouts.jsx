@@ -8,15 +8,18 @@ import { LayoutColumn, LayoutWrapper } from '../components/StyledComponents';
 import { useSelector } from 'react-redux';
 import { getUserLoadingStatus } from '../store/user';
 import Loader from '../components/Loader/Loader';
+import { getTrainingPlanLoadingStatus } from '../store/trainingPlan';
 
 const Workouts = () => {
     const { seqNumber } = useParams();
     const userDataLoadingStatus = useSelector(getUserLoadingStatus());
+    const trainigplanLoadingStatus = useSelector(getTrainingPlanLoadingStatus());
+    const isDataLoading = userDataLoadingStatus || trainigplanLoadingStatus;
 
     return (
         <LayoutWrapper>
             <LayoutColumn>
-                {userDataLoadingStatus ? <Loader /> : <>{seqNumber ? <Workout /> : <TrainingPlan />}</>}
+                {isDataLoading ? <Loader /> : <>{seqNumber ? <Workout /> : <TrainingPlan />}</>}
                 <HelpDrawer>
                     <AboutWorkouts />
                 </HelpDrawer>

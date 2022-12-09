@@ -61,19 +61,16 @@ const Schedule = () => {
         const workoutStatus = workoutNumber <= userCompletedWorkouts ? 'completed' : 'current';
         return (
             <Link to={`/workouts/${workoutNumber}`}>
-                <StyledTag
-                    status={workoutStatus}>{`Тренировка ${workout.sequenceNumber}${workout.kindName}`}</StyledTag>
+                <StyledTag status={workoutStatus}>{`Тренировка ${workout.sequenceNumber}`}</StyledTag>
             </Link>
         );
     };
 
     const onCellRender = (value) => {
         if (userSchedule && currentWorkout && trainingPlan) {
-            const scheduleItem = Object.values(userSchedule).find(
-                (item) => String(item.date) === value.format('YYYYMMDD')
-            );
+            const scheduleItem = userSchedule.find((item) => String(item.date) === value.format('YYYYMMDD'));
             if (scheduleItem) {
-                return getWorkoutTag(scheduleItem.sequenceNumber);
+                return getWorkoutTag(scheduleItem.workout);
             }
         }
     };

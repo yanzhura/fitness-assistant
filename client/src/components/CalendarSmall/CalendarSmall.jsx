@@ -24,11 +24,9 @@ const CalendarSmall = () => {
 
     const onCellRender = (value) => {
         if (userSchedule && currentWorkout && trainingPlan) {
-            const scheduleItem = Object.values(userSchedule).find(
-                (item) => String(item.date) === value.format('YYYYMMDD')
-            );
+            const scheduleItem = userSchedule.find((item) => String(item.date) === value.format('YYYYMMDD'));
             if (scheduleItem) {
-                const workoutStatus = scheduleItem.sequenceNumber <= userCompletedWorkouts ? 'completed' : 'current';
+                const workoutStatus = scheduleItem.workout <= userCompletedWorkouts ? 'completed' : 'current';
                 return <StyledCell workoutStatus={workoutStatus}>{value.format('DD')}</StyledCell>;
             } else {
                 return <StyledCell workoutStatus={'none'}>{value.format('DD')}</StyledCell>;

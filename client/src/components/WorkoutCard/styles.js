@@ -179,3 +179,26 @@ export const BackgroudNumber = styled.div`
     letter-spacing: -10px;
     background: ${gray[3]};
 `;
+
+export const CompleteWrapper = styled.span`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+`;
+
+export const CompleteTitle = styled.span``;
+
+export const CompleteForm = styled.span`
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border-style: dotted;
+    border-color: ${gray[5]};
+    border-width: 1px;
+`;
+
+export const CompleteDateWrapper = styled.span`
+    display: flex;
+    justify-content: space-between;
+`;

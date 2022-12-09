@@ -36,7 +36,7 @@ const createWorkouts = async () => {
     return Promise.all(
         workoutsMock.map(async (w) => {
             const groups = w.exerciseGroups;
-            const exerciseIDs = await getExerciseIDs(groups);
+            const exerciseIDs = await getExerciseIDs(groups, w.level);
             const newWorkout = new Workout({
                 ...w,
                 exercises: exerciseIDs
@@ -47,10 +47,10 @@ const createWorkouts = async () => {
     );
 };
 
-const getExerciseIDs = async (groups) => {
+const getExerciseIDs = async (groups, level) => {
     return await Promise.all(
         groups.map(async (g) => {
-            const ex = await Exercise.findOne({ group: g, level: 1 });
+            const ex = await Exercise.findOne({ group: g, level });
             return ex._id;
         })
     );

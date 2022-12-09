@@ -37,7 +37,7 @@ const TrainingStats = () => {
                 }
             ];
         } else if (trainingStartedAt && !trainingFinishedAt) {
-            const lastCompletedWorkoutDate = userSchedule[`workout${userCompletedWorkouts}`].date;
+            const lastCompletedWorkoutDate = userSchedule.at(-1).date;
             const daysOfTraining = moment(lastCompletedWorkoutDate).diff(trainingStartedAt, 'days');
             const description =
                 daysOfTraining === 0

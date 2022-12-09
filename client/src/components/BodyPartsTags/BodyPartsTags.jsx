@@ -1,25 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 import { capitalize } from '../../utils/capitalize';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHand } from '@fortawesome/free-solid-svg-icons';
+import { Space } from 'antd';
 //* styles
 import { ColorBadge, tagColors } from './styles';
-import { Space } from 'antd';
+import { getBodyParts } from '../../store/trainingPlan';
 
 const BodyPartsTags = ({ bodyParts, size }) => {
-    const getTagColor = (number) => {
-        return tagColors[number];
-    };
-
-    return Object.keys(bodyParts).map((key, index) => {
-        const getNumberRegexp = /\d+/g;
-        const bodyPartNumber = parseInt(getNumberRegexp.exec(key)) - 1;
+    const allBodyParts = useSelector(getBodyParts());
+    return bodyParts.map((part, index) => {
+        const colorIndex = allBodyParts.indexOf(part);
+        const color = tagColors[colorIndex];
         return (
-            <ColorBadge key={index} color={getTagColor(bodyPartNumber)} size={size}>
+            <ColorBadge key={index} size={size} color={color}>
                 <Space>
                     <FontAwesomeIcon icon={faHand} />
-                    {capitalize(bodyParts[key].name)}
+                    {capitalize(part)}
                 </Space>
             </ColorBadge>
         );
@@ -27,7 +26,7 @@ const BodyPartsTags = ({ bodyParts, size }) => {
 };
 
 BodyPartsTags.propTypes = {
-    bodyParts: PropTypes.object.isRequired,
+    bodyParts: PropTypes.array.isRequired,
     size: PropTypes.string
 };
 
