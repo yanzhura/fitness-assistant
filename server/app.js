@@ -7,6 +7,7 @@ const config = require('config');
 const routes = require('./routes');
 const path = require('path');
 const https = require('https');
+const fs = require('fs');
 
 const app = express();
 const HTTP_PORT = config.get('httpPort') ?? 8080;
@@ -15,11 +16,11 @@ const MONGO_URI = config.get('mongoUri');
 
 const productionStatic = path.join(__dirname, 'static');
 const productionIndex = path.join(__dirname, 'static', 'index.html');
-const cert = path.join(__dirname, 'certs', 'fullchain.pem');
-const key = path.join(__dirname, 'certs', 'privkey.pem');
+const fullChain = path.join(__dirname, 'certs', 'fullchain.pem');
+const privKey = path.join(__dirname, 'certs', 'privkey.pem');
 const productionOptions = {
-    cert,
-    key
+    cert: fs.readFileSync(fullChain),
+    key: fs.readFileSync(privKey)
 };
 
 app.use(express.json());

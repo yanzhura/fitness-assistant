@@ -1,8 +1,8 @@
 import axios from 'axios';
-import config from '../App.config.json';
+import getApiUrl from '../App.config';
 
 const http = axios.create({
-    baseURL: config.apiUrl
+    baseURL: getApiUrl()
 });
 
 export default {
