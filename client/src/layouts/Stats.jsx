@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getTrainingPlanErrors, getTrainingPlanLoadingStatus, resetTrainingPlanError } from '../store/trainingPlan';
 import { getUserErrors, getUserLoadingStatus, resetUserError } from '../store/user';
 import showErrorToast from '../utils/errorToast';
-import HelpDrawer from '../components/HelpDrawer/HelpDrawer';
+import HelpDrawer from '../components/HelpDrawer';
 import { AboutStats } from '../pages/QuickTour';
 import StatsSummary from '../pages/StatsSummary';
 //* styles

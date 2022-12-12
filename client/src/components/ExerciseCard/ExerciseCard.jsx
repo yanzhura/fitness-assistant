@@ -1,36 +1,46 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import exPhotoA from '../../assets/exercise19-1.png';
-import exPhotoB from '../../assets/exercise19-2.png';
 import { capitalize } from '../../utils/capitalize';
 import BodyPartsTags from '../BodyPartsTags';
+import appConfig from '../../App.config';
+//* styles
 import {
+    BigTitle,
     CardBadges,
     CardHeader,
-    CardPhoto,
     CardText,
-    CardTitle,
     CardWrapper,
     LightBadge,
     ModalWrapper,
-    Photo
+    Photo,
+    SmallTitle
 } from './styles';
 
-const lorem =
-    'Банальные, но неопровержимые выводы, а также сделанные на базе интернет-аналитики выводы будут призваны к ответу. Учитывая ключевые сценарии поведения, перспективное планирование требует анализа укрепления моральных ценностей. Как принято считать, активно развивающиеся страны третьего мира могут быть рассмотрены исключительно в разрезе маркетинговых и финансовых предпосылок. Повседневная практика показывает, что современная методология разработки, а также свежий взгляд на привычные вещи — безусловно открывает новые горизонты для стандартных подходов. Повседневная практика показывает, что укрепление и развитие внутренней структуры однозначно фиксирует необходимость экспериментов, поражающих по своей масштабности и грандиозности.';
-
 const ExerciseCard = ({ exercise }) => {
+    const { description } = exercise;
+    const { photoId, execution, completion, annotation } = description;
     return (
         <ModalWrapper>
             <CardWrapper>
                 <CardHeader>
-                    <CardPhoto>
-                        <Photo src={exPhotoA} />
-                        <Photo src={exPhotoB} />
-                    </CardPhoto>
+                    <Photo src={`${appConfig.staticUrl}/exercises/${photoId}left.jpg`} />
+                    <Photo src={`${appConfig.staticUrl}/exercises/${photoId}right.jpg`} />
                 </CardHeader>
-                <CardTitle>{capitalize(exercise.name)}</CardTitle>
-                <CardText>{lorem}</CardText>
+                <BigTitle>{capitalize(exercise.name)}</BigTitle>
+                <CardText>
+                    <div>
+                        <SmallTitle>Сколько выполнять</SmallTitle>
+                        {execution}
+                    </div>
+                    <div>
+                        <SmallTitle>Что записать в результат</SmallTitle>
+                        {completion}
+                    </div>
+                    <div>
+                        <SmallTitle>Как выполнять</SmallTitle>
+                        {annotation}
+                    </div>
+                </CardText>
             </CardWrapper>
             <CardBadges>
                 <LightBadge>{exercise.group}</LightBadge>

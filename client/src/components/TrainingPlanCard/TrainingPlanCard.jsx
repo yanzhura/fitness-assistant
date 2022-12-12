@@ -47,12 +47,12 @@ const TrainingPlanCard = ({ sequenceNumber, level, kind, type, exerciseGroups, c
                         </CardLine>
                         <CardLine>
                             <Label>Вид тренировки</Label>
-                            <DarkBadge>{capitalize(type)}</DarkBadge>
+                            <DarkBadge>{capitalize(kind)}</DarkBadge>
                         </CardLine>
                         <StyledHr />
                         <CardLine>
                             <Label>Набор упражнений</Label>
-                            <DarkBadge>{kind}</DarkBadge>
+                            <DarkBadge>{type}</DarkBadge>
                         </CardLine>
                         <GroupsBadges>{getExerciseGroups()}</GroupsBadges>
                     </CardText>

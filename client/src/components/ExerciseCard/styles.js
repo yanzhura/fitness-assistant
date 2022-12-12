@@ -18,10 +18,8 @@ export const CardWrapper = styled.div`
 
 export const CardHeader = styled.div`
     width: 100%;
-    padding: 10px;
-    gap: 10px;
     display: flex;
-    flex-direction: column;
+    justify-content: space-around;
     border-radius: 5px;
     outline-style: solid;
     outline-width: 1px;
@@ -29,21 +27,11 @@ export const CardHeader = styled.div`
     outline-offset: 5px;
 `;
 
-export const CardPhoto = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-`;
-
 export const Photo = styled.img`
-    width: 120px;
+    width: 170px;
     border-radius: 5px;
 `;
 
-export const CardTitle = styled.div`
-    font-size: 18px;
-    font-weight: 600;
-`;
 export const CardText = styled.div`
     width: 100%;
     padding: 10px;
@@ -55,6 +43,20 @@ export const CardText = styled.div`
     outline-width: 1px;
     outline-color: ${gray[3]};
     outline-offset: 5px;
+`;
+
+export const BigTitle = styled.div`
+    margin-bottom: 20px;
+    font-family: 'Montserrat', 'sans-serif';
+    font-size: 18px;
+    color: ${gray[8]};
+`;
+
+export const SmallTitle = styled.div`
+    margin: 10px 0px 5px 0px;
+    font-family: 'Montserrat', 'sans-serif';
+    font-size: 14px;
+    color: ${gray[8]};
 `;
 
 export const CardBadges = styled.div`

@@ -2,13 +2,16 @@ import styled from '@emotion/styled';
 import { gray } from '../../components/StyledComponents';
 
 export const HomeWrapper = styled.div`
+    width: 100%;
     display: flex;
     gap: 10px;
 `;
 
-export const HomeWorkout = styled.div``;
+export const HomeWorkout = styled.div`
+    max-width: 70%;
+`;
 export const HomeInfo = styled.div`
-    width: 35%;
+    width: 30%;
     display: flex;
     flex-direction: column;
     gap: 10px;

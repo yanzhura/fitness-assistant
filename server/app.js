@@ -14,10 +14,12 @@ const HTTP_PORT = config.get('httpPort') ?? 8080;
 const HTTPS_PORT = config.get('httpsPort') ?? 8443;
 const MONGO_URI = config.get('mongoUri');
 
-const productionStatic = path.join(__dirname, 'static');
-const productionIndex = path.join(__dirname, 'static', 'index.html');
-const fullChain = path.join(__dirname, 'certs', 'fullchain.pem');
-const privKey = path.join(__dirname, 'certs', 'privkey.pem');
+const wwwRoot = path.join(__dirname, 'www', 'frontend');
+const htmlIindex = path.join(__dirname, 'www', 'frontend', 'index.html');
+const fullChain = path.join(__dirname, 'www', 'certs', 'fullchain.pem');
+const privKey = path.join(__dirname, 'www', 'certs', 'privkey.pem');
+const staticFiles = path.join(__dirname, 'www', 'static');
+
 const productionOptions = {
     cert: fs.readFileSync(fullChain),
     key: fs.readFileSync(privKey)
@@ -27,12 +29,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors());
 app.use('/api', routes);
+app.use('/static', express.static(staticFiles));
 
 if (process.env.NODE_ENV === 'production') {
     app.use(require('helmet')());
-    app.use('/', express.static(productionStatic));
+    app.use('/', express.static(wwwRoot));
     app.get('*', (req, res) => {
-        res.sendFile(productionIndex);
+        res.sendFile(htmlIindex);
     });
 }
 

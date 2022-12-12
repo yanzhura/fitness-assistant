@@ -1,4 +1,7 @@
+import axios from 'axios';
+import appConfig from '../App.config';
 import httpService from './httpService';
+import localstorageService from './localstorageService';
 
 const signIn = async ({ email, password }) => {
     const { data } = await httpService.post('/auth/signInWithPassword', {
@@ -17,7 +20,16 @@ const signUp = async ({ email, password, ...rest }) => {
     return data;
 };
 
+const refresh = async () => {
+    const refreshToken = localstorageService.getRefreshToken();
+    const { data } = await axios.post(`${appConfig.apiUrl}/auth/token`, {
+        refreshToken
+    });
+    return data;
+};
+
 export default {
     signIn,
-    signUp
+    signUp,
+    refresh
 };

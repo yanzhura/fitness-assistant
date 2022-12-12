@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import { getUserCompletedWorkouts, getUserCurrentWorkout, getUserSchedule } from '../../store/user';
 import { getTrainingPlan } from '../../store/trainingPlan';
 import { Link } from 'react-router-dom';
-import HelpDrawer from '../../components/HelpDrawer/HelpDrawer';
+import HelpDrawer from '../../components/HelpDrawer';
 import { AboutSchedule } from '../../pages/QuickTour';
 import { ButtonsBox, CalendarHeader, CalendarWrapper, DateBox, StyledTag } from './styles';
 import { LayoutColumn, LayoutWrapper, StyledTitle } from '../../components/StyledComponents';

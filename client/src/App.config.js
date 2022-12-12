@@ -1,8 +1,22 @@
+const devServerUrl = 'http://localhost:8080';
+
 const getApiUrl = () => {
     if (process.env.NODE_ENV === 'development') {
-        return 'http://localhost:8080/api';
+        return `${devServerUrl}/api`;
     }
     return '/api';
 };
 
-export default getApiUrl;
+const getStaticUrl = () => {
+    if (process.env.NODE_ENV === 'development') {
+        return `${devServerUrl}/static`;
+    }
+    return '/static';
+};
+
+const appConfig = {
+    apiUrl: getApiUrl(),
+    staticUrl: getStaticUrl()
+};
+
+export default appConfig;

@@ -5,7 +5,7 @@ import CompleteCongrats from '../../components/CompleteCongrats';
 import WorkoutCard from '../../components/WorkoutCard';
 import WorkoutSteps from '../../components/WorkoutSteps';
 import { getUserCurrentWorkout, getUserTrainingStatus } from '../../store/user';
-import HelpDrawer from '../../components/HelpDrawer/HelpDrawer';
+import HelpDrawer from '../../components/HelpDrawer';
 import { AboutHome } from '../QuickTour';
 //* styles
 import { StyledTitle } from '../../components/StyledComponents';
