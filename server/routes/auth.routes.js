@@ -106,37 +106,34 @@ router.post('/signInWithPassword', [
     }
 ]);
 
-const isTokenInvalid = (validationToken, dbToken) => {
-    return !validationToken || !dbToken || validationToken._id !== dbToken?.user?.toString();
+const isTokenInvalid = (validationData, dbToken) => {
+    return !validationData || !dbToken || validationToken._id !== dbToken?.user?.toString();
 };
 
-router.post('/token', [
-    check('password', 'Минимальная длина пароля 8 символов').isLength({ min: 8 }),
-    async (req, res) => {
-        try {
-            const { refreshToken } = req.body;
-            const validationToken = tokenService.validateRefresh(refreshToken);
-            const dbToken = await tokenService.findToken(refreshToken);
+router.post('/token', async (req, res) => {
+    try {
+        const { refreshToken } = req.body;
+        const validationData = tokenService.validateRefresh(refreshToken);
+        const dbToken = await tokenService.findToken(refreshToken);
 
-            if (isTokenInvalid(validationToken, dbToken)) {
-                res.status(401).json({
-                    message: 'Unauthorized'
-                });
-            }
-
-            const tokens = await tokenService.generate({
-                _id: dbToken._id
-            });
-
-            await tokenService.save(dbToken._id, tokens.refreshToken);
-
-            res.status(200).send({ ...tokens, userId: validationToken._id });
-        } catch (error) {
-            res.status(500).json({
-                message: '500 Server Error. Try again later'
+        if (isTokenInvalid(validationData, dbToken)) {
+            res.status(401).json({
+                message: 'Unauthorized'
             });
         }
+
+        const tokens = tokenService.generate({
+            _id: dbToken._id.toString()
+        });
+
+        await tokenService.save(validationData._id, tokens.refreshToken);
+
+        res.status(200).send({ ...tokens, userId: validationData._id });
+    } catch (error) {
+        res.status(500).json({
+            message: '500 Server Error. Try again later'
+        });
     }
-]);
+});
 
 module.exports = router;

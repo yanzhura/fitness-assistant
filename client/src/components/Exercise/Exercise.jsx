@@ -8,8 +8,8 @@ import { getUserCompletedWorkouts, getUserSchedule } from '../../store/user';
 import { repeatsDeclension } from '../../utils/declensions';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsis } from '@fortawesome/free-solid-svg-icons';
-import exImage from '../../assets/exercise19-1.png';
 import ExerciseCard from '../ExerciseCard/ExerciseCard';
+import appConfig from '../../App.config';
 //* styles
 import {
     ExercisePhoto,
@@ -31,7 +31,7 @@ const Exercise = ({ sequenceNumber, exercise }) => {
     const userCompletedWorkouts = useSelector(getUserCompletedWorkouts());
 
     const isWorkoutCompleted = sequenceNumber <= userCompletedWorkouts;
-    const { name, bodyParts, bodyWeight } = exercise;
+    const { name, bodyParts, bodyWeight, description } = exercise;
     const { results } = isWorkoutCompleted ? userSchedule.find((w) => w.workout === sequenceNumber) : { results: 0 };
     const { count } = isWorkoutCompleted ? results.find((res) => res.exercise === exercise._id) : { count: 0 };
     const units = bodyWeight ? repeatsDeclension(count) : 'кг';
@@ -43,7 +43,7 @@ const Exercise = ({ sequenceNumber, exercise }) => {
             <ExerciseWrapper onClick={toggleModal}>
                 <PhotoFrame>
                     <ExercisePhoto>
-                        <Photo src={exImage} />
+                        <Photo src={`${appConfig.staticUrl}/exercises/${description.photoId}small.jpg`} />
                     </ExercisePhoto>
                 </PhotoFrame>
                 <ExerciseResult>

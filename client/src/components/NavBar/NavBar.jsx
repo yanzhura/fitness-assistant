@@ -3,10 +3,10 @@ import { Link, useLocation } from 'react-router-dom';
 import { Divider, Menu } from 'antd';
 import { useSelector } from 'react-redux';
 import { getCurrentUser, getIsLoggedIn, getShowQuickTour, getUserLoadingStatus } from '../../store/user';
+import EnterButtons from '../EnterButtons/EnterButtons';
+import appConfig from '../../App.config';
 //* styles
 import { Logo, LogoWrapper, menuOverride, MenuWrapper, Profile } from './styles';
-import logo from '../../assets/logoWithText.png';
-import EnterButtons from '../EnterButtons/EnterButtons';
 
 const Navbar = () => {
     const isLoggedIn = useSelector(getIsLoggedIn());
@@ -51,7 +51,7 @@ const Navbar = () => {
         <>
             <LogoWrapper>
                 <Link to={'/'}>
-                    <Logo src={logo} />
+                    <Logo src={`${appConfig.staticUrl}/startPage/logoWithText.png`} />
                 </Link>
             </LogoWrapper>
             <MenuWrapper>

@@ -1,24 +1,16 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import { Button, Drawer } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { getQuickTourPage, getShowQuickTour, hideQuickTour, nextQuickTourPage } from '../../store/user';
 import customHistory from '../../utils/customHistory';
+import pages from './pages';
 //* styles
 import { bodyOverride, headerFooterOverride } from './styles';
 
-const HelpDrawer = ({ children }) => {
+const HelpDrawer = () => {
     const dispatch = useDispatch();
     const isQuickTourOpen = useSelector(getShowQuickTour());
     const currentPage = useSelector(getQuickTourPage());
-
-    const pages = [
-        { title: 'Сводка', path: '/home' },
-        { title: 'Теренировки', path: '/workouts' },
-        { title: 'Расписание', path: '/schedule' },
-        { title: 'Статистика', path: '/stats' },
-        { title: 'Помощь', path: '/help' }
-    ];
 
     const [drawerOpen] = useState(isQuickTourOpen);
 
@@ -51,13 +43,9 @@ const HelpDrawer = ({ children }) => {
             headerStyle={headerFooterOverride}
             footerStyle={headerFooterOverride}
             bodyStyle={bodyOverride}>
-            {children}
+            {pages[currentPage].text}
         </Drawer>
     );
-};
-
-HelpDrawer.propTypes = {
-    children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node])
 };
 
 export default HelpDrawer;

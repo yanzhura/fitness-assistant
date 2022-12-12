@@ -1,11 +1,13 @@
 import React from 'react';
-import HelpDrawer from '../../components/HelpDrawer/HelpDrawer';
+import HelpDrawer from '../../components/HelpDrawer';
 import { AboutHelp } from '../../pages/QuickTour';
 import CollapsePanel from 'antd/lib/collapse/CollapsePanel';
 import { helpTopics } from '../../components/HelpTopics';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faQuestion } from '@fortawesome/free-solid-svg-icons';
 import { LayoutColumn, LayoutWrapper, StyledTitle } from '../../components/StyledComponents';
+import parse from 'html-react-parser';
+//* styles
 import { BackgroudSymbol, HelpWrapper, StyledCollapse } from './styles';
 
 const Help = () => {
@@ -18,7 +20,7 @@ const Help = () => {
                         {el.title}
                     </StyledTitle>
                 }>
-                {el.body}
+                {parse(el.body)}
             </CollapsePanel>
         ));
     };

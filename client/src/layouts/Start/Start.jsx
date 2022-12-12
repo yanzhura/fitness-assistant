@@ -1,4 +1,8 @@
 import React from 'react';
+import { Space } from 'antd';
+import appConfig from '../../App.config';
+import StartCard from '../../components/StartCard/StartCard';
+//* styles
 import { PhotoWrapper } from '../../components/StyledComponents';
 import {
     Cards,
@@ -10,39 +14,26 @@ import {
     Greeting,
     GreetingTitle,
     Logo,
-    LogoWrapper,
-    MainText
+    LogoWrapper
 } from './styles';
-import logo from '../../assets/logoWithoutText.png';
-import StartCard from '../../components/StartCard/StartCard';
-import imageNovice1 from '../../assets/gymNovice1.jpg';
-import imageNovice2 from '../../assets/gymNovice2.jpg';
-import imageNovice3 from '../../assets/gymNovice3.jpg';
-import iconKettleBell from '../../assets/iconKetlebell.png';
-import iconDumbBell from '../../assets/iconDumbbell.png';
-import iconArm from '../../assets/iconArm.png';
-import { Space } from 'antd';
-
-const lorem = `Задача организации, в особенности же высококачественный прототип будущего проекта влечет за собой процесс внедрения и модернизации вывода текущих активов. Лишь предприниматели в сети интернет могут быть ассоциативно распределены по отраслям. В частности, экономическая повестка сегодняшнего дня однозначно фиксирует необходимость приоретизации разума над эмоциями. Не следует, однако, забывать, что повышение уровня гражданского сознания не даёт нам иного выбора, кроме определения соответствующих условий активизации. Банальные, но неопровержимые выводы, а также явные признаки победы институционализации, которые представляют собой яркий пример континентально-европейского типа политической культуры, будут представлены в исключительно положительном свете. Таким образом, внедрение современных методик позволяет выполнить важные задания по разработке системы обучения кадров, соответствующей насущным потребностям. Вот вам яркий пример современных тенденций — граница обучения кадров предопределяет высокую востребованность своевременного выполнения сверхзадачи. Однозначно, акционеры крупнейших компаний, которые представляют собой яркий пример континентально-европейского типа политической культуры, будут в равной степени предоставлены сами себе. Таким образом, постоянный количественный рост и сфера нашей активности не даёт нам иного выбора, кроме определения прогресса профессионального сообщества. Приятно, граждане, наблюдать, как реплицированные с зарубежных источников, современные исследования неоднозначны и будут смешаны с не уникальными данными до степени совершенной неузнаваемости, из-за чего возрастает их статус бесполезности.`;
-const loremShort = `Задача организации, в особенности же высококачественный прототип будущего проекта влечет за собой процесс внедрения и модернизации вывода текущих активов. Лишь предприниматели в сети интернет могут быть ассоциативно распределены по отраслям.`;
 
 const cardsData = [
     {
-        text: loremShort,
-        image: imageNovice1,
-        icon: iconKettleBell,
+        text: 'Перестаньте ломать голову над тем, что делать с абонементом в фитнес-клуб, который вам подарили. Больше не надо жалеть о деньгах, который вы потратили на абонемент, по которому не ходите в спортзал. Начните заниматься с вашим ассистентом в ближайшие дни!',
+        image: `${appConfig.staticUrl}/startPage/gymNovice1.jpg`,
+        icon: `${appConfig.staticUrl}/startPage/logoKettleBell.png`,
         align: 'left'
     },
     {
-        text: loremShort,
-        image: imageNovice2,
-        icon: iconDumbBell,
+        text: 'Люди, которые начинают ходить в зал - растеряны и смущены. Они бродят от тренажёра к тренажёру, делают бессмыссленные упражнения без цели и плана. У вас есть такой план! Приходите на каждую тренировку с чётким знанием того, что вы будете делать. Вы будете точно знать чем заниматься с первого и до последнего дня.',
+        image: `${appConfig.staticUrl}/startPage/gymNovice2.jpg`,
+        icon: `${appConfig.staticUrl}/startPage/logoDumbBell.png`,
         align: 'right'
     },
     {
-        text: loremShort,
-        image: imageNovice3,
-        icon: iconArm,
+        text: 'Пройдите через 36 специальных тренировок для начинающих и превратитесь из новичка в завсегдатая спортивного клуба. По окончании программы вы сможете отследить прогрес в цифрах и графиках и оценить успех от занятий. Спустя 3 месяца занятий вы обретёте знания и навыки, которые помогут вам понять, куда двигаться дальше в мире спорта!',
+        image: `${appConfig.staticUrl}/startPage/gymNovice3.jpg`,
+        icon: `${appConfig.staticUrl}/startPage/logoArm.png`,
         align: 'left'
     }
 ];
@@ -61,10 +52,10 @@ const Start = () => {
                     <GreetingTitle>ЗДРАВСТВУЙТЕ!</GreetingTitle>
                     <Greeting>Я ВАШ ПЕРСОНАЛЬНЫЙ</Greeting>
                     <LogoWrapper>
-                        <Logo src={logo} />{' '}
+                        <Logo src={`${appConfig.staticUrl}/startPage/logoWithoutText.png`} />{' '}
                     </LogoWrapper>
                     <FitnessAssistant>
-                        <FitnessAssistantLeft>ФИТНЕСС</FitnessAssistantLeft>
+                        <FitnessAssistantLeft>ФИТНЕС</FitnessAssistantLeft>
                         <FitnessAssistantRight>АССИСТЕНТ</FitnessAssistantRight>
                     </FitnessAssistant>
                     <Cards>
@@ -72,7 +63,6 @@ const Start = () => {
                             {getStartCards()}
                         </Space>
                     </Cards>
-                    <MainText>{lorem}</MainText>
                 </CenteredBox>
             </CenteredWrapper>
         </PhotoWrapper>

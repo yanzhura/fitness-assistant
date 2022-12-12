@@ -289,19 +289,17 @@ const WorkoutCard = ({ sequenceNumber }) => {
                             </CardLine>
                             <CardLine>
                                 <Label>Вид тренировки</Label>
-                                <DarkBadge>{capitalize(type)}</DarkBadge>
+                                <DarkBadge>{capitalize(kind)}</DarkBadge>
                             </CardLine>
                             <CardLine>
                                 <Label>Набор упражнений</Label>
-                                <DarkBadge>{kind}</DarkBadge>
+                                <DarkBadge>{type}</DarkBadge>
                             </CardLine>
                         </CardLabels>
                         <CardBadges>{getExerciseGroups()}</CardBadges>
                     </CardInfo>
-                    <ExercisesWrapper>
-                        {getExercisesElements()}
-                        <BackgroudNumber>{sequenceNumber}</BackgroudNumber>
-                    </ExercisesWrapper>
+                    <ExercisesWrapper>{getExercisesElements()}</ExercisesWrapper>
+                    <BackgroudNumber>{sequenceNumber}</BackgroudNumber>
                 </CardBody>
                 <CardFooter>
                     <FooterPlan>

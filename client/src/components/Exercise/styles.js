@@ -35,7 +35,7 @@ export const ExercisePhoto = styled.div`
     background: #fff;
 `;
 export const Photo = styled.img`
-    width: 50px;
+    width: 60px;
 `;
 
 export const ExerciseResult = styled.div`
@@ -75,6 +75,7 @@ export const TextTitle = styled.div`
 
 export const TextTags = styled.div`
     display: flex;
+    flex-wrap: wrap;
     gap: 5px;
 `;
 

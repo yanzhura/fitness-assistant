@@ -26,8 +26,9 @@ export const CardHeader = styled.div`
 `;
 
 export const CardBody = styled.div`
+    position: relative;
     height: 100%;
-    overflow-y: hidden;
+    overflow: hidden;
     display: flex;
     justify-content: space-between;
     gap: 10px;
@@ -56,6 +57,7 @@ export const HeaderNumber = styled.div`
 `;
 
 export const CardInfo = styled.div`
+    height: fit-content;
     padding: 10px;
     display: flex;
     flex-direction: column;
@@ -66,7 +68,6 @@ export const CardInfo = styled.div`
 
 export const ExercisesWrapper = styled.div`
     z-index: 5;
-    position: relative;
     max-height: inherit;
     overflow: hidden;
     flex-grow: 1;

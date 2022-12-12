@@ -17,6 +17,7 @@ export const HelpWrapper = styled.div`
 `;
 
 export const StyledCollapse = styled(Collapse)`
+    z-index: 5;
     width: 80%;
     height: fit-content;
 `;
