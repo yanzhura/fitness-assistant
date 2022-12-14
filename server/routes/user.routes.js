@@ -32,7 +32,7 @@ router.get('/:userId', auth, async (req, res) => {
             res.status(200).send(user);
         } else {
             res.status(401).json({
-                message: 'Unauthorized'
+                message: 'Unauthorized from router.get(/:userId)'
             });
         }
     } catch (error) {

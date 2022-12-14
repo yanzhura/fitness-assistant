@@ -10,14 +10,14 @@ module.exports = (req, res, next) => {
 
         if (!token) {
             return res.status(401).json({
-                message: 'Unauthorized'
+                message: 'Unauthorized from auth.middleware !token'
             });
         }
 
         const data = tokenService.validateAccess(token);
 
         if (!data) {
-            return res.status(401).json({ message: 'Unauthorized' });
+            return res.status(401).json({ message: 'Unauthorized from auth.middleware !data' });
         }
 
         req.user = data;
