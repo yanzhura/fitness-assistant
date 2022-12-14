@@ -1,26 +1,57 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
-import { getWorkoutByNumber } from '../../store/workouts';
-import BodyPartsTags from '../BodyPartsTags/BodyPartsTags';
+import { capitalize } from '../../utils/capitalize';
+import BodyPartsTags from '../BodyPartsTags';
+import appConfig from '../../App.config';
+//* styles
+import {
+    BigTitle,
+    CardBadges,
+    CardHeader,
+    CardText,
+    CardWrapper,
+    LightBadge,
+    ModalWrapper,
+    Photo,
+    SmallTitle
+} from './styles';
 
-const ExerciseCard = ({ workoutNumber, exerciseKey }) => {
-    const workout = useSelector(getWorkoutByNumber(workoutNumber));
-    const exercise = workout.exercises[exerciseKey];
+const ExerciseCard = ({ exercise }) => {
+    const { description } = exercise;
+    const { photoId, execution, completion, annotation } = description;
     return (
-        <div>
-            <BodyPartsTags bodyParts={exercise.bodyParts} />
-            <p>Фото</p>
-            <p>Название: {exercise.name}</p>
-            <p>Группа: {exercise.group}</p>
-            <p>Описание</p>
-        </div>
+        <ModalWrapper>
+            <CardWrapper>
+                <CardHeader>
+                    <Photo src={`${appConfig.staticUrl}/exercises/${photoId}left.jpg`} />
+                    <Photo src={`${appConfig.staticUrl}/exercises/${photoId}right.jpg`} />
+                </CardHeader>
+                <BigTitle>{capitalize(exercise.name)}</BigTitle>
+                <CardText>
+                    <div>
+                        <SmallTitle>Сколько выполнять</SmallTitle>
+                        {execution}
+                    </div>
+                    <div>
+                        <SmallTitle>Что записать в результат</SmallTitle>
+                        {completion}
+                    </div>
+                    <div>
+                        <SmallTitle>Как выполнять</SmallTitle>
+                        {annotation}
+                    </div>
+                </CardText>
+            </CardWrapper>
+            <CardBadges>
+                <LightBadge>{exercise.group}</LightBadge>
+                <BodyPartsTags bodyParts={exercise.bodyParts} size={'small'} />
+            </CardBadges>
+        </ModalWrapper>
     );
 };
 
 ExerciseCard.propTypes = {
-    workoutNumber: PropTypes.number.isRequired,
-    exerciseKey: PropTypes.string.isRequired
+    exercise: PropTypes.object.isRequired
 };
 
 export default ExerciseCard;

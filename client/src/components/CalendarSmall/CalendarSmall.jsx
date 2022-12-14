@@ -1,9 +1,7 @@
-/** @jsxImportSource @emotion/react */
-
 import React from 'react';
-import { Calendar, Col, Row, Statistic } from 'antd';
+import { Calendar } from 'antd';
 //* styles
-import { StyledCell } from './styles';
+import { CalendarHeader, DarkBadge, StyledCell } from './styles';
 import { useSelector } from 'react-redux';
 import { getUserCompletedWorkouts, getUserCurrentWorkout, getUserSchedule } from '../../store/user';
 import { getTrainingPlan } from '../../store/trainingPlan';
@@ -18,21 +16,17 @@ const CalendarSmall = () => {
 
     const onHeaderRender = () => {
         return (
-            <Row justify={'end'}>
-                <Col>
-                    <Statistic title={moment().format('DD.MM.YYYY')} valueRender={() => ''} />
-                </Col>
-            </Row>
+            <CalendarHeader>
+                <DarkBadge>{moment().format('DD.MM.YYYY')}</DarkBadge>
+            </CalendarHeader>
         );
     };
 
     const onCellRender = (value) => {
         if (userSchedule && currentWorkout && trainingPlan) {
-            const scheduleItem = Object.values(userSchedule).find(
-                (item) => String(item.date) === value.format('YYYYMMDD')
-            );
+            const scheduleItem = userSchedule.find((item) => String(item.date) === value.format('YYYYMMDD'));
             if (scheduleItem) {
-                const workoutStatus = scheduleItem.sequenceNumber <= userCompletedWorkouts ? 'completed' : 'current';
+                const workoutStatus = scheduleItem.workout <= userCompletedWorkouts ? 'completed' : 'current';
                 return <StyledCell workoutStatus={workoutStatus}>{value.format('DD')}</StyledCell>;
             } else {
                 return <StyledCell workoutStatus={'none'}>{value.format('DD')}</StyledCell>;
@@ -43,11 +37,9 @@ const CalendarSmall = () => {
     };
 
     return (
-        <div>
-            <Link to={'/schedule'}>
-                <Calendar fullscreen={false} headerRender={onHeaderRender} dateFullCellRender={onCellRender} />
-            </Link>
-        </div>
+        <Link to={'/schedule'}>
+            <Calendar fullscreen={false} headerRender={onHeaderRender} dateFullCellRender={onCellRender} />
+        </Link>
     );
 };
 

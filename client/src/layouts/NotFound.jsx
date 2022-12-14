@@ -1,16 +1,29 @@
+import { Button, Result } from 'antd';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { LayoutColumn, LayoutWrapper } from '../components/StyledComponents';
+import customHistory from '../utils/customHistory';
 
 const NotFound = () => {
+    const handleClick = () => {
+        customHistory.push('/');
+    };
+
     return (
-        <div>
-            <h1>404</h1>
-            <p>Запрашиваемая страница не найдена</p>
-            <Link to="/">На главную</Link>
-        </div>
+        <LayoutWrapper>
+            <LayoutColumn>
+                <Result
+                    status="404"
+                    title="404"
+                    subTitle="Страница на которую вы перешли не существует."
+                    extra={
+                        <Button type="primary" onClick={handleClick}>
+                            Вернуться на главную
+                        </Button>
+                    }
+                />
+            </LayoutColumn>
+        </LayoutWrapper>
     );
 };
 
 export default NotFound;
-
-// TODO Надо разместить на этой странице соответствующий колмпонент из Ant Design / Components / Result

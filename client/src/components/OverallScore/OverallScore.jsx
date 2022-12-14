@@ -1,12 +1,12 @@
 import React from 'react';
-import Title from 'antd/lib/typography/Title';
 import { ResponsiveLine } from '@nivo/line';
 import { useSelector } from 'react-redux';
 import { getUserCompletedWorkouts, getUserSchedule } from '../../store/user';
 import { green } from '@ant-design/colors';
 import { getTrainingPlan } from '../../store/trainingPlan';
 //* styles
-import { StyledGraphBox } from '../StyledComponents';
+import { StyledGraphBox, StyledTitle } from '../StyledComponents';
+import { TextBox, TextWrapper } from './styles';
 
 const OverallScore = () => {
     const userSchedule = useSelector(getUserSchedule());
@@ -23,8 +23,8 @@ const OverallScore = () => {
         ];
         for (let i = 1; i <= workoutsTotal; i++) {
             if (i <= userCompletedWorkouts) {
-                const { result } = userSchedule[`workout${i}`];
-                dailyResults.push(Object.values(result).reduce((acc, val) => acc + val, 0));
+                const { results } = userSchedule[i - 1];
+                dailyResults.push(results.reduce((acc, val) => acc + val.count, 0));
             } else {
                 dailyResults.push(0);
             }
@@ -51,24 +51,36 @@ const OverallScore = () => {
     const data = getGraphData();
 
     return (
-        <div>
-            <StyledGraphBox>
-                <Title level={3}>Общий прогресс в баллах</Title>
-                <ResponsiveLine
-                    data={data}
-                    margin={{ top: 30, right: 50, bottom: 100, left: 50 }}
-                    lineWidth={1}
-                    enablePointLabel={true}
-                    pointSize={8}
-                    pointColor={'white'}
-                    pointBorderWidth={1}
-                    pointBorderColor={green[5]}
-                    colors={green[5]}
-                    axisLeft={null}
-                    axisBottom={{ legend: 'Тренировки', legendPosition: 'middle', legendOffset: 40 }}
-                />
-            </StyledGraphBox>
-        </div>
+        <StyledGraphBox>
+            {userCompletedWorkouts < 4 ? (
+                <TextWrapper>
+                    <TextBox>
+                        У нас пока недостаточно данных, чтобы отобразить график общего прогреса. Он появится, когда вы
+                        закончите не менее 3-х тренировок.
+                    </TextBox>
+                </TextWrapper>
+            ) : (
+                <>
+                    <StyledTitle level="4" italic>
+                        Общий прогресс в баллах
+                    </StyledTitle>
+                    <ResponsiveLine
+                        data={data}
+                        margin={{ top: 30, right: 50, bottom: 100, left: 50 }}
+                        lineWidth={1}
+                        enablePointLabel={true}
+                        pointSize={8}
+                        pointColor={'white'}
+                        pointBorderWidth={1}
+                        pointBorderColor={green[5]}
+                        colors={green[5]}
+                        axisLeft={null}
+                        axisBottom={{ legend: 'Тренировки', legendPosition: 'middle', legendOffset: 40 }}
+                        enableArea={true}
+                    />
+                </>
+            )}
+        </StyledGraphBox>
     );
 };
 

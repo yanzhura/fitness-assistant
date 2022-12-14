@@ -1,45 +1,16 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
 import { useParams } from 'react-router-dom';
-import { Col, Row, Spin } from 'antd';
-import {
-    getWorkoutByNumber,
-    getWorkoutsErrors,
-    getWorkoutsLoadingStatus,
-    loadWorkout,
-    resetWorkoutError
-} from '../../store/workouts';
+import { WorkoutWrapper } from './styles';
 import WorkoutCard from '../../components/WorkoutCard';
-import showErrorToast from '../../utils/errorToast';
-import { StyledBorderBox } from '../../components/StyledComponents';
 
 const Workout = () => {
-    const dispatch = useDispatch();
     const { seqNumber } = useParams();
     const sequenceNumber = parseInt(seqNumber);
-    const workoutLoadingStatus = useSelector(getWorkoutsLoadingStatus());
-    const workoutLoadingErrors = useSelector(getWorkoutsErrors());
-    const workout = useSelector(getWorkoutByNumber(sequenceNumber));
-
-    useEffect(() => {
-        dispatch(loadWorkout(sequenceNumber));
-    }, []);
-
-    useEffect(() => {
-        if (workoutLoadingErrors) {
-            showErrorToast(workoutLoadingErrors);
-            dispatch(resetWorkoutError());
-        }
-    }, [workoutLoadingErrors]);
 
     return (
-        <Col span={16} offset={4}>
-            <Row justify={'center'}>
-                <StyledBorderBox>
-                    {workoutLoadingStatus || !workout ? <Spin /> : <WorkoutCard sequenceNumber={sequenceNumber} />}
-                </StyledBorderBox>
-            </Row>
-        </Col>
+        <WorkoutWrapper>
+            <WorkoutCard sequenceNumber={sequenceNumber} />
+        </WorkoutWrapper>
     );
 };
 

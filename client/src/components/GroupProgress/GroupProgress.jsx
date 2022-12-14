@@ -1,9 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import Title from 'antd/lib/typography/Title';
 import { ResponsiveBar } from '@nivo/bar';
-import { findKey } from 'lodash';
-import { getExerciseGroups } from '../../store/trainingPlan';
+import { getExercises } from '../../store/trainingPlan';
 import { getUserCompletedWorkouts, getUserSchedule } from '../../store/user';
 //* styles
 import {
@@ -20,25 +18,25 @@ import {
     purple,
     magenta
 } from '@ant-design/colors';
-import { StyledGraphBox } from '../StyledComponents';
+import { StyledGraphBox, StyledTitle } from '../StyledComponents';
+import { TextBox, TextWrapper } from './styles';
 
 const GroupProgress = () => {
-    const exerciseGroups = useSelector(getExerciseGroups());
+    const exercises = useSelector(getExercises());
     const userSchedule = useSelector(getUserSchedule());
     const userCompletedWorkouts = useSelector(getUserCompletedWorkouts());
 
     const getGraphData = () => {
         const preDataObject = {};
         for (let i = 1; i <= userCompletedWorkouts; i++) {
-            const { result } = userSchedule[`workout${i}`];
-            for (const exercise in result) {
-                const groupKey = findKey(exerciseGroups, (o) => o.exercises.includes(exercise));
-                const groupName = exerciseGroups[groupKey].name;
+            const { results } = userSchedule[i - 1];
+            for (const result of results) {
+                const groupName = exercises.find((ex) => ex._id === result.exercise).group;
                 if (!preDataObject[groupName]) {
                     preDataObject[groupName] = [];
-                    preDataObject[groupName].push(result[exercise]);
+                    preDataObject[groupName].push(result.count);
                 } else {
-                    preDataObject[groupName].push(result[exercise]);
+                    preDataObject[groupName].push(result.count);
                 }
             }
         }
@@ -80,30 +78,46 @@ const GroupProgress = () => {
     const { graphData, graphKeys } = getGraphData();
 
     return (
-        <div>
-            <StyledGraphBox>
-                <Title level={3}>Прогресс по группам</Title>
-                <ResponsiveBar
-                    data={graphData}
-                    keys={graphKeys}
-                    indexBy="exerciseGroup"
-                    margin={{ top: 30, right: 50, bottom: 100, left: 50 }}
-                    groupMode="grouped"
-                    colors={({ id, data }) => {
-                        return String(data[`${id}Color`]);
-                    }}
-                    borderWidth={1}
-                    borderColor={{
-                        from: 'color',
-                        modifiers: [['darker', 0.2]]
-                    }}
-                    enableLabel={false}
-                    axisLeft={null}
-                    axisBottom={{ legend: 'Группы упражнений', legendPosition: 'middle', legendOffset: 40 }}
-                    isInteractive={false}
-                />
-            </StyledGraphBox>
-        </div>
+        <StyledGraphBox>
+            {userCompletedWorkouts < 4 ? (
+                <TextWrapper>
+                    <TextBox>
+                        У нас пока недостаточно данных, чтобы отобразить график прогреса по группам. Он появится, когда
+                        вы закончите не менее 3-х тренировок.
+                    </TextBox>
+                </TextWrapper>
+            ) : (
+                <>
+                    <StyledTitle level="4" italic>
+                        Прогресс по группам
+                    </StyledTitle>
+                    <ResponsiveBar
+                        data={graphData}
+                        keys={graphKeys}
+                        indexBy="exerciseGroup"
+                        margin={{ top: 30, right: 50, bottom: 100, left: 50 }}
+                        groupMode="grouped"
+                        colors={({ id, data }) => {
+                            return String(data[`${id}Color`]);
+                        }}
+                        borderWidth={1}
+                        borderColor={{
+                            from: 'color',
+                            modifiers: [['darker', 0.2]]
+                        }}
+                        enableLabel={false}
+                        axisLeft={null}
+                        axisBottom={{
+                            legend: 'Группы упражнений',
+                            legendPosition: 'middle',
+                            legendOffset: 60,
+                            tickRotation: 15
+                        }}
+                        isInteractive={false}
+                    />
+                </>
+            )}
+        </StyledGraphBox>
     );
 };
 

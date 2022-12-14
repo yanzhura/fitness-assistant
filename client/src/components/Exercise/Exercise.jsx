@@ -1,41 +1,74 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Badge, Card, Modal } from 'antd';
-import Title from 'antd/lib/typography/Title';
-import { getWorkoutByNumber } from '../../store/workouts';
+import { Modal } from 'antd';
 import { capitalize } from '../../utils/capitalize';
-import ExerciseCard from '../ExerciseCard/ExerciseCard';
 import BodyPartsTags from '../BodyPartsTags/BodyPartsTags';
+import { getUserCompletedWorkouts, getUserSchedule } from '../../store/user';
+import { repeatsDeclension } from '../../utils/declensions';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEllipsis } from '@fortawesome/free-solid-svg-icons';
+import ExerciseCard from '../ExerciseCard/ExerciseCard';
+import appConfig from '../../App.config';
 //* styles
-import { ExerciseWrapper } from './styles';
+import {
+    ExercisePhoto,
+    ExerciseResult,
+    ExerciseText,
+    ExerciseWrapper,
+    Photo,
+    PhotoFrame,
+    ResultNumber,
+    ResultUnits,
+    TextTags,
+    TextTitle
+} from './styles';
+import { gray } from '../StyledComponents';
 
-const Exercise = ({ workoutNumber, exerciseKey }) => {
+const Exercise = ({ sequenceNumber, exercise }) => {
+    const userSchedule = useSelector(getUserSchedule());
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const workout = useSelector(getWorkoutByNumber(workoutNumber));
+    const userCompletedWorkouts = useSelector(getUserCompletedWorkouts());
 
-    const { group, name, bodyParts } = workout.exercises[exerciseKey];
+    const isWorkoutCompleted = sequenceNumber <= userCompletedWorkouts;
+    const { name, bodyParts, bodyWeight, description } = exercise;
+    const { results } = isWorkoutCompleted ? userSchedule.find((w) => w.workout === sequenceNumber) : { results: 0 };
+    const { count } = isWorkoutCompleted ? results.find((res) => res.exercise === exercise._id) : { count: 0 };
+    const units = bodyWeight ? repeatsDeclension(count) : 'кг';
 
     const toggleModal = () => setIsModalOpen((prevState) => !prevState);
 
     return (
-        <ExerciseWrapper>
-            <Badge.Ribbon text={group} color={'#aaa'}>
-                <Card size={'small'} onClick={toggleModal}>
-                    <BodyPartsTags bodyParts={bodyParts} />
-                    <Title level={4}>{capitalize(name)}</Title>
-                </Card>
-            </Badge.Ribbon>
-            <Modal footer={null} open={isModalOpen} onCancel={toggleModal} centered={true}>
-                <ExerciseCard {...{ workoutNumber, exerciseKey }} />
+        <>
+            <ExerciseWrapper onClick={toggleModal}>
+                <PhotoFrame>
+                    <ExercisePhoto>
+                        <Photo src={`${appConfig.staticUrl}/exercises/${description.photoId}small.jpg`} />
+                    </ExercisePhoto>
+                </PhotoFrame>
+                <ExerciseResult>
+                    <ResultNumber>
+                        {isWorkoutCompleted ? count : <FontAwesomeIcon icon={faEllipsis} color={gray[6]} />}
+                    </ResultNumber>
+                    <ResultUnits>{units}</ResultUnits>
+                </ExerciseResult>
+                <ExerciseText>
+                    <TextTitle>{capitalize(name)}</TextTitle>
+                    <TextTags>
+                        <BodyPartsTags bodyParts={bodyParts} />
+                    </TextTags>
+                </ExerciseText>
+            </ExerciseWrapper>
+            <Modal footer={null} open={isModalOpen} onCancel={toggleModal} centered={true} width={400}>
+                <ExerciseCard {...{ sequenceNumber, exercise }} />
             </Modal>
-        </ExerciseWrapper>
+        </>
     );
 };
 
 Exercise.propTypes = {
-    workoutNumber: PropTypes.number.isRequired,
-    exerciseKey: PropTypes.string.isRequired
+    sequenceNumber: PropTypes.number.isRequired,
+    exercise: PropTypes.object
 };
 
 export default Exercise;

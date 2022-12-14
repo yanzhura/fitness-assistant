@@ -1,29 +1,33 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Tag } from 'antd';
-import { UserOutlined } from '@ant-design/icons';
+import { useSelector } from 'react-redux';
 import { capitalize } from '../../utils/capitalize';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHand } from '@fortawesome/free-solid-svg-icons';
+import { Space } from 'antd';
 //* styles
-import { tagColors } from './styles';
+import { ColorBadge, tagColors } from './styles';
+import { getBodyParts } from '../../store/trainingPlan';
 
-const BodyPartsTags = ({ bodyParts }) => {
-    const getTagColor = (number) => {
-        return tagColors[number];
-    };
-
-    return Object.keys(bodyParts).map((key) => {
-        const getNumberRegexp = /\d+/g;
-        const bodyPartNumber = parseInt(getNumberRegexp.exec(key)) - 1;
+const BodyPartsTags = ({ bodyParts, size }) => {
+    const allBodyParts = useSelector(getBodyParts());
+    return bodyParts.map((part, index) => {
+        const colorIndex = allBodyParts.indexOf(part);
+        const color = tagColors[colorIndex];
         return (
-            <Tag key={bodyParts[key].name} icon={<UserOutlined />} color={getTagColor(bodyPartNumber)}>
-                {capitalize(bodyParts[key].name)}
-            </Tag>
+            <ColorBadge key={index} size={size} color={color}>
+                <Space>
+                    <FontAwesomeIcon icon={faHand} />
+                    {capitalize(part)}
+                </Space>
+            </ColorBadge>
         );
     });
 };
 
 BodyPartsTags.propTypes = {
-    bodyParts: PropTypes.object.isRequired
+    bodyParts: PropTypes.array.isRequired,
+    size: PropTypes.string
 };
 
 export default BodyPartsTags;

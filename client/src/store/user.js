@@ -32,15 +32,7 @@ const initialUserData = {
     currentWorkout: 1,
     completedWorkouts: 0,
     showWelcomePage: true,
-    showQuickTour: true,
-    trainingStartedAt: false,
-    trainingFinishedAt: false,
-    schedule: {
-        workout1: {
-            date: 0,
-            sequenceNumber: 1
-        }
-    }
+    showQuickTour: true
 };
 
 const userSlice = createSlice({
@@ -50,7 +42,7 @@ const userSlice = createSlice({
         authSucceeded: (state, action) => {
             state.isLoggedIn = true;
             state.isLoading = true;
-            state.userId = action.payload.localId;
+            state.userId = action.payload.userId;
         },
         authFailed: (state, action) => {
             state.error = action.payload;
@@ -72,6 +64,7 @@ const userSlice = createSlice({
             state.isLoggedIn = false;
             state.isLoading = false;
             state.error = null;
+            state.quickTourPage = 0;
         },
         userCreateRequested: (state) => {
             state.isLoading = true;
@@ -100,15 +93,22 @@ const userSlice = createSlice({
             const sequenceNumber = action.payload.workoutSequenceNumber;
             const date = action.payload.plannedDate;
             const result = action.payload.workoutResult;
-            const oldSchedule = { ...state.userData.schedule };
-            state.userData.schedule = {
-                ...oldSchedule,
-                [`workout${sequenceNumber}`]: {
-                    date,
-                    sequenceNumber,
-                    result
+            if (!state.userData.schedule[sequenceNumber - 1]) {
+                state.userData.schedule.push({
+                    workout: sequenceNumber,
+                    date: 0,
+                    results: []
+                });
+            }
+            state.userData.schedule[sequenceNumber - 1].date = date;
+            if (result) {
+                for (const key in result) {
+                    state.userData.schedule[sequenceNumber - 1].results.push({
+                        exercise: key,
+                        count: result[key]
+                    });
                 }
-            };
+            }
         },
         currentWorkoutIncreased: (state) => {
             state.userData.currentWorkout = parseInt(state.userData.currentWorkout) + 1;
@@ -204,11 +204,10 @@ export const createUser =
     async (dispatch) => {
         dispatch(userCreateRequested());
         try {
-            const authData = await authService.signUp({ email, password });
-            await userService.createNewUser(authData.localId, { ...initialUserData, email, ...rest });
+            const authData = await authService.signUp({ email, password, ...rest, ...initialUserData });
             dispatch(
                 userCreateSucceeded({
-                    userId: authData.localId,
+                    userId: authData.userId,
                     userData: { ...initialUserData, email, ...rest }
                 })
             );
@@ -266,7 +265,7 @@ export const resetUserError = () => (dispatch) => {
     dispatch(userErrorReset());
 };
 
-export const hideWelcomPage = () => (dispatch) => {
+export const hideWelcomePage = () => (dispatch) => {
     dispatch(welcomePageHidden());
     dispatch(updateUser());
 };
@@ -293,9 +292,14 @@ export const getUserCurrentWorkout = () => (state) => state.user.userData?.curre
 export const getUserCompletedWorkouts = () => (state) => state.user.userData?.completedWorkouts;
 export const getUserSchedule = () => (state) => state.user.userData?.schedule;
 export const getCurrentWorkoutSchedule = () => (state) => {
-    const currentWorkoutKey = `workout${state.user.userData.currentWorkout}`;
-    if (state.user.userData?.schedule) {
-        return state.user.userData.schedule[currentWorkoutKey];
+    const currentWorkout = state.user.userData.currentWorkout;
+    if (state.user.userData?.schedule && state.user.userData.schedule.length > 0) {
+        return state.user.userData.schedule[currentWorkout - 1];
+    }
+};
+export const getScheduleByWorkout = (number) => (state) => {
+    if (state.user.userData?.schedule && state.user.userData.schedule.length > 0) {
+        return state.user.userData.schedule.find((el) => el.workout === number);
     }
 };
 export const getUserTrainingStatus = () => (state) => ({

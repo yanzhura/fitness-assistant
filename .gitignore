@@ -1,6 +1,13 @@
+_notes
+
 client/node_modules
 client/.env*
+client/build
 
 server/node_modules
 server/.env*
 server/config
+server/build
+server/www/certs/*
+server/www/frontend/*
+server/www/static/*

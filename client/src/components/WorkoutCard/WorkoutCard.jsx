@@ -1,20 +1,56 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import { Button, DatePicker, Divider, Modal, Space, message, Form, InputNumber } from 'antd';
-import moment from 'moment';
+import { useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
+import { Button, DatePicker, Modal, message, Form, InputNumber, Space, Popconfirm } from 'antd';
+import moment from 'moment';
 import {
     completeCurrentWorkout,
+    getScheduleByWorkout,
+    getUserCompletedWorkouts,
     getUserCurrentWorkout,
     getUserSchedule,
-    updateUserSchedule,
-    getCurrentWorkoutSchedule,
-    getUserCompletedWorkouts
+    updateUserSchedule
 } from '../../store/user';
 import Exercise from '../Exercise';
 import { capitalize } from '../../utils/capitalize';
 import customHistory from '../../utils/customHistory';
-import { getWorkoutByNumber } from '../../store/workouts';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+    faCalendarDays,
+    faCircleCheck,
+    faCirclePlay,
+    faDumbbell,
+    faTriangleExclamation
+} from '@fortawesome/free-solid-svg-icons';
+import {
+    CardBody,
+    CardFooter,
+    CardHeader,
+    CardInfo,
+    CardLabels,
+    CardLine,
+    CardStatus,
+    CardWrapper,
+    DarkBadge,
+    CardBadges,
+    HeaderNumber,
+    HeaderText,
+    HeaderTitle,
+    Label,
+    LightBadge,
+    StatusIcon,
+    StatusLine,
+    ExercisesWrapper,
+    FooterPlan,
+    BackgroudNumber,
+    CompleteWrapper,
+    CompleteTitle,
+    CompleteForm
+} from './styles';
+import { blue, lime, orange, red } from '@ant-design/colors';
+import { gray, StyledTitle } from '../StyledComponents';
+import { getExercisesForWorkout, getWorkoutByNumber } from '../../store/trainingPlan';
 
 const WorkoutCard = ({ sequenceNumber }) => {
     const dispatch = useDispatch();
@@ -22,28 +58,39 @@ const WorkoutCard = ({ sequenceNumber }) => {
     const [planedDate, setPlanedDate] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const { complexityLevel, kindName, typeName, exercises } = useSelector(getWorkoutByNumber(sequenceNumber));
+    const { level, kind, type, exerciseGroups } = useSelector(getWorkoutByNumber(sequenceNumber));
+    const fullExercises = useSelector(getExercisesForWorkout(sequenceNumber));
     const userCurrentWorkout = useSelector(getUserCurrentWorkout());
-    const userCompletedWorkouts = useSelector(getUserCompletedWorkouts());
     const userSchedule = useSelector(getUserSchedule());
-    const currentWorkoutSchedule = useSelector(getCurrentWorkoutSchedule());
-    const [form] = Form.useForm();
+    const workoutSchedule = useSelector(getScheduleByWorkout(sequenceNumber));
+    const userCompletedWorkouts = useSelector(getUserCompletedWorkouts());
 
-    const lastWorkoutCompleted =
-        userCurrentWorkout > 1 &&
-        Object.values(userSchedule).find((item) => item.sequenceNumber === userCurrentWorkout - 1);
+    const [form] = Form.useForm();
+    const { pathname } = useLocation();
+
+    const lastWorkoutCompleted = userSchedule[userCompletedWorkouts - 1];
+    const lastCompletedDate = lastWorkoutCompleted?.date ? lastWorkoutCompleted.date : null;
 
     const nowDate = moment().format('YYYYMMDD');
-    const isWorkoutCompleteUnable = userCurrentWorkout > 1 && lastWorkoutCompleted.date === nowDate;
+    const isWorkoutCompleteUnable = lastCompletedDate === nowDate;
 
     const disabledPastDates = (current) => {
-        return current && current < moment().endOf('day');
+        if (isWorkoutCompleteUnable) {
+            return current && current < moment().endOf('day');
+        }
+
+        return current && current < moment().subtract(1, 'day');
     };
 
     const disabledFutureDates = (current) => {
-        return (
-            (current && current < moment(lastWorkoutCompleted.date).endOf('day')) || current >= moment().endOf('day')
-        );
+        if (lastCompletedDate) {
+            return (
+                (current && current < moment(lastWorkoutCompleted.date).endOf('day')) ||
+                current >= moment().endOf('day')
+            );
+        }
+
+        return current >= moment().endOf('day');
     };
 
     const handleDatePick = (date) => {
@@ -55,26 +102,9 @@ const WorkoutCard = ({ sequenceNumber }) => {
         setPlanedDate('');
     };
 
-    const getCompleteInfo = () => {
-        if (sequenceNumber <= userCompletedWorkouts) {
-            const completeDate = userSchedule[`workout${sequenceNumber}`].date;
-            return <p>{`Тренировка завершена ${moment(completeDate).format('DD MMMM YYYY')} г.`}</p>;
-        } else if (sequenceNumber === 1 && currentWorkoutSchedule.date === 0) {
-            return <p>Это ваша первая тренировка. Она ещё не запланирована.</p>;
-        } else if (sequenceNumber === userCurrentWorkout) {
-            if (currentWorkoutSchedule) {
-                return (
-                    <p>{`Тренировка запланирована на ${moment(currentWorkoutSchedule.date).format(
-                        'DD MMMM YYYY'
-                    )} г.`}</p>
-                );
-            }
-        }
-    };
-
     const getExercisesElements = () => {
-        return Object.keys(exercises).map((key) => {
-            return <Exercise key={key} workoutNumber={sequenceNumber} exerciseKey={key} />;
+        return fullExercises.map((exercise, index) => {
+            return <Exercise key={index} sequenceNumber={sequenceNumber} exercise={exercise} />;
         });
     };
 
@@ -110,27 +140,34 @@ const WorkoutCard = ({ sequenceNumber }) => {
         <Button key={1} type="ghost" onClick={modalCancel}>
             Отмена
         </Button>,
-        <Button key={2} type="primary" onClick={modalOk}>
-            Завершить
-        </Button>
+        <Popconfirm
+            key={2}
+            title="Внесённые результаты нельзя отменить. Продолжить?"
+            onConfirm={modalOk}
+            okText="Да"
+            cancelText="Нет"
+            icon={<FontAwesomeIcon icon={faTriangleExclamation} color={red[5]} />}>
+            <Button type="primary">ОК</Button>
+        </Popconfirm>
     ];
 
     const getFormElemetns = () => {
-        return Object.keys(exercises).map((key) => {
-            const units = exercises[key].bodyWeight ? 'раз' : 'кг';
-            const step = exercises[key].bodyWeight ? 1 : 0.5;
+        return fullExercises.map((exercise, index) => {
+            const units = exercise.bodyWeight ? 'раз' : 'кг';
+            const step = exercise.bodyWeight ? 1 : 0.5;
+            const precision = exercise.bodyWeight ? 0 : 1;
             return (
                 <Form.Item
-                    key={key}
-                    name={key}
-                    label={capitalize(exercises[key].name)}
+                    key={exercise._id}
+                    name={exercise._id}
+                    label={capitalize(exercise.name)}
                     rules={[
                         {
                             required: true,
                             message: 'Заполните результат упражнения'
                         }
                     ]}>
-                    <InputNumber decimalSeparator={','} precision={1} min={0} prefix={units} step={step} />
+                    <InputNumber decimalSeparator={','} precision={precision} min={0} prefix={units} step={step} />
                 </Form.Item>
             );
         });
@@ -140,69 +177,187 @@ const WorkoutCard = ({ sequenceNumber }) => {
         customHistory.goBack();
     };
 
+    const getExerciseGroups = () => {
+        return exerciseGroups.map((g, index) => (
+            <LightBadge key={index}>
+                <FontAwesomeIcon icon={faDumbbell} /> {g}
+            </LightBadge>
+        ));
+    };
+
+    let completeStatus = '';
+    if (sequenceNumber === userCurrentWorkout) {
+        completeStatus = 'current';
+    } else if (sequenceNumber < userCurrentWorkout) {
+        completeStatus = 'completed';
+    } else if (sequenceNumber > userCurrentWorkout) {
+        completeStatus = 'future';
+    }
+
+    const getCompleteIcon = () => {
+        if (completeStatus === 'completed') {
+            return <FontAwesomeIcon icon={faCircleCheck} color={lime[5]} />;
+        }
+
+        if (completeStatus === 'current') {
+            return <FontAwesomeIcon icon={faCirclePlay} color={orange[5]} />;
+        }
+
+        if (completeStatus === 'future') {
+            return <FontAwesomeIcon icon={faCircleCheck} color={gray[3]} />;
+        }
+    };
+
+    const getPlannedIcon = () => {
+        if (completeStatus === 'completed') {
+            return <FontAwesomeIcon icon={faCalendarDays} color={lime[5]} />;
+        }
+
+        if (completeStatus === 'current') {
+            if (!workoutSchedule) {
+                return <FontAwesomeIcon icon={faCalendarDays} color={gray[3]} />;
+            }
+
+            return <FontAwesomeIcon icon={faCalendarDays} color={blue[5]} />;
+        }
+
+        if (completeStatus === 'future') {
+            return <FontAwesomeIcon icon={faCalendarDays} color={gray[3]} />;
+        }
+    };
+
+    const getCompleteInfo = () => {
+        if (completeStatus === 'completed') {
+            return 'Завершена';
+        }
+
+        if (completeStatus === 'current') {
+            return 'Текущая';
+        }
+
+        if (completeStatus === 'future') {
+            return 'Предстоящая';
+        }
+    };
+
+    const getPlannedInfo = () => {
+        if (completeStatus === 'completed') {
+            const workoutDate = workoutSchedule.date;
+            return moment(workoutDate).format('DD.MM.YYYY');
+        }
+
+        if (completeStatus === 'current') {
+            if (!workoutSchedule) {
+                return 'Не запланирована';
+            }
+
+            const workoutDate = workoutSchedule.date;
+            return <>{`На ${moment(workoutDate).format('DD.MM.YYYY')}`}</>;
+        }
+
+        if (completeStatus === 'future') {
+            return 'Не запланирована';
+        }
+    };
+
     return (
-        <div>
-            <Button onClick={handleBackButton}>Назад</Button>
-            <div>
-                <p>Номер: {sequenceNumber}</p>
-                <p>Сложность: {complexityLevel}</p>
-                <p>Вид: {kindName}</p>
-                <p>Тип: {typeName}</p>
-            </div>
-            <div>
-                <h4>Упражнения</h4>
-                <div>{getExercisesElements()}</div>
-            </div>
-            <div>
-                {getCompleteInfo()}
-                {sequenceNumber === userCurrentWorkout ? (
-                    <>
-                        <Divider>Планирование тренировки</Divider>
-                        <Space direction="vertical" size={'middle'}>
+        <>
+            <CardWrapper>
+                <CardHeader>
+                    <HeaderTitle>
+                        <HeaderText>Тренировка&nbsp;</HeaderText>
+                        <HeaderNumber>{sequenceNumber}</HeaderNumber>
+                    </HeaderTitle>
+                    {pathname !== '/home' && <Button onClick={handleBackButton}>Назад</Button>}
+                </CardHeader>
+                <CardBody>
+                    <CardInfo>
+                        <CardStatus>
+                            <StatusLine>
+                                <StatusIcon>{getCompleteIcon()}</StatusIcon>
+                                <DarkBadge>{getCompleteInfo()}</DarkBadge>
+                            </StatusLine>
+                            <StatusLine>
+                                <StatusIcon>{getPlannedIcon()}</StatusIcon>
+                                <DarkBadge>{getPlannedInfo()}</DarkBadge>
+                            </StatusLine>
+                        </CardStatus>
+                        <CardLabels>
+                            <CardLine>
+                                <Label>Уровень сложности</Label>
+                                <DarkBadge>{level}</DarkBadge>
+                            </CardLine>
+                            <CardLine>
+                                <Label>Вид тренировки</Label>
+                                <DarkBadge>{capitalize(kind)}</DarkBadge>
+                            </CardLine>
+                            <CardLine>
+                                <Label>Набор упражнений</Label>
+                                <DarkBadge>{type}</DarkBadge>
+                            </CardLine>
+                        </CardLabels>
+                        <CardBadges>{getExerciseGroups()}</CardBadges>
+                    </CardInfo>
+                    <ExercisesWrapper>{getExercisesElements()}</ExercisesWrapper>
+                    <BackgroudNumber>{sequenceNumber}</BackgroudNumber>
+                </CardBody>
+                <CardFooter>
+                    <FooterPlan>
+                        <DatePicker
+                            disabledDate={disabledPastDates}
+                            format={'DD.MM.YYYY'}
+                            showToday={false}
+                            value={planedDate}
+                            onChange={(value) => handleDatePick(value)}
+                            disabled={!(completeStatus === 'current')}
+                        />
+                        <Button type="primary" onClick={submitToSchedule} disabled={!planedDate}>
                             <Space>
-                                <DatePicker
-                                    disabledDate={disabledPastDates}
-                                    format={'DD.MM.YYYY'}
-                                    showToday={false}
-                                    value={planedDate}
-                                    onChange={(value) => handleDatePick(value)}
-                                />
-                                <Button type="primary" onClick={submitToSchedule} disabled={!planedDate}>
-                                    Запланировать
-                                </Button>
+                                <FontAwesomeIcon icon={faCalendarDays} color={gray[0]} size="xl" />
+                                <span>Запланировать</span>
                             </Space>
-                            <div>
-                                <Button type="ghost" onClick={modalOpen}>
-                                    Внести результаты и завершить
-                                </Button>
-                            </div>
+                        </Button>
+                    </FooterPlan>
+                    <Button type="primary" disabled={!(completeStatus === 'current')} onClick={modalOpen}>
+                        <Space>
+                            <FontAwesomeIcon icon={faCircleCheck} color={gray[0]} size="xl" />
+                            <span>Завершить</span>
                         </Space>
-                    </>
-                ) : (
-                    ''
-                )}
-            </div>
-            <Modal open={isModalOpen} closable={false} destroyOnClose={true} footer={modalFooter} centered={true}>
-                <Divider>Результаты тренировки</Divider>
-                <Form
-                    name="workoutResults"
-                    form={form}
-                    onFinish={formSubmit}
-                    requiredMark={false}
-                    colon={false}
-                    labelCol={{ span: 18 }}
-                    labelAlign={'left'}
-                    initialValues={{
-                        completeDate: moment()
-                    }}>
-                    {getFormElemetns()}
-                    <Divider>Дата завершения</Divider>
-                    <Form.Item key={'datepicker'} name="completeDate" label={'   '}>
-                        <DatePicker disabledDate={disabledFutureDates} format={'DD.MM.YYYY'} showToday={true} />
-                    </Form.Item>
-                </Form>
+                    </Button>
+                </CardFooter>
+            </CardWrapper>
+            <Modal
+                open={isModalOpen}
+                closable={false}
+                destroyOnClose={true}
+                footer={modalFooter}
+                centered={true}
+                width={450}>
+                <CompleteWrapper>
+                    <CompleteTitle>
+                        <StyledTitle level="4">Внесите результаты</StyledTitle>
+                    </CompleteTitle>
+                    <CompleteForm>
+                        <Form
+                            name="workoutResults"
+                            form={form}
+                            onFinish={formSubmit}
+                            requiredMark={false}
+                            colon={false}
+                            labelCol={{ span: 17 }}
+                            labelAlign={'left'}
+                            initialValues={{
+                                completeDate: moment()
+                            }}>
+                            {getFormElemetns()}
+                            <Form.Item key={'datepicker'} name="completeDate" label={'Дата'}>
+                                <DatePicker disabledDate={disabledFutureDates} format={'DD.MM.YYYY'} showToday={true} />
+                            </Form.Item>
+                        </Form>
+                    </CompleteForm>
+                </CompleteWrapper>
             </Modal>
-        </div>
+        </>
     );
 };
 
